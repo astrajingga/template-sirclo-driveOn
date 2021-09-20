@@ -1,0 +1,29 @@
+.contact-page
+{
+  &-container
+  {
+    margin-bottom: 2rem;
+    padding: 2rem;
+    border-radius: 5px;
+    background-color: $color_white;
+    box-shadow: 0 0 15px rgba(0,0,0,.15);
+  }
+
+  &-title
+  {
+    font-family: "karla-bold";
+    font-size: 16px;
+    margin-bottom: 2rem;
+  }
+}
+
+.contact-info
+{
+  margin-bottom: 2rem;
+  
+  img
+  {
+    height: 50px;
+    margin-bottom: 1.5rem;
+  }
+}

@@ -1,0 +1,59 @@
+.section-breadcrumb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 0;
+  background-image: linear-gradient($color_orange_light, $color_white);
+
+  @media screen and (max-width: 575px) {
+    padding-bottom: 1.5rem;
+  }
+
+  &__title {
+    font-family: "karla-bold";
+    margin: 0;
+    text-transform: uppercase;
+
+    @media screen and (max-width: 575px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__image {
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    margin-bottom: 30px;
+
+    @media screen and (max-width: 575px) {
+      margin-bottom: 20px;
+    }
+  }
+
+  .breadcrumb {
+    &-merlin {
+      padding: 0.25rem 1rem;
+      background-color: transparent;
+
+      &-item {
+        a {
+          color: $color_black;
+          text-decoration: none;
+        }
+
+        + .breadcrumb-merlin-item {
+          padding-left: 1rem;
+
+          &::before {
+            padding-right: 1rem;
+            content: "\276F";
+          }
+        }
+
+        &__link {
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+}

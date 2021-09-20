@@ -1,0 +1,123 @@
+.payment-notif-page
+{
+  &-container
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+
+  &-inner
+  {
+    display: flex;
+    flex-direction: column;
+    width: 650px;
+
+    & > div:first-child
+    {
+      background-color: $color_yellow;
+      border: 1px solid $color_yellow_dark;
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      align-content: center;
+      border-radius: 5px;
+      box-shadow: 0 0 15px rgba(0,0,0,.15);
+    }
+  }
+
+  &-outer
+  {
+    order: 3;
+    padding: 1.5rem;
+    align-content: center;
+    border-radius: 5px;
+    background-color: $color_white;
+    box-shadow: 0 0 15px rgba(0,0,0,.15);
+  }
+
+  &-title
+  {
+    font-family: "karla-bold";
+    font-size: 16px;
+  }
+
+  &-subtitle
+  {
+    color: $color_gray_text;
+  }
+
+  &-form
+  {
+    margin: 2rem 0;
+  }
+
+  &-register-guide
+  {
+    display: block;
+    text-align: center;
+
+    .register-link
+    {
+      font-family: "karla-bold";
+    }
+  }
+}
+
+.date-picker {
+	&__input {
+		display: block !important;
+		border: 1px solid #ced4da;
+		border-radius: 0.25rem;
+		transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+		div {
+			border: none;
+
+			input,
+			input:focus {
+				border: none;
+			}
+		}
+	}
+
+	&__calendar {
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+		div {
+			button {
+				position: relative;
+				padding: 0.75em 0.5em;
+				height: auto;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+			}
+		}
+	}
+}
+
+.order-detail-container {
+  order: 2;
+  padding: 1.5rem;
+  align-content: center;
+  border-radius: 5px;
+  background-color: $color_white;
+  box-shadow: 0 0 15px rgba(0,0,0,.15);
+  margin-bottom: 2rem;
+}
+
+.summary-total {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  &__price {
+    font-size: 16px;
+    font-weight: 800;
+  }
+}

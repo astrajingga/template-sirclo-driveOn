@@ -1,0 +1,60 @@
+@mixin position($position: relative, $top: auto, $right: auto, $bottom: auto, $left: auto, $base: 16)
+{
+  position: #{$position};
+
+  @if $top {
+    @if $top == auto {
+      top: $top;
+    } @else if is-percentage($top) {
+      top: $top;
+    } @else {
+      @if $top == 0 {
+        top: 0;
+      } @else {
+        top: $top;
+      }
+    }
+  }
+
+  @if $left {
+    @if $left == auto {
+      left: $left;
+    } @else if is-percentage($top) {
+      left: $left;
+    } @else {
+      @if $left == 0 {
+        left: 0;
+      } @else {
+        left: $left;
+      }
+    }
+  }
+
+  @if $bottom {
+    @if $bottom == auto {
+      bottom: $bottom;
+    } @else if is-percentage($top) {
+      bottom: $bottom;
+    } @else {
+      @if $bottom == 0 {
+        bottom: 0;
+      } @else {
+        bottom: $bottom
+      }
+    }
+  }
+
+  @if $right {
+    @if $right == auto {
+      right: $right;
+    } @else if is-percentage($top) {
+      right: $right;
+    } @else {
+      @if $right == 0 {
+        right: 0;
+      } @else {
+        right: $right;
+      }
+    }
+  }
+}

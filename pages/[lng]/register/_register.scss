@@ -1,0 +1,22 @@
+.register-page {
+  &-container {
+    margin-bottom: 5rem;
+    padding: 2rem;
+    border-radius: 5px;
+    background-color: $color_white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  }
+
+  &-form {
+    &--label {
+      font-family: "karla-bold";
+      font-size: 16px;
+      margin-bottom: 1rem;
+    }
+
+    #emailHelp {
+      display: block;
+      margin-bottom: 1rem;
+    }
+  }
+}

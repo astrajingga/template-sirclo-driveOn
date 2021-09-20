@@ -1,0 +1,164 @@
+.placeholder-item {
+  background: $color_placeholder;
+  background: linear-gradient(to right, #eee 2%, #ddd 18%, #eee 33%);
+  background-size: 1300px;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: placeholderAnimate;
+
+  &__header {
+    &--widget {
+      width: 100%;
+      height: 30px;
+    }
+
+    &--logo {
+      width: 105px;
+      height: 35px;
+    }
+
+    &--nav {
+      height: 20px;
+      width: 100px;
+      margin: 0 1rem;
+
+      &-mobile {
+        height: 15px;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  &__banner {
+    height: 80vh;
+    width: 80%;
+
+    @media screen and (max-width: 767px) {
+      height: 30vh;
+    }
+  }
+
+  &__product {
+    &--card {
+      height: 300px;
+      width: 100%;
+
+      @media screen and (max-width: 575px) {
+        height: 200px;
+      }
+    }
+
+    &--title {
+      height: 30px;
+      width: 250px;
+      margin-bottom: 2rem;
+
+      @media screen and (max-width: 575px) {
+        margin: 1rem 0;
+      }
+    }
+
+    &--list {
+      height: 15px;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    &-cat {
+      &--card {
+        height: 300px;
+        width: 100%;
+
+        @media screen and (max-width: 575px) {
+          height: 70px;
+        }
+      }
+    }
+  }
+
+  &__testimonial {
+    &--title {
+      height: 20px;
+      width: 200px;
+      margin-bottom: 1rem;
+    }
+
+    &--list {
+      height: 10px;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__review {
+    &--title {
+      height: 20px;
+      width: 200px;
+      margin-bottom: 1rem;
+    }
+
+    &--list {
+      height: 10px;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__widget {
+    &--banner {
+      height: 300px;
+      width: 100%;
+    }
+  }
+
+  &__contact {
+    &--logo {
+      height: 50px;
+      width: 200px;
+      margin-bottom: 1rem;
+    }
+
+    &--caption {
+      height: 10px;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__instagramfeed
+  {
+    margin-top: 3rem;
+    height: 200px;
+    width: 100%;
+
+    @media screen and (max-width: 575px){
+      height: 93px;
+    }
+  }
+
+  &__blogsList
+  {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 15px;
+  }
+
+  &--text
+  {
+    width: 100%;
+    height: 16px;
+    margin-bottom: 8px;
+  }
+}
+
+@keyframes placeholderAnimate {
+  0% {
+    background-position: -650px 0;
+  }
+  100% {
+    background-position: 650px 0;
+  }
+}
