@@ -52,7 +52,7 @@ const classesAccount = {
   passwordContainerClassName: "d-flex align-items-center position-relative w-100",
   passwordInputClassName: "form-control sirclo-form-input size-label",
   passwordViewButtonClassName: "btn button-view-password",
-  buttonClassName: "btn btn-orange-outer btn-long float-right ml-2",
+  buttonClassName: "btn btn-danger btn-long float-right ml-2",
   tableClassName: "table",
   orderHistoryContainerClassName: "order-history-container",
   orderItemClassName: "order-history-items",
@@ -111,7 +111,7 @@ const classesAccount = {
   shipmentListClassName: "track-shipment__list",
   shipmentListWrapperClassName: "track-shipment__listWrapper",
   shipmentCloseIconClassName: "track-shipment__closeIcon",
-  shipmentTrackButtonClassName: "track-shipment__trackButton btn btn-orange",
+  shipmentTrackButtonClassName: "track-shipment__trackButton btn btn-danger",
   shipmentNoteClassName: "track-shipment__note",
 
   /* map */
@@ -126,7 +126,7 @@ const classesAccount = {
   mapHeaderNoteClassName: "account-page_mapPopupNote",
   mapLabelAddressClassName: "account-page_mapPopupLabelAddress",
   mapCenterButtonClassName: "account-page_mapPopupCenterButton",
-  mapButtonFooterClassName: "btn btn-orange btn-long d-block mx-auto my-3 mx-2",
+  mapButtonFooterClassName: "btn btn-danger btn-long d-block mx-auto my-3 mx-2",
 
   /* membership */
   membershipStatusClassName: "account-page_membershipStatus",
@@ -155,8 +155,8 @@ const classesAccount = {
   popupConfirmationOrderNoteClassName: "orderConfirmPopup__note",
   popupConfirmationOrderDescriptionClassName: "orderConfirmPopup__description",
   popupConfirmationOrderWrapButtonClassName: "orderConfirmPopup__buttons",
-  popupConfirmationOrderButtonConfirmClassName: "orderConfirmPopup__button orderConfirmPopup__button--confirm btn btn-orange-outer",
-  popupConfirmationOrderButtonNoClassName: "orderConfirmPopup__button orderConfirmPopup__button--cancel btn btn-orange",
+  popupConfirmationOrderButtonConfirmClassName: "orderConfirmPopup__button orderConfirmPopup__button--confirm btn btn-danger",
+  popupConfirmationOrderButtonNoClassName: "orderConfirmPopup__button orderConfirmPopup__button--cancel btn btn-danger",
   orderControlClassName: "order-history__actions",
   orderedItemDetailDeliveredClassName: "order-history-items-body invoice-button",
 
@@ -223,7 +223,7 @@ const Accounts: FC<any> = ({
       brand={brand}
     >
       <Breadcrumb
-        title={i18n.t("account.yourAccount")}
+        // title={i18n.t("account.yourAccount")}
         links={linksBreadcrumb}
         lng={lng}
       />

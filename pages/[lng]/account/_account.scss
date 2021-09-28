@@ -23,7 +23,7 @@
       &-icon {
         margin-left: 0.25rem;
         height: 1em;
-        color: $color_orange;
+        color: $color_red;
       }
     }
   }
@@ -34,7 +34,7 @@
       margin: 0;
       padding: 0;
       margin-bottom: 2rem;
-      border-bottom: 1px solid $color_orange;
+      border-bottom: 1px solid $color_red;
       white-space: nowrap;
       overflow-x: auto;
       overflow-y: hidden;
@@ -69,7 +69,7 @@
               width: 100%;
               left: 0;
               bottom: 0;
-              border-bottom: 3px solid $color_orange;
+              border-bottom: 3px solid $color_red;
             }
           }
         }
@@ -240,7 +240,7 @@
   &_mapPopupNote {
     font-size: 14px;
     background: $color_orange_light;
-    color: $color_orange;
+    color: $color_red;
     padding: 15px;
     text-align: center;
   }
@@ -335,7 +335,7 @@
     }
 
     &::-webkit-progress-value {
-      background-color: $color_orange;
+      background-color: $color_red;
       border-radius: 6px;
     }
   }
@@ -1078,7 +1078,7 @@
     display: none;
 
     &:checked + .notification_mediaCheckboxSlider {
-      background-color: $color_orange;
+      background-color: $color_red;
     }
 
     &:checked + .notification_mediaCheckboxSlider:before {
@@ -1153,7 +1153,7 @@
     opacity: 0;
 
     &:checked ~ .notification_mediaDetailCheckboxLabel {
-      background-color: $color_orange;
+      background-color: $color_red;
     }
 
     &:disabled ~ .notification_mediaDetailCheckboxLabel {
@@ -1174,7 +1174,7 @@
     width: 15px;
     background-color: $color_white;
     margin-bottom: 0;
-    outline: 1px solid $color_orange;
+    outline: 1px solid $color_red;
 
     &::after {
       content: "";

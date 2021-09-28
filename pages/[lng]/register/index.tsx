@@ -66,11 +66,11 @@ const RegisterPage: FC<any> = ({
       lngDict={lngDict}
       brand={brand}
     >
-      {/* <Breadcrumb
-        title={i18n.t("register.title")}
+      <Breadcrumb
+        // title={i18n.t("register.title")}
         links={linksBreadcrumb}
         lng={lng}
-      /> */}
+      />
       <section>
         <div className="container">
           <div className="register-page-container">

@@ -6,6 +6,7 @@ import {
   Products,
   isProductRecommendationAllowed
 } from "@sirclo/nexus";
+import Link from "next/link";
 import Layout from "components/Layout/Layout";
 import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 import EmptyComponent from "components/EmptyComponent/EmptyComponent";
@@ -120,7 +121,7 @@ const Cart: FC<any> = ({
       brand={brand}
     >
       <Breadcrumb
-        title={i18n.t("cart.title")}
+        // title={i18n.t("cart.title")}
         links={linksBreadcrumb}
         lng={lng}
       />
@@ -128,6 +129,16 @@ const Cart: FC<any> = ({
         <div className="cart margin-step-payment">
           <div className="row">
             <div className="col-12 col-lg-8">
+            <div className="heading__titlecart">
+              <h2>{i18n.t("cart.title")}</h2>
+              <br></br>
+              <h3>{i18n.t("cart.continue")} <Link href="/[lng]/products" as={`/${lng}/products`}>
+              <a className="heading__titlecart--colorLink">
+                {i18n.t("cart.Toproduct")}
+              </a>
+            </Link>
+            </h3>
+            </div>
               {invalidMsg !== "" &&
                 <div className="cart-table__errorCart">
                   {invalidMsg}
@@ -212,6 +223,9 @@ const Cart: FC<any> = ({
                         <div className="col-6 col-md-3 mb-4">
                           <Placeholder classes={classesPlaceholderProduct} withImage />
                         </div>
+                        <div className="col-6 col-md-3 mb-4">
+                          <Placeholder classes={classesPlaceholderProduct} withImage />
+                        </div>
                       </>
                     }
                   />
@@ -219,6 +233,7 @@ const Cart: FC<any> = ({
               </div>
             </>
           }
+          
         </div>
       </div>
     </Layout>
