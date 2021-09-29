@@ -200,7 +200,7 @@
         font-family: "karla-bold";
         font-size: 10px;
         color: $color_white;
-        background: $color_orange;
+        background: $color_red;
         width: max-content;
         padding: 0 5px;
         border-radius: 5px;
@@ -507,7 +507,7 @@
           z-index: 6;
           border: none;
           border-radius: 5px;
-          background-color: $color_orange;
+          background-color: $color_red;
           color: $color_white;
           text-transform: uppercase;
           text-align: center;
@@ -545,10 +545,10 @@
     }
 
     &__itemActive {
-      color: $color_orange;
+      color: $color_red;
 
       a {
-        color: $color_orange;
+        color: $color_red;
       }
     }
   }

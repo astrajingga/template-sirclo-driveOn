@@ -115,6 +115,7 @@ const Blog: FC<any> = ({
                   paginationClasses={classesPagination}
                   withPagination
                   itemPerPage={4}
+                  withReadMoreButton
                   thumborSetting={{
                     width: size.width < 768 ? 375 : 512,
                     format: "webp",

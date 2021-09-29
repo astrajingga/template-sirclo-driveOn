@@ -54,11 +54,10 @@ const ContactPage: FC<any> = ({
           <div className="container mb-5">
             <div className="row"> 
               <div className="col-12 col-sm-12 col-lg-6">
-                <h2>Contact Us</h2>
-                <br></br>
-                <p>Gedung Arta Graha Lantai 21 Jl. Jend. Sudirman 12930</p>
-                <p>Jakarta, Indonesia</p>
-                <p>+621 716 3455</p>
+              <Widget
+                  pos="main-content-1"
+                  widgetClassName="insert-your-class"
+                />
               </div>
               <div className="col-12 col-sm-12 col-lg-6">
                 {/* <img src="testing"></img> */}
