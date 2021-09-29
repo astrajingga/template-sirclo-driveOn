@@ -1,7 +1,13 @@
 import { FC, useState, useEffect } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Router, { useRouter } from "next/router";
-import { ProductFilter, ProductSort, Products, useI18n, Pagination } from "@sirclo/nexus";
+import {
+  ProductFilter,
+  ProductSort,
+  Products,
+  useI18n,
+  Pagination,
+} from "@sirclo/nexus";
 import Layout from "components/Layout/Layout";
 import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 import SideMenu from "components/SideMenu/SideMenu";
@@ -116,6 +122,19 @@ const ProductsPage: FC<any> = ({
     `${i18n.t("home.title")}`,
     `${i18n.t("product.title")}`,
   ];
+
+  const [search, setsearch] = useState("");
+
+  const searchProduct = (val: any) => {
+    console.log(val);
+    if (val !== "" && typeof val !== "undefined") {
+      Router.push(`/${lng}/products?q=${val}`);
+      // setOpenSearch(false);
+    } else {
+      Router.push(`/${lng}/products`);
+      // setOpenSearch(false);
+    }
+  };
 
   useEffect(() => {
     setCurrPage(0);
@@ -253,9 +272,9 @@ const ProductsPage: FC<any> = ({
               withPriceInput={true}
               withPriceValueLabel
               withTooltip
-              tagType='radio'
-              variantType='radio'
-              colorFilterType='radio'
+              tagType="radio"
+              variantType="radio"
+              colorFilterType="radio"
               handleFilter={handleFilter}
               loadingComponent={
                 <Placeholder
@@ -267,14 +286,25 @@ const ProductsPage: FC<any> = ({
             />
           </div>
           <div className="col-12 col-md-8">
-            <ProductSort
-              classes={classesProductSort}
-              type="dropdown"
-              handleSort={(selectedSort: any) => {
-                setSort(selectedSort);
-                setOpenSort(false);
-              }}
-            />
+            <div className="search" style={{display: 'flex',justifyContent : 'center',alignSelf : 'center', paddingBottom : 20}}>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  searchProduct(search);
+                }}
+              >
+                <label>
+                  <input
+                    type="text"
+                    className="search-bar"
+                    placeholder={i18n.t("header.searchPlaceholder")}
+                    value={search}
+                    onChange={(e) => setsearch(e.target.value)}
+                  />
+                </label>
+                <input type="submit" value="Submit" className="submit" />
+              </form>
+            </div>
             <div className="row products">
               {Array.from(Array(currPage + 1)).map((_, i) => (
                 <Products
@@ -288,6 +318,7 @@ const ProductsPage: FC<any> = ({
                   getQuickViewSlug={setSlug}
                   quickViewFeature={true}
                   sort={sort}
+                  callPagination={true}
                   filter={filterProduct}
                   withSeparatedVariant={true}
                   classes={classesProducts}
@@ -345,6 +376,16 @@ const ProductsPage: FC<any> = ({
                 />
               ))}
             </div>
+          </div>
+          <div className="col-2 sidebar">
+            <ProductSort
+              classes={classesProductSort}
+              type="dropdown"
+              handleSort={(selectedSort: any) => {
+                setSort(selectedSort);
+                setOpenSort(false);
+              }}
+            />
           </div>
         </div>
         {/* </div> */}
