@@ -29,7 +29,7 @@ const classesOrderSummary = {
   subTotalTextClassName: "order-summary__body--label-subtotal",
   subTotalPriceClassName: "order-summary__body--subtotal",
   footerClassName: "order-summary__footer",
-  submitButtonClassName: "px-0 btn btn-orange btn-long btn-45-pad order-summary__submitButton",
+  submitButtonClassName: "px-0 btn btn-danger btn-long btn-45-pad order-summary__submitButton",
   continueShoppingClassName: "d-none",
   popupClassName: "order-summary__overlay",
   voucherContainerClassName: "order-summary__popup",
@@ -43,7 +43,7 @@ const classesOrderSummary = {
   voucherListHeaderClassName: "order-summary__popup--voucher-title",
   voucherClassName: "order-summary__popup--voucher-list",
   voucherFooterClassName: "order-summary__popup--voucher-footer",
-  voucherApplyButtonClassName: "btn btn-orange",
+  voucherApplyButtonClassName: "btn btn-danger",
 
   pointsButtonClassName: "order-summary__header--features b-left mt-3",
   pointsIconClassName: "order-summary__header--features-icon",
@@ -116,6 +116,9 @@ const OrderSummaryBox: FC<any> = ({
 
   return (
     <>
+      <div className="heading__titlecart">
+        <h6>{i18n.t("cart.summary")}</h6>
+      </div>
       <div className="order-summary__wrapper">
         {withOrderDetail &&
           <div className="cartOrderSummaryBox order-1">

@@ -38,7 +38,9 @@ const LookbookCategory: FC<any> = ({
       lngDict={lngDict}
       brand={brand}
     >
-      <Breadcrumb title={i18n.t("lookbook.title")} links={linksBreadcrumb} lng={lng} />
+      <Breadcrumb 
+      // title={i18n.t("lookbook.title")} 
+      links={linksBreadcrumb} lng={lng} />
       {LookbookAllowed &&
         <section>
           <div className="container">
@@ -63,9 +65,10 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req }) =>
   const { default: lngDict = {} } = await import(
     `locales/${params.lng}.json`
   );
-
+  
   const brand = await useBrand(req);
-
+  
+  // console.log("masuk");
   return {
     props: {
       lng: params.lng,

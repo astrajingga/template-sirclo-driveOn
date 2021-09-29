@@ -25,7 +25,7 @@ import { useGoogleAuth } from 'lib/utils/useGoogleAuth'
 import { useFacebookAuth } from 'lib/utils/useFacebookAuth'
 import { useWhatsAppOTPSetting } from 'lib/utils/useSingleSignOn'
 import Layout from 'components/Layout/Layout'
-import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
+// import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
 import Loader from 'components/Loader/Loader'
 import LoaderPages from 'components/Loader/LoaderPages'
 
@@ -33,7 +33,7 @@ const loginClasses = {
   containerClassName: "login-page-form",
   inputContainerClassName: "sirclo-form-row",
   inputClassName: "form-control sirclo-form-input",
-  buttonClassName: "btn btn-orange btn-long btn-center",
+  buttonClassName: "col-12 btn btn-danger btn-long btn-center",
   footerClassName: "footer",
   forgotPasswordClass: "forgot-password",
   forgotLinkClass: "forgot-link",
@@ -108,7 +108,7 @@ const LoginPage: FC<any> = ({
       lngDict={lngDict}
       brand={brand}
     >
-      <Breadcrumb title={i18n.t("login.title")} links={linksBreadcrumb} lng={lng} />
+      {/* <Breadcrumb title={i18n.t("login.title")} links={linksBreadcrumb} lng={lng} /> */}
       <section>
         <div className="container">
           <div className="login-page-container">
@@ -116,10 +116,10 @@ const LoginPage: FC<any> = ({
               {step === "email" || !hasOtp ?
                 <>
                   <h3 className="login-page-title">
-                    {i18n.t("login.welcome")}
+                    {i18n.t("login.title")}
                   </h3>
                   <span className="login-page-subtitle">
-                    {i18n.t("login.credential")}
+                    {i18n.t("login.welcome")}
                   </span>
                   <Login
                     classes={loginClasses}
