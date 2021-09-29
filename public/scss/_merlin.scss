@@ -129,6 +129,7 @@
   }
 }
 
+
 .page-transition {
   &-enter {
     opacity: 0;
@@ -934,8 +935,10 @@ section {
 
         &--sale {
           text-decoration: line-through;
-          color: $color_red;
-          padding-right: 10px;
+          color: #ECEAEA;
+          display: block;
+          opacity: 0.5;
+          padding-right: 0;
 
           @media screen and (max-width: 767px) {
             display: block;

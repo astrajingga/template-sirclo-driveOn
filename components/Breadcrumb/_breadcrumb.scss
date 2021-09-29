@@ -1,8 +1,8 @@
 .section-breadcrumb {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 3rem 0;
+  align-items: flex-start;
+  padding: 1rem;
   background-image: linear-gradient($color_orange_light, $color_white);
 
   @media screen and (max-width: 575px) {

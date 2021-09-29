@@ -78,6 +78,7 @@ const Blog: FC<any> = ({
   const allowedBlog = isBlogAllowed();
 
   const [totalCategories, setTotalCategories] = useState(null);
+  console.log(headerImage)
 
   const linksBreadcrumb = [`${i18n.t("home.title")}`, `${i18n.t("blog.title")}`]
 
