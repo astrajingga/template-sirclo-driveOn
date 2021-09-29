@@ -4,7 +4,8 @@ import {
   Contact,
   Widget,
   useI18n,
-  isEnquiryAllowed
+  isEnquiryAllowed,
+  
 } from "@sirclo/nexus";
 import Layout from "components/Layout/Layout";
 import Breadcrumb from "components/Breadcrumb/Breadcrumb";

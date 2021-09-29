@@ -1,16 +1,7 @@
-import {
-  FC,
-  useState,
-  useEffect
-} from "react";
+import { FC, useState, useEffect } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import Router, { useRouter } from "next/router"
-import {
-  ProductFilter,
-  ProductSort,
-  Products,
-  useI18n
-} from "@sirclo/nexus";
+import Router, { useRouter } from "next/router";
+import { ProductFilter, ProductSort, Products, useI18n, Pagination } from "@sirclo/nexus";
 import Layout from "components/Layout/Layout";
 import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 import SideMenu from "components/SideMenu/SideMenu";
@@ -21,7 +12,7 @@ import {
   faSlidersH,
   faChevronDown,
   faBoxOpen,
-  faCheckCircle
+  faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import dynamic from "next/dynamic";
 import useQuery from "lib/utils/useQuery";
@@ -29,13 +20,9 @@ import { useBrand } from "lib/utils/useBrand";
 import useWindowSize from "lib/utils/useWindowSize";
 import useInfiniteScroll from "lib/utils/useInfiniteScroll";
 
-const Quickview = dynamic(
-  () => import("components/Quickview/Quickview")
-);
+const Quickview = dynamic(() => import("components/Quickview/Quickview"));
 
-const Popup = dynamic(
-  () => import("components/Popup/Popup")
-);
+const Popup = dynamic(() => import("components/Popup/Popup"));
 
 const classesProductFilter = {
   filterClassName: "products_filter",
@@ -49,8 +36,9 @@ const classesProductFilter = {
   filterSliderHandleClassName: "products_filterSliderHandle",
   filterSliderTrackClassName: "products_filterSliderTrack",
   filterSliderTooltipClassName: "products_filterSliderTooltip",
-  filterSliderTooltipContainerClassName: "products_filterSliderTooltipContainer",
-  filterSliderTooltipTextClassName: "products_filterSliderTooltipText"
+  filterSliderTooltipContainerClassName:
+    "products_filterSliderTooltipContainer",
+  filterSliderTooltipTextClassName: "products_filterSliderTooltipText",
 };
 
 const classesProductSort = {
@@ -94,7 +82,7 @@ const ProductsPage: FC<any> = ({
   lng,
   lngDict,
   brand,
-  urlSite
+  urlSite,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n();
   const router = useRouter();
@@ -105,10 +93,11 @@ const ProductsPage: FC<any> = ({
   const [openFilter, setOpenFilter] = useState<boolean>(false);
   const [openSort, setOpenSort] = useState<boolean>(false);
   const [sort, setSort] = useState(null);
-  const [filterProduct, setFilterProduct] = useState({})
+  const [filterProduct, setFilterProduct] = useState({});
   const [isQuickview, setIsQuickview] = useState<boolean>(false);
   const [slug, setSlug] = useState<string>("");
-  const [showModalErrorAddToCart, setShowModalErrorAddToCart] = useState<boolean>(false);
+  const [showModalErrorAddToCart, setShowModalErrorAddToCart] =
+    useState<boolean>(false);
   const [showModalAddToCart, setShowModalAddToCart] = useState<boolean>(false);
   const [showModalNotifyMe, setShowModalNotifyMe] = useState<boolean>(false);
 
@@ -118,7 +107,10 @@ const ProductsPage: FC<any> = ({
     totalItems: 0,
   });
 
-  const { currPage, setCurrPage } = useInfiniteScroll(pageInfo, "products__item");
+  const { currPage, setCurrPage } = useInfiniteScroll(
+    pageInfo,
+    "products__item"
+  );
 
   const linksBreadcrumb = [
     `${i18n.t("home.title")}`,
@@ -132,30 +124,26 @@ const ProductsPage: FC<any> = ({
   const handleFailedAddToCart = () => {
     setIsQuickview(false);
     setShowModalErrorAddToCart(true);
-  }
+  };
 
   const handleCompleteAddToCart = () => {
     setIsQuickview(false);
     setShowModalAddToCart(true);
-  }
+  };
 
   const handleCompleteNotifyMe = () => {
     setIsQuickview(false);
     setShowModalNotifyMe(true);
-  }
+  };
 
-  const handleFilter = (selectedFilter: any) => setFilterProduct(selectedFilter);
+  const handleFilter = (selectedFilter: any) =>
+    setFilterProduct(selectedFilter);
 
   const toogleFilter = () => setOpenFilter(!openFilter);
   const toogleSort = () => setOpenSort(!openSort);
 
   return (
-    <Layout
-      i18n={i18n}
-      lng={lng}
-      lngDict={lngDict}
-      brand={brand}
-    >
+    <Layout i18n={i18n} lng={lng} lngDict={lngDict} brand={brand}>
       {isQuickview && slug && (
         <Quickview
           slug={slug}
@@ -167,11 +155,8 @@ const ProductsPage: FC<any> = ({
           urlSite={urlSite}
         />
       )}
-      {showModalNotifyMe &&
-        <Popup
-          setPopup={setShowModalNotifyMe}
-          withClose={false}
-        >
+      {showModalNotifyMe && (
+        <Popup setPopup={setShowModalNotifyMe} withClose={false}>
           <div className="product-detail_errorAddCart">
             <h3 className="product-detail_errorAddCartTitle">
               {i18n.t("product.notifyTitleSuccess")}
@@ -184,17 +169,15 @@ const ProductsPage: FC<any> = ({
               onClick={() => {
                 setShowModalNotifyMe(false);
                 Router.push("/[lng]/products", `/${lng}/products`);
-              }}>
+              }}
+            >
               {i18n.t("global.continueShopping")}
             </button>
           </div>
         </Popup>
-      }
-      {showModalAddToCart &&
-        <Popup
-          setPopup={setShowModalAddToCart}
-          withClose={false}
-        >
+      )}
+      {showModalAddToCart && (
+        <Popup setPopup={setShowModalAddToCart} withClose={false}>
           <div className="product-detail_errorAddCart">
             <FontAwesomeIcon
               icon={faCheckCircle}
@@ -210,7 +193,8 @@ const ProductsPage: FC<any> = ({
               onClick={() => {
                 setShowModalAddToCart(false);
                 Router.push("/[lng]/cart", `/${lng}/cart`);
-              }}>
+              }}
+            >
               {i18n.t("cart.title")}
             </button>
             <button
@@ -218,28 +202,29 @@ const ProductsPage: FC<any> = ({
               onClick={() => {
                 setShowModalAddToCart(false);
                 Router.push("/[lng]/products", `/${lng}/products`);
-              }}>
+              }}
+            >
               {i18n.t("global.continueShopping")}
             </button>
           </div>
         </Popup>
-      }
-      {showModalErrorAddToCart &&
+      )}
+      {showModalErrorAddToCart && (
         <Popup setPopup={setShowModalErrorAddToCart}>
           <div className="product-detail_errorAddCart">
-            <h3 className="product-detail_errorAddCartTitle">{i18n.t("cart.errorSKUTitle")}</h3>
-            <p className="product-detail_errorAddCartDesc">{i18n.t("cart.errorSKUDetail")} </p>
+            <h3 className="product-detail_errorAddCartTitle">
+              {i18n.t("cart.errorSKUTitle")}
+            </h3>
+            <p className="product-detail_errorAddCartDesc">
+              {i18n.t("cart.errorSKUDetail")}{" "}
+            </p>
           </div>
         </Popup>
-      }
-      <Breadcrumb
-        title={i18n.t("product.title")}
-        links={linksBreadcrumb}
-        lng={lng}
-      />
-      <section>
-        <div className="container">
-          <div className="categories">
+      )}
+      <Breadcrumb links={linksBreadcrumb} lng={lng} />
+      {/* <section> */}
+      <div className="contain">
+        {/* <div className="categories">
             <a onClick={toogleFilter} className="categories__item">
               <span className="categories__item--title">
                 {i18n.t("product.filter")}
@@ -258,79 +243,113 @@ const ProductsPage: FC<any> = ({
                 icon={faChevronDown}
               />
             </a>
+          </div> */}
+        {/* <div className="container"> */}
+        <div className="row">
+          <div className="col-2 sidebar">
+            <span className="filter">{i18n.t("product.filter")}</span>
+            <ProductFilter
+              classes={classesProductFilter}
+              withPriceInput={true}
+              withPriceValueLabel
+              withTooltip
+              tagType='radio'
+              variantType='radio'
+              colorFilterType='radio'
+              handleFilter={handleFilter}
+              loadingComponent={
+                <Placeholder
+                  classes={classesPlaceholderFilter}
+                  withList={true}
+                  listMany={10}
+                />
+              }
+            />
           </div>
-          <div className="row products">
-            {Array.from(Array(currPage + 1)).map((_, i) => (
-              <Products
-                key={i}
-                tagName={tagname}
-                pageNumber={i}
-                itemPerPage={8}
-                getPageInfo={setPageInfo as any}
-                collectionSlug={categories}
-                isQuickView={setIsQuickview}
-                getQuickViewSlug={setSlug}
-                quickViewFeature={true}
-                sort={sort}
-                filter={filterProduct}
-                withSeparatedVariant={true}
-                classes={classesProducts}
-                fullPath={`product/{id}`}
-                pathPrefix={`product`}
-                lazyLoadedImage={false}
-                thumborSetting={{
-                  width: size.width < 575 ? 350 : 500,
-                  format: "webp",
-                  quality: 85,
-                }}
-                emptyStateComponent={
-                  <div className="col-12">
-                    <EmptyComponent
-                      classes={classesEmptyComponent}
-                      logo={
-                        <FontAwesomeIcon
-                          icon={faBoxOpen}
-                          className="products__empty--icon"
+          <div className="col-12 col-md-8">
+            <ProductSort
+              classes={classesProductSort}
+              type="dropdown"
+              handleSort={(selectedSort: any) => {
+                setSort(selectedSort);
+                setOpenSort(false);
+              }}
+            />
+            <div className="row products">
+              {Array.from(Array(currPage + 1)).map((_, i) => (
+                <Products
+                  key={i}
+                  tagName={tagname}
+                  pageNumber={i}
+                  itemPerPage={4}
+                  getPageInfo={setPageInfo as any}
+                  collectionSlug={categories}
+                  isQuickView={setIsQuickview}
+                  getQuickViewSlug={setSlug}
+                  quickViewFeature={true}
+                  sort={sort}
+                  filter={filterProduct}
+                  withSeparatedVariant={true}
+                  classes={classesProducts}
+                  fullPath={`product/{id}`}
+                  pathPrefix={`product`}
+                  lazyLoadedImage={false}
+                  thumborSetting={{
+                    width: size.width < 575 ? 350 : 500,
+                    format: "webp",
+                    quality: 85,
+                  }}
+                  emptyStateComponent={
+                    <div className="col-12">
+                      <EmptyComponent
+                        classes={classesEmptyComponent}
+                        logo={
+                          <FontAwesomeIcon
+                            icon={faBoxOpen}
+                            className="products__empty--icon"
+                          />
+                        }
+                        title={i18n.t("product.isEmpty")}
+                        desc={i18n.t("product.isEmptyDesc")}
+                      />
+                    </div>
+                  }
+                  loadingComponent={
+                    <>
+                      <div className="col-6 col-md-3 mb-4">
+                        <Placeholder
+                          classes={classesPlaceholderProduct}
+                          withImage={true}
                         />
-                      }
-                      title={i18n.t("product.isEmpty")}
-                      desc={i18n.t("product.isEmptyDesc")}
-                    />
-                  </div>
-                }
-                loadingComponent={
-                  <>
-                    <div className="col-6 col-md-3 mb-4">
-                      <Placeholder
-                        classes={classesPlaceholderProduct}
-                        withImage={true}
-                      />
-                    </div>
-                    <div className="col-6 col-md-3 mb-4">
-                      <Placeholder
-                        classes={classesPlaceholderProduct}
-                        withImage={true}
-                      />
-                    </div>
-                    <div className="col-6 col-md-3 mb-4">
-                      <Placeholder
-                        classes={classesPlaceholderProduct}
-                        withImage={true}
-                      />
-                    </div>
-                    <div className="col-6 col-md-3 mb-4">
-                      <Placeholder
-                        classes={classesPlaceholderProduct}
-                        withImage={true}
-                      />
-                    </div>
-                  </>
-                }
-              />
-            ))}
+                      </div>
+                      <div className="col-6 col-md-3 mb-4">
+                        <Placeholder
+                          classes={classesPlaceholderProduct}
+                          withImage={true}
+                        />
+                      </div>
+                      <div className="col-6 col-md-3 mb-4">
+                        <Placeholder
+                          classes={classesPlaceholderProduct}
+                          withImage={true}
+                        />
+                      </div>
+                      <div className="col-6 col-md-3 mb-4">
+                        <Placeholder
+                          classes={classesPlaceholderProduct}
+                          withImage={true}
+                        />
+                      </div>
+                    </>
+                  }
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </section>
+        {/* </div> */}
+      </div>
+      {/* </section> */}
       <SideMenu
         title={i18n.t("product.filter")}
         openSide={openFilter}
@@ -359,6 +378,7 @@ const ProductsPage: FC<any> = ({
       >
         <ProductSort
           classes={classesProductSort}
+          type="dropdown"
           handleSort={(selectedSort: any) => {
             setSort(selectedSort);
             setOpenSort(false);
@@ -369,10 +389,11 @@ const ProductsPage: FC<any> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
-  const { default: lngDict = {} } = await import(
-    `locales/${params.lng}.json`
-  );
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+}) => {
+  const { default: lngDict = {} } = await import(`locales/${params.lng}.json`);
 
   const brand = await useBrand(req);
   const urlSite = `https://${req.headers.host}/${params.lng}/product/${params.slug}`;
@@ -381,8 +402,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req }) =>
     props: {
       lng: params.lng,
       lngDict,
-      brand: brand || '',
-      urlSite
+      brand: brand || "",
+      urlSite,
     },
   };
 };
