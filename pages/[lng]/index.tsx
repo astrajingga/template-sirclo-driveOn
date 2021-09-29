@@ -27,6 +27,7 @@ const Popup = dynamic(() => import("components/Popup/Popup"));
 const Placeholder = dynamic(() => import("components/Placeholder"));
 const EmptyComponent = dynamic(() => import("components/EmptyComponent/EmptyComponent"));
 
+
 const Widget = dynamic(
   () => import("@sirclo/nexus").then((mod) => mod.Widget),
   { ssr: false }
@@ -224,6 +225,7 @@ const Home: React.FC<any> = ({
             <Placeholder classes={classesPlaceholderBanner} withImage />
           }
         />
+
       </div>
       <section>
         <div className="container">
@@ -304,6 +306,23 @@ const Home: React.FC<any> = ({
               </a>
             </Link>
           </div>
+        </div>
+      </section>
+      <br></br>
+      <br></br>
+      <section>
+        <div className="container">
+          <LazyLoadComponent>
+              <Widget
+                pos='main-content-2'
+                thumborSetting={{
+                  width: 0,
+                  height: 0,
+                  format: 'webp',
+                  quality: 0,
+                }}
+              />
+            </LazyLoadComponent>
         </div>
       </section>
       {/* <section>

@@ -1,13 +1,18 @@
 import { FC } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { ThankYou, useI18n } from "@sirclo/nexus";
+import SEO from "components/SEO/SEO";
 import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import { useBrand } from "lib/utils/useBrand";
+import { useBrand } from "lib/useBrand";
+import { Check } from "react-feather";
+import styles from "public/scss/ThankYou.module.scss";
 
 const classesThankYouPage = {
-  thankYouClassName: "thank-you__inner",
-  buttonClassName: "btn btn-orange btn-long text-uppercase"
+  thankYouClassName: styles.thankyou_inner,
+  hankYouOrderID: styles.thankyou_label,
+  thankYouMessageClassName: styles.thankyou_message,
+  thankYouOrderID: styles.thankyou_orderID,
+  buttonClassName: `btn w-100 ${styles.btn_primary} ${styles.btn_long}`
 }
 
 const ThankYouPage: FC<any> = ({
@@ -16,27 +21,23 @@ const ThankYouPage: FC<any> = ({
   brand
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n();
-  const linksBreadcrumb = [`${i18n.t("home.title")}`, `${i18n.t("thankYou.title")}`]
 
   return (
     <Layout
-      lngDict={lngDict}
       i18n={i18n}
       lng={lng}
+      lngDict={lngDict}
       brand={brand}
     >
-      <Breadcrumb title={i18n.t("thankYou.title")} links={linksBreadcrumb} lng={lng} />
+      <SEO title={i18n.t("thankYou.thanks")} />
       <section>
         <div className="container">
-          <div className="thank-you__container">
-            <h6 className="thank-you__container--titlePrimary">{i18n.t("thankYou.titlePrimary")}</h6>
+          <div className={styles.thankyou_container}>
             <ThankYou
-              thankYouImageURL={
-                <img src="/images/checkl.svg" className="thank-you__inner--icon" alt="merlin" />
-              }
-              thankYouMessage={i18n.t("thankYou.message")}
+              thankYouImageURL={<Check className={styles.thankyou_inner__icon} />}
               classes={classesThankYouPage}
               withDelay
+              thankYouMessage={i18n.t("thankYou.message")}
             />
           </div>
         </div>
@@ -45,7 +46,7 @@ const ThankYouPage: FC<any> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const { default: lngDict = {} } = await import(
     `locales/${params.lng}.json`
   );
@@ -56,8 +57,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req }) =>
     props: {
       lng: params.lng,
       lngDict,
-      brand: brand || ''
-    },
+      brand: brand || ""
+    }
   };
 }
 

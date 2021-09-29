@@ -43,10 +43,12 @@ const InstagramFeed: FC<{size: TSize}> = ({ size }) => {
   return (
     
     <div className="container">
+          <br></br>
         <div className="heading">
           <div className="heading__title">
+            <br></br>
             <h6>{i18n.t("instaFeed.titleDesc")}</h6>
-            <h1>{i18n.t("instaFeed.title")}</h1>
+            {/* <h1>{i18n.t("instaFeed.title")}</h1> */}
           </div>
         </div>
       {(instagramQuickView && instagramMedia) &&
@@ -64,7 +66,7 @@ const InstagramFeed: FC<{size: TSize}> = ({ size }) => {
 
       <InstaFeed
         Carousel={Carousel}
-        slidesPerPage={size.width < 575 ? 4 : 6}
+        slidesPerPage={size.width < 575 ? 2 : 3}
         slidesPerScroll={1}
         autoPlay={10000}
         infinite

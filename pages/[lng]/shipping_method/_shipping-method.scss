@@ -56,7 +56,7 @@
 
   &__items {
     padding: 2rem 3rem;
-    border: 1px solid $color_orange;
+    border: 1px solid $color_red;
     border-radius: 3px;
     margin-bottom: 1rem;
     cursor: pointer;
@@ -100,7 +100,7 @@
   &__warningPinPoinText
   {
     font-style: italic;
-    color: $color_orange;
+    color: $color_red;
   }
 
   &_errorAddCart
