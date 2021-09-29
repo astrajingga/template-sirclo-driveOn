@@ -1,13 +1,7 @@
 import { FC, useState, useEffect } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Router, { useRouter } from "next/router";
-import {
-  ProductFilter,
-  ProductSort,
-  Products,
-  useI18n,
-  Pagination,
-} from "@sirclo/nexus";
+import { ProductFilter, ProductSort, Products, useI18n } from "@sirclo/nexus";
 import Layout from "components/Layout/Layout";
 import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 import SideMenu from "components/SideMenu/SideMenu";
@@ -29,6 +23,13 @@ import useInfiniteScroll from "lib/utils/useInfiniteScroll";
 const Quickview = dynamic(() => import("components/Quickview/Quickview"));
 
 const Popup = dynamic(() => import("components/Popup/Popup"));
+
+const classessPagination = {
+  pagingClassName: "paging",
+  activeClassName: "active_paging",
+  itemClassName: "item_paging",
+  linkClassName: "link_paging",
+};
 
 const classesProductFilter = {
   filterClassName: "products_filter",
@@ -286,7 +287,15 @@ const ProductsPage: FC<any> = ({
             />
           </div>
           <div className="col-12 col-md-8">
-            <div className="search" style={{display: 'flex',justifyContent : 'center',alignSelf : 'center', paddingBottom : 20}}>
+            <div
+              className="search"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignSelf: "center",
+                paddingBottom: 20,
+              }}
+            >
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -297,7 +306,7 @@ const ProductsPage: FC<any> = ({
                   <input
                     type="text"
                     className="search-bar"
-                    placeholder={i18n.t("header.searchPlaceholder")}
+                    placeholder={i18n.t("header.searchProduct")}
                     value={search}
                     onChange={(e) => setsearch(e.target.value)}
                   />
@@ -311,7 +320,8 @@ const ProductsPage: FC<any> = ({
                   key={i}
                   tagName={tagname}
                   pageNumber={i}
-                  itemPerPage={4}
+                  itemPerPage={8}
+                  paginationClasses={classessPagination}
                   getPageInfo={setPageInfo as any}
                   collectionSlug={categories}
                   isQuickView={setIsQuickview}

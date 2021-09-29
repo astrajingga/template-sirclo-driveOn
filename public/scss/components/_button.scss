@@ -10,21 +10,21 @@
 
   &-orange {
     color: $color_white;
-    background-color: $color_orange;
+    background-color: $color_base_red;
 
     &:hover {
       color: $color_white;
-      background-color: $color_orange_dark;
+      background-color: $color_base_red_dark;
     }
   }
 
   &-orange-outer {
-    color: $color_orange !important;
-    border: 1px solid $color_orange;
+    color: $color_base_red !important;
+    border: 1px solid $color_base_red;
 
     &:hover {
       color: $color_white !important;
-      background-color: $color_orange;
+      background-color: $color_base_red;
     }
   }
 
@@ -76,7 +76,7 @@
         .ml-2,
         .order-summary__header--features-icon;
       margin-left: auto;
-      color: $color_orange;
+      color: $color_base_red;
     }
 
     &:hover {
