@@ -20,7 +20,7 @@ const classesContact = {
   titleClassName: "contact-page-title",
   inputContainerClassName: "sirclo-form-row",
   inputClassName: "form-control sirclo-form-input",
-  buttonClassName: "btn btn-orange btn-long",
+  buttonClassName: "btn btn-danger btn-long float-right",
 };
 
 const classesPlaceholderContact = {
@@ -48,10 +48,25 @@ const ContactPage: FC<any> = ({
     >
       {allowedEnquiry &&
         <>
-          <Breadcrumb title={i18n.t("contact.title")} links={linksBreadcrumb} lng={lng} />
+          <Breadcrumb 
+          // title={i18n.t("contact.title")} 
+          links={linksBreadcrumb} lng={lng} />
           <div className="container mb-5">
+            <div className="row"> 
+              <div className="col-12 col-sm-12 col-lg-6">
+                <h2>Contact Us</h2>
+                <br></br>
+                <p>Gedung Arta Graha Lantai 21 Jl. Jend. Sudirman 12930</p>
+                <p>Jakarta, Indonesia</p>
+                <p>+621 716 3455</p>
+              </div>
+              <div className="col-12 col-sm-12 col-lg-6">
+                {/* <img src="testing"></img> */}
+              </div>
+            </div>
+            <br></br>
             <div className="row">
-              <div className="col-12 col-sm-12 col-lg-7">
+              <div className="col-12 col-sm-12 col-lg-12">
                 <Contact
                   classes={classesContact}
                   isAddressDetail={false}
@@ -59,7 +74,7 @@ const ContactPage: FC<any> = ({
                   onError={() => toast.error(i18n.t("contact.submitError"))}
                 />
               </div>
-              <div className="col-12 col-sm-12 col-lg-5">
+              {/* <div className="col-12 col-sm-12 col-lg-5">
                 <Widget
                   pos="footer-4"
                   widgetClassName="contact-info"
@@ -72,7 +87,7 @@ const ContactPage: FC<any> = ({
                     <Placeholder classes={classesPlaceholderContact} withImage withList listMany={3} />
                   }
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </>

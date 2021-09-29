@@ -96,7 +96,7 @@ const PlaceOrder: FC<any> = ({
         brand={brand}
       >
         <Breadcrumb
-          title={i18n.t("placeOrder.title")}
+          // title={i18n.t("placeOrder.title")}
           links={linksBreadcrumb}
           lng={lng}
         />

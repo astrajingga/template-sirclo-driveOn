@@ -13,7 +13,7 @@ const classesResetPassword = {
   containerClassName: "forgot-password-page-form",
   inputContainerClassName: "sirclo-form-row",
   inputClassName: "form-control sirclo-form-input",
-  buttonClassName: "btn btn-orange btn-long float-right",
+  buttonClassName: "btn col-12 btn-danger btn-long",
   spinnerClassName: "spinner",
 }
 
@@ -33,12 +33,15 @@ const ForgotPassword: FC<any> = ({
       lngDict={lngDict}
       brand={brand}
     >
-      <Breadcrumb title={i18n.t("resetPassword.title")} links={linksBreadcrumb} lng={lng} />
+      <Breadcrumb 
+      // title={i18n.t("resetPassword.title")} 
+      links={linksBreadcrumb} lng={lng} />
+      {/* <br> */}
       <div className="container">
         <div className="forgot-password-page-container">
           <div className="forgot-password-page-inner">
             <h3 className="forgot-password-page-title">
-              {i18n.t("resetPassword.titleChild")}
+              {i18n.t("resetPassword.title")}
             </h3>
             <span className="forgot-password-page-subtitle">
               {i18n.t("resetPassword.subTitle")}

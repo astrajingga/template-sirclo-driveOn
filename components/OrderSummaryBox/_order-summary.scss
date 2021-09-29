@@ -20,6 +20,7 @@
     max-width: 100% !important;
     width: 100% !important;
     height: 100%;
+    margin-top: 2rem;
 
     @media screen and (max-width: 767px) {
       margin-top: 32px;
@@ -45,13 +46,13 @@
       height: 44px;
       justify-content: flex-start;
       cursor: pointer;
-      border: 1px solid $color_orange;
+      border: 1px solid $color_red;
       padding: 0 16px;
       border-radius: 6px;
       background: $color_white;
 
       &-icon {
-        color: $color_orange;
+        color: $color_red;
         display: flex;
         align-items: center;
       }
@@ -70,9 +71,9 @@
     padding: 20px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    border-left: 1px solid $color_orange;
-    border-right: 1px solid $color_orange;
-    border-top: 1px solid $color_orange;
+    // border-left: 1px solid $color_red;
+    // border-right: 1px solid $color_red;
+    // border-top: 1px solid $color_red;
 
     &--label-subtotal {
       font-size: 14px;
@@ -107,9 +108,9 @@
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    border-left: 1px solid $color_orange;
-    border-right: 1px solid $color_orange;
-    border-bottom: 1px solid $color_orange;
+    // border-left: 1px solid $color_red;
+    // border-right: 1px solid $color_red;
+    // border-bottom: 1px solid $color_red;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 
@@ -220,10 +221,10 @@
 
       &-change {
         background-color: transparent;
-        border: 1px solid $color_orange;
+        border: 1px solid $color_red;
         box-sizing: border-box;
         border-radius: 3px;
-        color: $color_orange;
+        color: $color_red;
         width: 46px;
         font-size: 24px;
         opacity: 0.4;
@@ -385,7 +386,7 @@
     font-weight: 300;
     font-size: 13px;
     line-height: 125%;
-    border: solid 1px $color_orange;
+    // border: solid 1px $color_red;
     border-bottom: 0;
     border-radius: 6px 6px 0 0;
     padding: 20px;
@@ -452,7 +453,7 @@
       width: 28px;
       height: 28px;
       margin: auto auto 0 !important;
-      border: 1px solid $color_orange;
+      border: 1px solid $color_red;
       border-radius: 2px;
     }
   }
@@ -460,9 +461,9 @@
   &_voucherButtonApplied {
     display: flex;
     justify-content: center;
-    color: $color_orange;
+    color: $color_red;
     background: $color_yellow;
-    border-bottom: 1px solid $color_orange;
+    border-bottom: 1px solid $color_red;
     padding: 16px;
     cursor: pointer;
 
@@ -471,7 +472,7 @@
     }
 
     &.b-right {
-      border-right: 0.5px solid $color_orange;
+      border-right: 0.5px solid $color_red;
       border-top-left-radius: 5px;
 
       @media screen and (max-width: 767px) {
@@ -486,7 +487,7 @@
 }
 
 .cartOrderSummaryBox {
-  border: 1px solid $color_orange;
+  border: 1px solid $color_red;
   padding: 1rem;
   padding-bottom: 0;
   border-radius: 5px;
