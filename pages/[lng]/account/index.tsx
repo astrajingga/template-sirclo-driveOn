@@ -1,9 +1,12 @@
 import { FC, useState } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { Account, useI18n } from "@sirclo/nexus";
+import { Account, useI18n ,  useLogout } from "@sirclo/nexus";
 import Layout from "components/Layout/Layout";
 import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 import { parseCookies } from "lib/parseCookies";
+import {
+  LogOut,
+} from "react-feather";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
@@ -30,7 +33,7 @@ import { useWhatsAppOTPSetting } from "lib/utils/useSingleSignOn";
 const ACTIVE_CURRENCY = "IDR";
 
 const classesAccount = {
-  containerClassName: "account-page_detail",
+  containerClassName: "account-page_detail col-12 col-md-9",
   tabClassName: "account-page_detail-tab",
   tabItemClassName: "account-page_detail-tab-item",
   linkTabItemClassName: "account-page_detail-tab-item-link",
@@ -40,9 +43,9 @@ const classesAccount = {
   myAccountClassName: "tab-pane-container",
   myAccountContentClassName: "tab-pane-account",
   myAccountBodyClassName: "account-order-list",
-  myAccountFieldClassName: "account-list d-md-flex align-items-center",
-  myAccountLabelClassName: "account-list-label d-md-flex",
-  myAccountValueClassName: "account-list-value d-md-flex",
+  myAccountFieldClassName: "account-list d-md-flex align-items-center row",
+  myAccountLabelClassName: "account-list-label d-md-flex float-left col-12 col-md-12",
+  myAccountValueClassName: "account-list-value d-md-flex col-12 col-md-12",
   loyaltyPointContainerClassName: "d-none",
   editAccountClassName: "edit-account",
   inputContainerClassName: "sirclo-form-row d-md-flex align-items-center",
@@ -52,7 +55,7 @@ const classesAccount = {
   passwordContainerClassName: "d-flex align-items-center position-relative w-100",
   passwordInputClassName: "form-control sirclo-form-input size-label",
   passwordViewButtonClassName: "btn button-view-password",
-  buttonClassName: "btn btn-danger btn-long float-right ml-2",
+  buttonClassName: "btn btn-danger btn-long col-12 col-md-12",
   tableClassName: "table",
   orderHistoryContainerClassName: "order-history-container",
   orderItemClassName: "order-history-items",
@@ -193,6 +196,7 @@ const Accounts: FC<any> = ({
   hasOtp
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n();
+  const logout = useLogout('login');
 
   const [name, setName] = useState<string>("");
 
@@ -234,7 +238,13 @@ const Accounts: FC<any> = ({
               <h2 className="account-page_profile--title">
                 {i18n.t("account.hi")}
                 {", "}
-                <span>{name || "Guys"}</span>
+                <span>{name || "Guys"} {" "}</span>
+                <span
+                  className="account_profile__logout"
+                  onClick={logout}
+                >
+                  <LogOut color="red" />
+                </span>
               </h2>
             </div>
             <Account

@@ -61,7 +61,7 @@ const PaymentConfirmationPage: FC<any> = ({
       brand={brand}
     >
       <Breadcrumb
-        title={i18n.t("paymentConfirm.title")}
+        // title={i18n.t("paymentConfirm.title")}
         links={linksBreadcrumb}
         lng={lng}
       />
@@ -69,6 +69,7 @@ const PaymentConfirmationPage: FC<any> = ({
         <div className="container">
           <div className="payment-notif-page-container">
             <div className="payment-notif-page-inner">
+                <h3>{i18n.t("paymentConfirm.title")}</h3>
               <PaymentConfirmation
                 onErrorMsg={(msg) => toast.error(msg)}
                 orderIDProps={orderID?.toString()}

@@ -62,9 +62,9 @@ const classesProducts = {
   productContainerClassName: "col-6 col-md-3 products__item",
   productImageClassName: "products__item--image",
   productImageContainerClassName: "image-container",
-  productLabelContainerClassName: "products__item--content",
-  productTitleClassName: "products__item--content-title",
-  productPriceClassName: "products__item--content-price",
+  productLabelContainerClassName: "products__item--contentRecomendation",
+  productTitleClassName: "products__item--contentRecomendation-title",
+  productPriceClassName: "products__item--contentRecomendation-price",
   stickerContainerClassName: "products__item-sticker",
   outOfStockLabelClassName: "products__item-sticker--outofstock",
   comingSoonLabelClassName: "products__item-sticker--comingsoon",
@@ -73,7 +73,7 @@ const classesProducts = {
   preOrderLabelClassName: "products__item-sticker--preorder",
   newLabelClassName: "products__item-sticker--new",
   buttonClassName: "products__item--buttonQuickview",
-  salePriceClassName: "products__item--content-price--sale"
+  salePriceClassName: "products__item--contentRecomendation-price--sale"
 }
 
 const paginationClasses = {
