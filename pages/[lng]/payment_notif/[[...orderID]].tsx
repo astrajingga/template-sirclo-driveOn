@@ -1,39 +1,76 @@
 import { FC } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
-import { PaymentConfirmation, useI18n } from "@sirclo/nexus";
+import { PaymentConfirmation, CheckPaymentOrder, useI18n } from "@sirclo/nexus";
+import SEO from "components/SEO/SEO";
 import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
-import { toast } from "react-toastify";
-import { useBrand } from "lib/utils/useBrand";
 import Loader from "components/Loader/Loader";
+import BankAccount from "components/BankAccount/BankAccount";
+import { useBrand } from "lib/utils/useBrand";
+import { toast } from "react-toastify";
+import styles from "public/scss/pages/PaymentNotif.module.scss";
+import stylesPopup from "public/scss/components/CheckPaymentOrder.module.scss";
+import stylesBanks from "public/scss/components/BanksAccount.module.scss";
+import {
+  ChevronUp,
+  ChevronDown,
+  X,
+} from "react-feather";
 
 const classesPaymentConfirmation = {
-  paymentConfirmationDivClassName: "payment-notif-page-outer",
-  inputContainerClassName: "sirclo-form-row",
-  inputClassName: "form-control sirclo-form-input",
-  selectClassName: "form-control sirclo-form-input",
-  datePickerInputClassName: "date-picker__input",
-  datePickerCalendarClassName: "date-picker__calendar",
-  buttonConfirmClassName: "btn btn-orange btn-long ml-2 mobile-no-margin",
-  buttonContinueClassName: "btn btn-orange btn-long mr-2 mobile-no-margin",
-  orderDetailContainerClassName: "order-detail-container",
-  summaryTotalContainerClassName: "summary-total",
-  summaryItemTitleClassName: "summary-total__title",
-  summaryItemPriceClassName: "summary-total__price",
-  orderDetailSummaryClassName: `m-0`,
-  paymentMethodContentClassName: `m-0`,
-  orderDetailPaymentClassName: `d-none`,
-  orderDetailShippingClassName: `d-none`,
-  billingAddressClassName: `d-none`,
-  paymentTitleClassName: `d-none`,
-  billingAddressContentClassName: `d-none`,
-  orderDetailHeaderClassName: `d-none`,
-  summaryTitleClassName: `d-none`,
-  summaryItemContainerClassName: `d-none`,
-};
+  paymentConfirmationDivClassName: styles.paymentNotif_form,
+  paymentInfoUploadClassName: styles.paymentNotif_info,
+  inputContainerClassName: `${styles.sirclo_form_row} ${styles.paymentConfirmation}`,
+  inputClassName: `form-control ${styles.sirclo_form_input}`,
+  selectClassName: `form-control ${styles.sirclo_form_input}`,
+
+  buttonConfirmClassName: styles.paymentConfirmation_buttonConfirm,
+  detailContainerClassName: styles.paymentConfirmation_detailContainer,
+  detailContentClassName: styles.paymentConfirmation_detailContent,
+  detailHeaderClassName: styles.paymentConfirmation_detailHeader,
+  detailTitleClassName: styles.paymentConfirmation_detailTitle,
+  detailStatusClassName: styles.paymentConfirmation_detailStatus,
+  paymentStatusCancelledClassName: styles.paymentConfirmation_detailStatusCancelled,
+  paymentStatusReturnedClassName: styles.paymentConfirmation_detailStatusReturned,
+  detailTotalAmountClassName: styles.paymentConfirmation_detailTotalAmount,
+  detailDropdownClassName: styles.paymentConfirmation_detailDropdown,
+  detailItemClassName: `d-flex`,
+  detailItemImgClassName: styles.paymentConfirmation_detailItemImg,
+  detailItemLabelClassName: styles.paymentConfirmation_detailItemLabel,
+  detailItemPriceClassName: styles.paymentConfirmation_detailItemPrice,
+  detailPriceBreakdownClassName: styles.paymentConfirmation_detailPriceBreakdown,
+  detailFieldClassName: styles.paymentConfirmation_detailField,
+  detailTotalFieldClassName: styles.paymentConfirmation_detailTotalField,
+  detailHeaderDropdownClassName: styles.paymentConfirmation_detailHeaderDropdown,
+  detailBodyDropdownClassName: styles.paymentConfirmation_detailBodyDropdown,
+  labelClassName: styles.paymentConfirmation_label,
+
+  bankAccountInformationClassName: stylesBanks.bank_information,
+  bankAccountContainerClassName: stylesBanks.bank_container,
+  bankAccountHeaderClassName: stylesBanks.bank_header,
+  bankAccountSectionClassName: stylesBanks.bank_section,
+  bankAccountLogoClassName: stylesBanks.bank_logoBank,
+  bankAccountBodyClassName: stylesBanks.bank_body,
+  bankAccountInfoAccountClassName: stylesBanks.bank_infoAccount,
+  bankAccountNumberSectionClassname: stylesBanks.bank_numberSection,
+  bankAccountCopyButtonClassName: stylesBanks.bank_buttonIcon,
+  bankAccountIconCollapseClassName: stylesBanks.bank_buttonIcon,
+  bankAccountLabelAccountNameClassName: stylesBanks.bank_name
+}
+
+
+const classesCheckPaymentOrder = {
+  checkPaymentOrderHeaderClassName: `d-none`,
+  checkPaymentOrderTitleClassName: stylesPopup.checkOrder_title,
+  checkPaymentOrderDescriptionClassName: stylesPopup.checkOrder_description,
+  checkPaymentOrderContentClassName: stylesPopup.checkOrder_content,
+  checkPaymentOrderInputContentClassName: stylesPopup.checkOrder_inputContent,
+  checkPaymentOrderInputTitleClassName: stylesPopup.checkOrder_inputTitle,
+  checkPaymentOrderInputClassName: stylesPopup.checkOrder_input,
+  checkPaymentOrderCloseButtonClassName: stylesPopup.checkOrder_closeButton,
+  checkPaymentOrderSubmitButtonClassName: stylesPopup.checkOrder_submitButton
+}
+
 
 const PaymentConfirmationPage: FC<any> = ({
   lng,
@@ -48,11 +85,6 @@ const PaymentConfirmationPage: FC<any> = ({
     orderID = router.query.orderID.toString();
   }
 
-  const linksBreadcrumb = [
-    `${i18n.t("home.title")}`,
-    `${i18n.t("paymentConfirm.title")}`,
-  ];
-
   return (
     <Layout
       i18n={i18n}
@@ -60,26 +92,48 @@ const PaymentConfirmationPage: FC<any> = ({
       lngDict={lngDict}
       brand={brand}
     >
-      <Breadcrumb
-        // title={i18n.t("paymentConfirm.title")}
-        links={linksBreadcrumb}
-        lng={lng}
-      />
+      <SEO title={i18n.t("paymentConfirm.heading")} />
       <section>
         <div className="container">
-          <div className="payment-notif-page-container">
-            <div className="payment-notif-page-inner">
-                <h3>{i18n.t("paymentConfirm.title")}</h3>
-              <PaymentConfirmation
-                onErrorMsg={(msg) => toast.error(msg)}
-                orderIDProps={orderID?.toString()}
-                classes={classesPaymentConfirmation}
-                datePickerCalendarIcon={<FontAwesomeIcon icon={faCalendar} height="2em" />}
-                withDelay
-                loadingComponent={<Loader color="text-dark"/>}
-                errorComponent={<div>{i18n.t("global.error")}</div>}
-                withOrderDetails
-              />
+          <div className={styles.paymentNotif_container}>
+            <div className={styles.paymentNotif_inner}>
+              <div className={styles.paymentNotif_inner_title}>
+                <h3>{i18n.t("paymentConfirm.heading")}</h3>
+              </div>
+
+
+              {orderID ?
+                <PaymentConfirmation
+                  orderIDProps={orderID}
+                  classes={classesPaymentConfirmation}
+                  orderDetailIcon={{
+                    chevronUp: <ChevronUp />,
+                    chevronDown: <ChevronDown />
+                  }}
+                  onErrorMsg={(msg) => toast.error(msg)}
+                  onSuccessMsg={(msg) => toast.success(msg)}
+                  loadingComponent={<Loader color="text-light" />}
+                  withOrderDetails
+                  children={<BankAccount />}
+                  thumborSetting={{
+                    width: 40,
+                    format: "webp",
+                    quality: 85
+                  }}
+                />
+                :
+                <>
+                  <BankAccount />
+                  <CheckPaymentOrder
+                    classes={classesCheckPaymentOrder}
+                    icon={{
+                      loading: <Loader color="text-light" />,
+                      close: <X />
+                    }}
+                    onErrorMsg={(msg) => toast.error(msg)}
+                  />
+                </>
+              }
             </div>
           </div>
         </div>
@@ -88,20 +142,18 @@ const PaymentConfirmationPage: FC<any> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
-  const { default: lngDict = {} } = await import(
-    `locales/${params.lng}.json`
-  );
-
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const brand = await useBrand(req);
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
+  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
 
   return {
     props: {
-      lng: params.lng,
+      lng: defaultLanguage,
       lngDict,
-      brand: brand || ''
-    },
+      brand: brand || ""
+    }
   };
-};
+}
 
 export default PaymentConfirmationPage;

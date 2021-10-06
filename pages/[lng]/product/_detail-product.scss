@@ -89,7 +89,7 @@
     & > p {
       font-family: "karla-bold";
       font-size: 22px;
-      color: $color_base_red;
+      color: $color_orange;
       order: 2;
     }
 
@@ -124,7 +124,7 @@
               appearance: none;
 
               &:checked + label {
-                background-color: $color_base_red;
+                background-color: $color_orange;
                 border-color: transparent;
               }
             }
@@ -243,7 +243,7 @@
       &--time {
         font-family: "karla-bold";
         padding: 0.5rem 1rem;
-        border: 1px solid $color_base_red;
+        border: 1px solid $color_orange;
         border-radius: 4px;
         background: $color_yellow;
       }
@@ -530,7 +530,7 @@
     }
 
     &ActiveFilter {
-      border: 2px solid $color_base_red;
+      border: 2px solid $color_orange;
     }
 
     &FilterIcon {
@@ -818,7 +818,7 @@
         transition: color 0.2s ease-out;
 
         &.is-selected {
-          color: $color_base_red;
+          color: $color_orange;
         }
       }
     }
@@ -872,7 +872,7 @@
         width: 100%;
 
         &-done {
-          background: $color_base_red;
+          background: $color_orange;
           border-radius: 20px;
           color: #fff;
           display: flex;
@@ -962,7 +962,7 @@
 
         & > span {
           font-size: 1.25rem;
-          color: $color_base_red;
+          color: $color_orange;
         }
       }
 
@@ -973,7 +973,7 @@
 
         button {
           position: inherit !important;
-          color: $color_base_red;
+          color: $color_orange;
 
           span {
             font-size: 2rem;
@@ -1262,7 +1262,7 @@
       padding: 12px;
 
       background-color: #FFFFF1;
-      border: solid 1px $color_base_red;
+      border: solid 1px #F7BE16;
       border-radius: 2px;
     }
 

@@ -21,13 +21,7 @@
 
   &__image {
     height: auto;
-    width: 90%;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    @media screen and (max-width: 767px) {
-      height: auto;
-      width: 100%;
-    }
+    width: 100%;
   }
 
   .BrainhubCarousel {
@@ -51,16 +45,6 @@
           background: $color_white;
         }
       }
-    }
-  }
-}
-
-.widget-widgetClassName{
-  @media screen and (max-width: 767px) {
-    img{
-      width: 100% !important;
-      background-size: cover;
-      height: auto;
     }
   }
 }
@@ -127,18 +111,6 @@
 
   img {
     width: 100%;
-  }
-}
-
-.size-capability {
-  &__image {
-      height: 70px;
-      width: auto;
-
-      @media screen and (max-width: 575px) {
-        width: 100%;
-        height: auto;
-      }
   }
 }
 

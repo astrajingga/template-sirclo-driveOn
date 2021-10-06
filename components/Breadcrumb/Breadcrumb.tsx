@@ -16,8 +16,8 @@ const Breadcrumb: FC<any> = ({
 }) => {
   return (
     <div
-      className={`section-breadcrumb ${"" ? "section-breadcrumb__image" : ""}`}
-      style={{ backgroundImage: `url(${""})` }}
+      className={`section-breadcrumb ${withImage ? "section-breadcrumb__image" : ""}`}
+      style={{ backgroundImage: `url(${withImage})` }}
     >
       <h1 className="section-breadcrumb__title">{title}</h1>
       <nav aria-label="breadcrumb">

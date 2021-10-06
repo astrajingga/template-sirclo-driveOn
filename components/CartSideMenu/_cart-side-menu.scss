@@ -151,8 +151,8 @@
       &-label
       {
         width: 100%;
-        color: $color_red;
-        border: 1px solid $color_red;
+        color: $color_orange;
+        border: 1px solid $color_orange;
         border-radius: 5px;
         padding: .5rem .5rem;
         cursor: pointer;
@@ -161,7 +161,7 @@
         &:hover
         {
           color: $color_white;
-          background: $color_red;
+          background: $color_orange;
         }
       }
     }
@@ -231,7 +231,7 @@
 
       svg
       {
-        color: $color_red;
+        color: $color_orange;
         height: 1rem;
         margin-top: -5px;
       }

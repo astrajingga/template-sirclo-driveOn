@@ -31,9 +31,7 @@ const LookbookSinglePage: FC<any> = ({
       lngDict={lngDict}
       brand={brand}
     >
-      <Breadcrumb 
-      // title={title} 
-      links={linksBreadcrumb} lng={lng} />
+      <Breadcrumb title={title} links={linksBreadcrumb} lng={lng} />
       <section>
         <div className="container">
           <LookbookSingle

@@ -1,5 +1,5 @@
 .announce {
-  background-color: $color_blue_dark;
+  background-color: $color_orange_dark;
 
   &__items {
     height: 25px;
@@ -10,7 +10,6 @@
     text-transform: uppercase;
     line-height: 16px;
     text-align: center;
-    color: white;
 
     &:empty {
       display: none;
@@ -39,7 +38,7 @@
     position: relative;
 
     &:hover {
-      background-color: $color_base_red;
+      background-color: #e4e4e4;
     }
 
     a {
@@ -48,8 +47,7 @@
   }
 
   .nav-link-merlin {
-    // color: rgba(0, 0, 0, 1) !important;
-    color: white !important;
+    color: rgba(0, 0, 0, 1) !important;
     text-transform: uppercase;
     font-size: small;
   }
@@ -61,8 +59,7 @@
 
   .dropdown-container {
     position: absolute;
-    background: #DE5F5F;
-    color: white !important;
+    background: #e4e4e4;
     visibility: hidden;
     opacity: 0;
     min-width: 125px;
@@ -88,7 +85,6 @@
         font-size: 12px;
         position: absolute;
         right: 1rem;
-        color: white;
         top: 50%;
         -webkit-transform: translate(-50%,-50%);
           -ms-transform: translate(-50%,-50%);
@@ -119,10 +115,9 @@
 
       .subchild {
         position: absolute;
-        background: #DE5F5F;
+        background: #e4e4e4;
         visibility: hidden;
         opacity: 0;
-        color: white;
         min-width: 125px;
         width: max-content;
         transition: all 0.3s ease;
@@ -154,8 +149,8 @@
   .nav {
     &-merlin {
       border: none;
-      background-color: $color_black_light;
-      // justify-content: space-between;
+      background-color: $color_white;
+      justify-content: space-between;
       height: 70px;
       min-height: 0;
       padding: 0;
@@ -200,7 +195,7 @@
         font-family: "karla-bold";
         font-size: 10px;
         color: $color_white;
-        background: $color_red;
+        background: $color_orange;
         width: max-content;
         padding: 0 5px;
         border-radius: 5px;
@@ -211,16 +206,12 @@
     }
   }
 
-  .size-search{
-    width: 500px;
-  }
-
   .search {
     input[type="text"] {
       padding: 0.5em;
       width: 100%;
       border: 0.5px solid rgba(0, 0, 0, 0.1);
-      border-radius: 20px;
+      border-radius: 4px;
 
       &::placeholder {
         color: rgba(0, 0, 0, 0.3);
@@ -431,7 +422,7 @@
 
   .navbar-mobile {
     width: 100%;
-    background: $color_black_light;
+    background: $color_white;
     position: sticky;
     z-index: 2;
 
@@ -507,7 +498,7 @@
           z-index: 6;
           border: none;
           border-radius: 5px;
-          background-color: $color_red;
+          background-color: $color_orange;
           color: $color_white;
           text-transform: uppercase;
           text-align: center;
@@ -545,10 +536,10 @@
     }
 
     &__itemActive {
-      color: $color_red;
+      color: $color_orange;
 
       a {
-        color: $color_red;
+        color: $color_orange;
       }
     }
   }

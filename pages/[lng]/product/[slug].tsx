@@ -311,7 +311,6 @@ const Product: FC<any> = ({
             <ProductDetail
               slug={slug}
               withButtonBuyNow
-              enableAutoColorVariant={true}
               lazyLoadedImage={false}
               withSeparatedVariant={true}
               isButton={{ 0: false, 1: false }}

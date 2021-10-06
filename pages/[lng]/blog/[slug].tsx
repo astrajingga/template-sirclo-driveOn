@@ -72,7 +72,7 @@ const BlogSlug: FC<any> = ({
     >
       <div className="blog-detail__breadcrumb">
         <Breadcrumb
-          // title={title}
+          title={title}
           links={linksBreadcrumb}
           lng={lng}
         />

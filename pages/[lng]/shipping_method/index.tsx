@@ -19,7 +19,7 @@ import {
   faTimes,
   faDotCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import OrderSummaryBox from 'components/OrderSummaryBox/OrderSummaryBoxCustom';
+import OrderSummaryBox from 'components/OrderSummaryBox/OrderSummaryBox';
 
 const LoaderPages = dynamic(() => import("components/Loader/LoaderPages"));
 
@@ -162,7 +162,7 @@ const ShippingMethodPage: FC<any> = ({
                   </div>
                 </div>
               </div>
-              <div className="col-12 col-lg-4 margin-step-payment-order no-padding-mobile-pad">
+              <div className="col-12 col-lg-4 margin-step-payment no-padding-mobile-pad">
                 <OrderSummaryBox
                   i18n={i18n}
                   auth={auth}

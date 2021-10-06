@@ -20,12 +20,11 @@
       background: $color_white;
       border: 1px solid $color_gray_text;
       border-radius: 50%;
-      display: none;
 
       &-active
       {
         color: $color_white;
-        background: $color_red;
+        background: $color_orange;
         border: 0;
       }
     }
@@ -38,7 +37,7 @@
       &-active
       {
         font-family: "karla-bold";
-        color: $color_red;
+        color: $color_black;
       }
     }
   }

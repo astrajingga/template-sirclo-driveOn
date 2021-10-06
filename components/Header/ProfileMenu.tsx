@@ -13,9 +13,7 @@ import dynamic from "next/dynamic";
 const SideMenu = dynamic(() => import("../SideMenu/SideMenu"));
 const CartSideMenu = dynamic(() => import("../CartSideMenu/CartSideMenu"));
 const DropdownNav = dynamic(() => import("./DropdownNav"));
-
 const Search = dynamic(() => import("./Search"));
-
 
 // const CurrencySelector = dynamic(() =>
 //   import("@sirclo/nexus").then((mod) => mod.CurrencySelector)
@@ -45,8 +43,8 @@ const PrivateComponent = dynamic(() =>
 
 const ProfileMenu = ({
   lng,
-  actionLogout,searchProduct
-
+  actionLogout,
+  searchProduct
 }) => {
   const router = useRouter();
 
@@ -83,23 +81,11 @@ const ProfileMenu = ({
 
   return (
     <div className="navbar-profile-menu">
-      {/* <a
-        onClick={(e) => e.preventDefault()}
-        href="#"
+      <DropdownNav
+        title={<FontAwesomeIcon className="nav--icon" icon={faUser} />}
       >
-        <FontAwesomeIcon
-          className="nav--icon ml-4"
-          icon={faSearch}
-          onClick={toogleSearch}
-        />
-      </a> */}
-
-      <div>
         <PrivateComponent
           Auth={
-            <DropdownNav
-              title={<FontAwesomeIcon className="nav--icon" icon={faUser} />}
-            >
             <>
               <div
                 className="menu-link"
@@ -126,25 +112,23 @@ const ProfileMenu = ({
                 </a>
               </div>
             </>
-              </DropdownNav>
           }
           NoAuth={
-            <button  onClick={() => router.push(`/[lng]/login`, `/${lng}/login`)} className="btn btn-danger">Login</button>
-            // <div
-            //   className="menu-link"
-            //   onClick={() => router.push(`/[lng]/login`, `/${lng}/login`)}
-            // >
-            //   <a
-            //     className="dropdown-link"
-            //     onClick={(e) => e.preventDefault()}
-            //     href="#"
-            //   >
-            //     {i18n.t("header.login")}
-            //   </a>
-            // </div>
+            <div
+              className="menu-link"
+              onClick={() => router.push(`/[lng]/login`, `/${lng}/login`)}
+            >
+              <a
+                className="dropdown-link"
+                onClick={(e) => e.preventDefault()}
+                href="#"
+              >
+                {i18n.t("header.login")}
+              </a>
+            </div>
           }
         />
-      </div>
+      </DropdownNav>
       <a
         className="navbar-profile-menu__cart"
         onClick={(e) => e.preventDefault()}
@@ -158,6 +142,16 @@ const ProfileMenu = ({
         <span className="badge-cart" onClick={toogleCart}>
           {data?.totalItem}
         </span>
+      </a>
+      <a
+        onClick={(e) => e.preventDefault()}
+        href="#"
+      >
+        <FontAwesomeIcon
+          className="nav--icon ml-4"
+          icon={faSearch}
+          onClick={toogleSearch}
+        />
       </a>
       {/* <DropdownNav
         title={<span style={{ textTransform: "uppercase" }}>{lng}</span>}

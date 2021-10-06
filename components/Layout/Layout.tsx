@@ -10,7 +10,6 @@ import Footer from "../Footer/Footer";
 import { useHookWidgetStyle } from "lib/utils/useWidgetStyle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import styles from "public/scss/components/Newsletter.module.scss";
 
 type LayoutPropType = {
   lngDict: any;
@@ -132,7 +131,7 @@ const Layout: React.FC<LayoutPropType> = ({
       }
       <main className={layoutClassName}>{props.children}</main>
       <ToastContainer />
-      <div className={styles.newsletter_overlay}>
+      <div className="newsletter__overlay">
         <Newsletter
           classes={classesNewsletterPopup}
           closeButton={<FontAwesomeIcon icon={faTimes} />}

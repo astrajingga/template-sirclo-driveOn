@@ -22,9 +22,7 @@ const Information: FC<any> = ({
 			lng={lng}
 			brand={brand}
 		>
-			<Breadcrumb 
-			// title={title}
-			 links={linksBreadcrumb} lng={lng} />
+			<Breadcrumb title={title} links={linksBreadcrumb} lng={lng} />
 			<section>
 				<div className="container">
 					<div className="information">

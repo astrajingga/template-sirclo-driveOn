@@ -1,12 +1,9 @@
 import { FC, useState } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { Account, useI18n ,  useLogout } from "@sirclo/nexus";
+import { Account, useI18n } from "@sirclo/nexus";
 import Layout from "components/Layout/Layout";
 import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 import { parseCookies } from "lib/parseCookies";
-import {
-  LogOut,
-} from "react-feather";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
@@ -26,14 +23,20 @@ import {
   faWhatsapp,
   faLine
 } from "@fortawesome/free-brands-svg-icons";
+import{
+  AlertCircle 
+} from "react-feather"
 import { toast } from "react-toastify";
 import { useBrand } from "lib/utils/useBrand";
 import { useWhatsAppOTPSetting } from "lib/utils/useSingleSignOn";
 
+import stylesPopupCheckPaymentOrder from "public/scss/components/CheckPaymentOrder.module.scss";
+import styles from "public/scss/pages/Account.module.scss";
+
 const ACTIVE_CURRENCY = "IDR";
 
 const classesAccount = {
-  containerClassName: "account-page_detail col-12 col-md-9",
+  containerClassName: "account-page_detail",
   tabClassName: "account-page_detail-tab",
   tabItemClassName: "account-page_detail-tab-item",
   linkTabItemClassName: "account-page_detail-tab-item-link",
@@ -43,9 +46,9 @@ const classesAccount = {
   myAccountClassName: "tab-pane-container",
   myAccountContentClassName: "tab-pane-account",
   myAccountBodyClassName: "account-order-list",
-  myAccountFieldClassName: "account-list d-md-flex align-items-center row",
-  myAccountLabelClassName: "account-list-label d-md-flex float-left col-12 col-md-12",
-  myAccountValueClassName: "account-list-value d-md-flex col-12 col-md-12",
+  myAccountFieldClassName: "account-list d-md-flex align-items-center",
+  myAccountLabelClassName: "account-list-label d-md-flex",
+  myAccountValueClassName: "account-list-value d-md-flex",
   loyaltyPointContainerClassName: "d-none",
   editAccountClassName: "edit-account",
   inputContainerClassName: "sirclo-form-row d-md-flex align-items-center",
@@ -55,7 +58,7 @@ const classesAccount = {
   passwordContainerClassName: "d-flex align-items-center position-relative w-100",
   passwordInputClassName: "form-control sirclo-form-input size-label",
   passwordViewButtonClassName: "btn button-view-password",
-  buttonClassName: "btn btn-danger btn-long col-12 col-md-12",
+  buttonClassName: "btn btn-orange-outer btn-long float-right ml-2",
   tableClassName: "table",
   orderHistoryContainerClassName: "order-history-container",
   orderItemClassName: "order-history-items",
@@ -114,7 +117,7 @@ const classesAccount = {
   shipmentListClassName: "track-shipment__list",
   shipmentListWrapperClassName: "track-shipment__listWrapper",
   shipmentCloseIconClassName: "track-shipment__closeIcon",
-  shipmentTrackButtonClassName: "track-shipment__trackButton btn btn-danger",
+  shipmentTrackButtonClassName: "track-shipment__trackButton btn btn-orange",
   shipmentNoteClassName: "track-shipment__note",
 
   /* map */
@@ -129,7 +132,7 @@ const classesAccount = {
   mapHeaderNoteClassName: "account-page_mapPopupNote",
   mapLabelAddressClassName: "account-page_mapPopupLabelAddress",
   mapCenterButtonClassName: "account-page_mapPopupCenterButton",
-  mapButtonFooterClassName: "btn btn-danger btn-long d-block mx-auto my-3 mx-2",
+  mapButtonFooterClassName: "btn btn-orange btn-long d-block mx-auto my-3 mx-2",
 
   /* membership */
   membershipStatusClassName: "account-page_membershipStatus",
@@ -158,8 +161,8 @@ const classesAccount = {
   popupConfirmationOrderNoteClassName: "orderConfirmPopup__note",
   popupConfirmationOrderDescriptionClassName: "orderConfirmPopup__description",
   popupConfirmationOrderWrapButtonClassName: "orderConfirmPopup__buttons",
-  popupConfirmationOrderButtonConfirmClassName: "orderConfirmPopup__button orderConfirmPopup__button--confirm btn btn-danger",
-  popupConfirmationOrderButtonNoClassName: "orderConfirmPopup__button orderConfirmPopup__button--cancel btn btn-danger",
+  popupConfirmationOrderButtonConfirmClassName: "orderConfirmPopup__button orderConfirmPopup__button--confirm btn btn-orange-outer",
+  popupConfirmationOrderButtonNoClassName: "orderConfirmPopup__button orderConfirmPopup__button--cancel btn btn-orange",
   orderControlClassName: "order-history__actions",
   orderedItemDetailDeliveredClassName: "order-history-items-body invoice-button",
 
@@ -180,6 +183,23 @@ const classesAccount = {
   mediaDetailCheckboxContainer: "notification_mediaDetailCheckboxContainer",
   mediaDetailCheckbox: "notification_mediaDetailCheckbox",
   mediaDetailCheckboxLabel: "notification_mediaDetailCheckboxLabel",
+
+  checkPaymentOrderContainerClassName: stylesPopupCheckPaymentOrder.checkOrder_overlay,
+  checkPaymentOrderContainerBodyClassName: stylesPopupCheckPaymentOrder.checkOrder_container,
+  checkPaymentOrderHeaderClassName: stylesPopupCheckPaymentOrder.checkOrder_header,
+  checkPaymentOrderTitleClassName: stylesPopupCheckPaymentOrder.checkOrder_title,
+  checkPaymentOrderDescriptionClassName: stylesPopupCheckPaymentOrder.checkOrder_description,
+  checkPaymentOrderContentClassName: stylesPopupCheckPaymentOrder.checkOrder_content,
+  checkPaymentOrderInputContentClassName: stylesPopupCheckPaymentOrder.checkOrder_inputContent,
+  checkPaymentOrderInputTitleClassName: stylesPopupCheckPaymentOrder.checkOrder_inputTitle,
+  checkPaymentOrderInputClassName: stylesPopupCheckPaymentOrder.checkOrder_input,
+  checkPaymentOrderCloseButtonClassName: stylesPopupCheckPaymentOrder.checkOrder_closeButton,
+  checkPaymentOrderSubmitButtonClassName: stylesPopupCheckPaymentOrder.checkOrder_submitButton,
+
+  orderInfoContainerClassName: styles.membership_info_container,
+  OrderInfoIconClassName: styles.membership_info_icon,
+  orderInfoLabelClassName: styles.membership_info_label,
+  OrderInfoSearchHereClassName: styles.membership_info_button,
 };
 
 const paginationClasses = {
@@ -196,7 +216,6 @@ const Accounts: FC<any> = ({
   hasOtp
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n();
-  const logout = useLogout('login');
 
   const [name, setName] = useState<string>("");
 
@@ -227,7 +246,7 @@ const Accounts: FC<any> = ({
       brand={brand}
     >
       <Breadcrumb
-        // title={i18n.t("account.yourAccount")}
+        title={i18n.t("account.yourAccount")}
         links={linksBreadcrumb}
         lng={lng}
       />
@@ -238,13 +257,7 @@ const Accounts: FC<any> = ({
               <h2 className="account-page_profile--title">
                 {i18n.t("account.hi")}
                 {", "}
-                <span>{name || "Guys"} {" "}</span>
-                <span
-                  className="account_profile__logout"
-                  onClick={logout}
-                >
-                  <LogOut color="red" />
-                </span>
+                <span>{name || "Guys"}</span>
               </h2>
             </div>
             <Account
@@ -254,8 +267,8 @@ const Accounts: FC<any> = ({
               onSuccessChPass={onSuccessChPass}
               onFetchCompleted={onFetchCompleted}
               currency={ACTIVE_CURRENCY}
-              orderHistoryType="accordion"
-              paymentHrefPrefix="/payment_notif"
+              orderHistoryType="list"
+              paymentHrefPrefix="payment_notif"
               showSettingNotification={hasOtp}
               orderHistoryIsCallPagination={true}
               orderHistoryItemPerPage={10}
@@ -268,6 +281,7 @@ const Accounts: FC<any> = ({
               mapButtonCloseIcon={<FontAwesomeIcon icon={faTimes} height="1.25em" />}
               mapCenterIcon={<FontAwesomeIcon icon={faDotCircle} size="1x" />}
               icons={{
+                infoIcon : <AlertCircle/>,
                 myAccount: <FontAwesomeIcon icon={faUserAlt} height="1em" />,
                 changePassword: <FontAwesomeIcon icon={faLock} height="1em" />,
                 orderHistory: <FontAwesomeIcon icon={faList} height="1em" />,

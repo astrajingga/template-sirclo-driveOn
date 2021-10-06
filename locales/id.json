@@ -1,6 +1,8 @@
 {
     "account": {
         "back": "Kembali ke akun saya",
+        "confirmPayment": "Konfirmasi Pembayaran",
+        "confirmPaymentSuccess": "Konfirmasi Pembayaran berhasil",
         "cancelled": "Dibatalkan",
         "changePassword": "Ganti kata sandi",
         "completed": "Selesai",
@@ -49,7 +51,9 @@
         "unpaid": "Belum Dibayar",
         "youGot": "Anda punya",
         "youHave": "Anda memiliki",
-        "yourAccount": "Akun Anda"
+        "yourAccount": "Akun Anda",
+        "cantFindYourOrder": "Tidak menemukan pesanan anda?",
+        "searchHere": "Cari disini"
     },
     "article": {
         "categories": "Kategori"
@@ -73,8 +77,6 @@
         "errorSKUitem": "Harap hapus item ini dari keranjang terlebih dahulu",
         "invalidItems": "Daftar produk yang tidak valid: ",
         "isEmpty": "Keranjang Kosong",
-        "summary": "Total Pembelian",
-        "continue": "Belum siap checkout?",
         "isEmptyDesc": "Harap tambahkan beberapa item ke keranjang Anda terlebih dahulu.",
         "item": "Barang",
         "limitStock": "Tidak bisa melebihi stok yang tersedia",
@@ -82,7 +84,6 @@
         "outofStock": "Stok Habis",
         "price": "Harga",
         "product": "Nama Produk, Ukuran dan Warna",
-        "Toproduct": "Lakukan belanja lagi",
         "quantity": "Kuantitas",
         "title": "Keranjang Belanja",
         "unknownSKU": "SKU tidak ditemukan",
@@ -177,20 +178,6 @@
         "showAll": "Tampilkan Semua",
         "title": "Beranda",
         "top-rate": "Top Rate"
-    },
-    "instaFeed": {
-        "title": "@drivenon_club",
-        "titleDesc": "Join Our Comunity on Instagram"
-    },
-    "capability": {
-        "quality": "High Quality",
-        "qualityDesc": "Good stuff only",
-        "protection": "Warranty Protection",
-        "protectionDesc": "Over 2 years",
-        "shipping": "Free Shipping",
-        "shippingDesc": "Order over Rp.500.000",
-        "support": "24 / 7 Support",
-        "supportDesc": "Dedicated support"
     },
     "loader": {
         "loading": "Menunggu"
@@ -321,13 +308,28 @@
         "doesNotEqual": "Jumlah yang di transfer tidak sesuai",
         "failed": "Gagal konfirmasi pesanan, silahkan cek form isian anda.",
         "file": "Bukti transfer",
-        "title": "Konfirmasi Pembayaran",
+        "heading": "Konfirmasi Pembayaran",
         "to": "Rekening tujuan",
         "totalAmount": "Jumlah tagihan yang harus anda bayar untuk pesanan ini adalah :",
         "transactionDate": "Tanggal transaksi",
         "unauthorize": "Konfirmasi pembayaran gagal, silakan login terlebih dahulu dan lakukan konfirmasi kembali",
         "uploadFailed": "Gagal mengunggah dokumen, silahkan coba lagi.",
-        "wrongEmail": "Mohon gunakan email yang sesuai dengan saat membuat order"
+        "wrongEmail": "Mohon gunakan email yang sesuai dengan saat membuat order",
+        "orderIdNotFound": "Nomor Pesanan tidak ditemukan",
+        "emailNotMatch": "Email tidak sesuai dengan nomor pesanan",
+        "titleCheckYoutOrder": "Periksa Nomor Pesanan",
+        "descCheckYoutOrder": "Untuk konfirmasi pembayaran, silahkan masukkan email dan nomor pesanan Anda.",
+        "orderId": "Nomor Pesanan",
+        "placeholderOrderId":  "Nomor Pesanan",
+        "email": "Email",
+        "placeholderEmail": "user@gmail.com",
+        "checkOrder": "Periksa Pesanan",
+        "details": "Rincian",
+        "optional": "Optional",
+        "invalidFileType": "Tipe File tidak didukung",
+        "confirmationPaymentSuccess": "Konfirmasi Pembayaran berhasil",
+        "pleaseLogin": "Nomor pesanan anda tidak ditemukan. Silahkan login terlebih dahulu",
+        "infoUpload": "Bukti pembayaran yang sudah dikirim tidak dapat diperbaiki, pastikan data yang akan Anda kirim sudah benar!"
     },
     "paymentStatus": {
         "continueShopping": "Lanjutkan Berbelanja",
@@ -564,7 +566,12 @@
         "submit": "Kirim Ulasan"
     },
     "thankYou": {
-        "message": "Terima kasih telah membeli di toko kami",
+        "accountNumber": "Nomor Rekening",
+        "bankAccountInformation": "Anda dapat melakukan pembayaran manual transfer melalui beberapa opsi dibawah",
+        "copy": "Salin",
+        "copyAccountNumberSuccess": "Salin Nomor Rekening Berhasil",
+        "message": "Kami mengirimkan Anda email ke {EMAIL} tanda terima pesanan. Jika email tidak ada di kotak masuk Anda, coba periksa bagian folder spam.",
+        "onBehalf": "a/n",
         "orderDetail": "Order Detail",
         "paymentMethod": "Tujuan Pembayaran",
         "paymentTitle": "Pembayaran",
@@ -574,10 +581,8 @@
         "shippingMethod": "Methode Pengiriman",
         "shippingTitle": "Pengiriman",
         "summaryTitle": "Kamu belanja apa nih?",
-        "thanks": "Terima Kasih",
-        "title": "Pesanan",
-        "titlePrimary": "Pesanan Anda telah dibuat",
-        "total": "Total Tagihan"
+        "thanks": "Pesanan telah dibuat",
+        "yourOrderID": "Nomor pesanan anda"
     },
     "whatsAppOTPInput": {
         "andConjunction": "serta",

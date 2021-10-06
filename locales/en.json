@@ -49,7 +49,9 @@
         "unpaid": "Unpaid",
         "youGot": "You Got",
         "youHave": "You have",
-        "yourAccount": "Your Account"
+        "yourAccount": "Your Account",
+        "cantFindYourOrder": "Can't find your order?",
+        "searchHere": "Search here"
     },
     "article": {
         "categories": "Categories"
@@ -75,14 +77,11 @@
         "isEmpty": "Empty Cart",
         "isEmptyDesc": "Please add some item in your cart first.",
         "item": "Item",
-        "continue": "Not ready to checkout ?",
-        "summary": "Order Summary",
         "limitStock": "Cannot exceed the available stock",
         "noteToSeller": "Note to Seller",
         "outofStock": "Out of Stock",
         "price": "Price",
         "product": "Product Name, Size & Color",
-        "Toproduct": "Continue Shopping",
         "quantity": "Quantity",
         "title": "Shopping Cart",
         "unknownSKU": "Unknown SKU",
@@ -177,20 +176,6 @@
         "showAll": "Show All",
         "title": "Home",
         "top-rate": "Top Rate"
-    },
-    "instaFeed": {
-        "title": "@drivenon_club",
-        "titleDesc": "Join Our Comunity on Instagram"
-    },
-    "capability": {
-        "quality": "High Quality",
-        "qualityDesc": "Good stuff only",
-        "protection": "Warranty Protection",
-        "protectionDesc": "Over 2 years",
-        "shipping": "Free Shipping",
-        "shippingDesc": "Order over Rp.500.000",
-        "support": "24 / 7 Support",
-        "supportDesc": "Dedicated support"
     },
     "loader": {
         "loading": "Loading"
@@ -321,13 +306,28 @@
         "doesNotEqual": "Amount transfered is unsuitable",
         "failed": "Payment confirmation failed! Please check your input form.",
         "file": "Receipt file",
-        "title": "Confirm Payment",
+        "heading": "Payment Confirmation",
         "to": "Payment to",
         "totalAmount": "Total amount payable for this order is:",
         "transactionDate": "Transaction Date",
         "unauthorize": "Payment confirmation has failed, please login first and try again",
         "uploadFailed": "File upload failed. Please try again.",
-        "wrongEmail": "Please use the email that you used to create the order"
+        "wrongEmail": "Please use the email that you used to create the order",
+        "orderIdNotFound": "Order ID not found",
+        "emailNotMatch": "Email does not match the order number",
+        "titleCheckYoutOrder": "Check Order ID",
+        "descCheckYoutOrder": "To confirm payment, please enter your email and order ID.",
+        "orderId": "Order ID",
+        "placeholderOrderId":  "Order ID",
+        "email": "Email",
+        "placeholderEmail": "user@gmail.com",
+        "checkOrder": "Check Order",
+        "details": "Details",
+        "optional": "Optional",
+        "invalidFileType": "File Type not supported",
+        "confirmationPaymentSuccess": "Payment confirmation successful",
+        "pleaseLogin": "Your order ID not found. Please login with your account.",
+        "infoUpload": "Proof of payment that has been sent cannot be reupload, please make sure the data you are about to send is correct!"
     },
     "paymentStatus": {
         "continueShopping": "Continue Shopping",
@@ -558,8 +558,13 @@
         "submit": "Submit Review"
     },
     "thankYou": {
-        "message": "Thank you for purchasing in our store",
+        "accountNumber": "Account Number",
+        "bankAccountInformation": "You can make manual transfer payments through several options below",
+        "copy": "Copy",
+        "copyAccountNumberSuccess": "Copy to clipboard",
+        "message": "We send you an email to {EMAIL} your order receipt. If the email isn't in your inbox, try checking the spam folder section.",
         "orderDetail": "Order Detail",
+        "onBehalf": "a/n",
         "paymentMethod": "Payment To",
         "paymentTitle": "Payment",
         "shipping": "Shipping costs",
@@ -569,9 +574,7 @@
         "shippingTitle": "Delivery",
         "summaryTitle": "What are you shopping for?",
         "thanks": "Thank You",
-        "title": "Place Order",
-        "titlePrimary": "Your order has been placed",
-        "total": "Total"
+        "yourOrderID": "Your Order ID"
     },
     "whatsAppOTPInput": {
         "andConjunction": "and",
