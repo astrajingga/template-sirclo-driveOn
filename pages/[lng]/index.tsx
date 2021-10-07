@@ -27,6 +27,7 @@ const Popup = dynamic(() => import("components/Popup/Popup"));
 const Placeholder = dynamic(() => import("components/Placeholder"));
 const EmptyComponent = dynamic(() => import("components/EmptyComponent/EmptyComponent"));
 
+
 const Widget = dynamic(
   () => import("@sirclo/nexus").then((mod) => mod.Widget),
   { ssr: false }
@@ -224,63 +225,33 @@ const Home: React.FC<any> = ({
             <Placeholder classes={classesPlaceholderBanner} withImage />
           }
         />
+
       </div>
       <section>
         <div className="container">
-          <LazyLoadComponent>
-            <ProductCategory
-              itemPerPage={4}
-              classes={classesProductCategory}
-              showImages={true}
-              thumborSetting={{
-                width: size.width < 768 ? 375 : 512,
-                format: "webp",
-                quality: 85,
-              }}
-              loadingComponent={
+          {/* <LazyLoadComponent>
                 <div className="row mb-5">
                   <div className="col-3 col-md-3">
-                    <Placeholder
-                      classes={classesPlaceholderCatProduct}
-                      withImage
-                    />
+                  <img className="size-capability__image" src="/images/capability-quality.png" />
                   </div>
                   <div className="col-3 col-md-3">
-                    <Placeholder
-                      classes={classesPlaceholderCatProduct}
-                      withImage
-                    />
+                    <img className="size-capability__image" src="/images/capability-protection.png" />
                   </div>
                   <div className="col-3 col-md-3">
-                    <Placeholder
-                      classes={classesPlaceholderCatProduct}
-                      withImage
-                    />
+                    <img className="size-capability__image" src="/images/capability-shipping.png" />
                   </div>
                   <div className="col-3 col-md-3">
-                    <Placeholder
-                      classes={classesPlaceholderCatProduct}
-                      withImage
-                    />
+                    <img className="size-capability__image" src="/images/capability-support.png" />
                   </div>
                 </div>
-              }
-              imageFallback={
-                <img
-                  className={classesProductCategory.imgClassName}
-                  src="/images/image-category-placeholder.webp"
-                  alt="Placeholder"
-                />
-              }
-            />
-          </LazyLoadComponent>
+          </LazyLoadComponent> */}
           <div className="heading">
             <div className="heading__title">
-              <h5>{i18n.t("home.ourProducts")}</h5>
+              <h2>{i18n.t("home.ourProducts")}</h2>
             </div>
-            <div className="heading__desc">
+            {/* <div className="heading__desc">
               <p>{i18n.t("home.ourProductsDesc")}</p>
-            </div>
+            </div> */}
           </div>
           <div className="row best-seller">
             <LazyLoadComponent>
@@ -330,14 +301,31 @@ const Home: React.FC<any> = ({
           </div>
           <div className="text-center">
             <Link href="/[lng]/products" as={`/${lng}/products`}>
-              <a className="btn btn-black-outer btn-short">
+              <a className="btn btn-orange-outer btn-short">
                 {i18n.t("home.showAll")}
               </a>
             </Link>
           </div>
         </div>
       </section>
+      <br></br>
+      <br></br>
       <section>
+        <div className="container">
+          <LazyLoadComponent>
+              <Widget
+                pos='main-content-2'
+                thumborSetting={{
+                  width: 0,
+                  height: 0,
+                  format: 'webp',
+                  quality: 0,
+                }}
+              />
+            </LazyLoadComponent>
+        </div>
+      </section>
+      {/* <section>
         <div className="container">
           <div className="row">
             <div className="col-12 col-md-6">
@@ -374,9 +362,9 @@ const Home: React.FC<any> = ({
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       <section>
-        <div className="container">
+        {/* <div className="container">
           <div className="heading">
             <div className="heading__title">
               <h5>{i18n.t("home.featuredProducts")}</h5>
@@ -472,7 +460,7 @@ const Home: React.FC<any> = ({
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {brand?.socmedSetting?.instagramToken &&
           <LazyLoadComponent threshold={300}>
             <InstagramFeed size={size} />
@@ -509,6 +497,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const brand = await useBrand(req);
   const urlSite = `https://${req.headers.host}/${params.lng}/product/${params.slug}`;
   const dataBanners = await getBanner(GRAPHQL_URI(req));
+  // console.log(JSON.stringify(dataBanners?.data?.brands));
 
   return {
     props: {

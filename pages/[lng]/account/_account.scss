@@ -16,14 +16,14 @@
 
     &--title {
       font-family: "karla-bold";
-      font-size: 16px;
+      font-size: 25px;
     }
 
     &--points {
       &-icon {
         margin-left: 0.25rem;
         height: 1em;
-        color: $color_orange;
+        color: $color_red;
       }
     }
   }
@@ -34,7 +34,7 @@
       margin: 0;
       padding: 0;
       margin-bottom: 2rem;
-      border-bottom: 1px solid $color_orange;
+      border-bottom: 1px solid $color_red;
       white-space: nowrap;
       overflow-x: auto;
       overflow-y: hidden;
@@ -69,7 +69,7 @@
               width: 100%;
               left: 0;
               bottom: 0;
-              border-bottom: 3px solid $color_orange;
+              border-bottom: 3px solid $color_red;
             }
           }
         }
@@ -123,6 +123,7 @@
         &-label {
           min-width: 200px;
           margin-bottom: 0;
+          display: none;
 
           @media screen and (max-width: 767px) {
             margin-bottom: 1rem;
@@ -149,6 +150,20 @@
       }
 
       .change-password {
+        justify-content: center;
+        align-items: center;
+        width: 700px;
+        padding: 5rem;
+        border-radius: 5px;
+        background-color: $color_white;
+        box-shadow: 0 0 15px rgba(0,0,0,.15);
+        @media screen and (max-width: 575px) {
+          width: 100%;
+          padding: 0;
+          margin: 0;
+          box-shadow: none;
+          border-radius: none;
+        }    
         .button-view-password {
           position: absolute;
           right: 10px;
@@ -160,8 +175,76 @@
           }
         }
       }
+
+      
     }
   }
+
+
+  .forgot-password-page
+{
+  &-container
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5rem;
+    margin-top:  5rem;
+  }
+
+  &-inner
+  {
+    width: 650px;
+    padding: 5rem;
+    align-content: center;
+    border-radius: 5px;
+    background-color: $color_white;
+    box-shadow: 0 0 15px rgba(0,0,0,.15);
+
+    @media screen and (max-width: 575px) {
+      width: 100%
+    }
+
+    .forgot-password
+    {
+      display: block;
+      text-align: center;
+
+      .forgot-link
+      {
+        font-family: "karla-bold";
+      }
+    }
+
+    .footer
+    {
+      margin: 1rem 0;
+      text-align: center;
+
+      a
+      {
+        font-family: "karla-bold";
+      }
+    }
+  }
+
+
+  &-title
+  {
+    font-family: "karla-bold";
+    font-size: 16px;
+  }
+
+  &-subtitle
+  {
+    color: $color_gray_text;
+  }
+
+  &-form
+  {
+    margin-top: 2rem;
+  }
+}
 
   &_buttonLocation {
     display: block;
@@ -175,7 +258,7 @@
   &_mapArea {
     width: 100%;
     height: 200px;
-    display: grid;
+    position: relative;
   }
 
   &_mapPopup {
@@ -239,8 +322,8 @@
 
   &_mapPopupNote {
     font-size: 14px;
-    background: $color_orange_light;
-    color: $color_orange;
+    background: $color_base_red_light;
+    color: $color_red;
     padding: 15px;
     text-align: center;
   }
@@ -288,8 +371,8 @@
   }
 
   &_membershipStatus {
-    background: $color_orange_light;
-    border: 1px solid $color_orange_low;
+    background: $color_base_red_light;
+    border: 1px solid $color_base_red;
     padding: 1rem;
     border-radius: 2px;
   }
@@ -308,6 +391,7 @@
       font-family: "karla-bold";
       font-size: 14px;
       margin-bottom: 0;
+      color: $color_white;
     }
   }
 
@@ -322,6 +406,7 @@
     position: absolute;
     top: 0;
     right: 0;
+    color: $color_white;
   }
 
   &_membershipProgress {
@@ -335,14 +420,14 @@
     }
 
     &::-webkit-progress-value {
-      background-color: $color_orange;
+      background-color: $color_red;
       border-radius: 6px;
     }
   }
 
   &_membershipPrompt {
     margin-top: 7px;
-    color: $color_gray_text;
+    color: $color_white;
   }
 
   &_membershipHistory {
@@ -408,7 +493,7 @@
   }
 
   &_membershipHistoryLinkContinue {
-    border: 1px solid $color_orange_low;
+    border: 1px solid $color_base_red;
     padding: 1rem;
     margin-bottom: 30px;
     border-radius: 3px;
@@ -454,6 +539,368 @@
   }
 }
 
+
+.account
+{
+  margin-bottom: 2rem;
+  min-height: 70vh;
+
+
+  &_profile
+  {
+    margin-top: 3rem;
+
+    &__logout
+    {
+      cursor: pointer;
+
+      svg
+      {
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+  &_profilePoints
+  {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: $color_blue;
+
+    span
+    {
+      &:first-child
+      {
+        margin-right: .5rem;
+      }
+    }
+
+    &__icon
+    {
+      color: $color_blue;
+      width: 1em;
+      height: 1em;
+    }
+
+    &__bold
+    {
+      margin-left: .35rem;
+      font-family: "roboto-black";
+    }
+  }
+
+  &_shipmentTracking{
+    position: fixed;
+    display: block;
+    margin: auto;
+    z-index: 10;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 3rem;
+  }
+
+  &_shipmentContainer {
+    width: 50%;
+    margin: auto;
+    background: white;
+
+    @media screen and (max-width: 768px) {
+      width: 95%;
+    }
+  }
+
+  &_tab
+  {
+    text-transform: uppercase;
+    margin: 10px 0;
+    padding: 20px 0;
+    white-space: nowrap;
+    overflow-x: auto;
+    border-bottom: 1px solid #ccc;
+
+    @media screen and (max-width: 575px) {
+      margin: 10px 0;
+    }
+
+    &__pane
+    {
+      width: 100%;
+      min-height: 50vh;
+      padding-top: 2rem;
+    }
+  }
+
+  &_tabNav
+  {
+    display: inline-block;
+    list-style: none;
+    margin-right: 3rem;
+    cursor: pointer;
+
+    &__link
+    {
+      color: $color_gray_semi_dark;
+      font-family: "roboto-black";
+      font-size: 12px;
+      
+      &:hover
+      {
+        color: $color_blue;
+        text-decoration: none;
+        transition: color 500ms;
+      }
+    }
+
+    &__linkActive
+    {
+      padding-bottom: 20px;
+      color: $color_blue;
+      border-bottom: 2px solid $color_blue;
+    }
+
+    &:last-child
+    {
+      display: none;
+    }
+  }
+
+  &_info
+  {
+    display: flex;
+    justify-content: space-between;
+
+    @media screen and (max-width: 575px) {
+      flex-direction: column-reverse;
+    }
+  }
+
+  &_myAccount
+  {
+    &_order 
+    {
+      margin: 0;
+      padding: 0;
+      line-height: 2rem;
+      text-align: left;
+      margin-bottom: 2rem;
+      
+      &__list
+      {
+        list-style: none;
+
+        span:first-child
+        {
+          width: 170px;
+          display: inline-block;
+
+          @media screen and (max-width: 575px) {
+            width: 150px;
+          }
+        }
+      }
+    }
+  }
+
+  &_edit
+  {
+    &__label
+    {
+      min-width: 200px;
+      margin-bottom: 0;
+
+      @media screen and (max-width: 767px) {
+        margin-bottom: 1rem;
+      }
+    }
+
+    & [data-identity="input-dateOfBirth"] {
+      width: 100% ;
+    }
+
+    & [class *="react-date-picker__wrapper"] {
+      & button {
+        margin-top: 0;
+        width: 40px;
+      }
+    }
+
+    & [class*="--disabled"] {
+      background-color: $color_gray_low;
+    }
+
+    & > button
+    {
+      margin-top: 1rem;
+    }
+  }
+
+  &_changePassword
+  {
+    & > button
+    {
+      margin-top: 1rem;
+    }
+  }
+
+  &_loyalty
+  {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+    &_loyalty
+  {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &_buttonLocation
+  {
+    display: block;
+    width: 100%;
+    border-radius: .25rem;
+    border: 1px solid $color_gray_primary;
+    color: $color_gray_text;
+    background-color: $color_white;
+    padding: 50px;
+  }
+
+  &_mapArea
+  {
+    width: 100%;
+    height: 200px;
+    position: relative;
+  }
+
+  &_mapPopup
+  {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &_mapCloseIcon
+  {
+    cursor: pointer;
+  }
+
+  &_mapPopupContainer
+  {
+    position: relative;
+    width: 50vw;
+    background: $color_white;
+    border-radius: 10px;
+
+    @media screen and (max-width: 991px) {
+      margin: 0 1rem;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &_mapPopupHeader
+  {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+  }
+
+  &_mapPopupHeaderTitle
+  {
+    flex: 1;
+    font-size: 16px;
+    color: $color_black;
+    text-align: center;
+  }
+
+  &_mapPopupClose
+  {
+    border: none;
+    background-color: transparent;
+    font-family: "roboto-black";
+    font-size: 16px;
+    color: $color_black;
+    margin: 0 !important;
+
+    &:focus,
+    &:active
+    {
+      outline: 0;
+      border: none;
+      box-shadow: none;
+    }
+  }
+
+  &_mapPopupNote
+  {
+    font-size: 14px;
+    background: $color_blue_light;
+    color: $color_black;
+    padding: 15px;
+    text-align: center;
+  }
+
+  &_mapPopupMaps
+  {
+    position: relative;
+    background-color: $color_white;
+    z-index: 1;
+    width: 100%;
+    height: 320px;
+
+    input
+    {
+      font-size: 14px;
+      width: calc(100% - 75px);
+      padding: 10px 15px;
+      border: 1px;
+      background: $color_white;
+      z-index: 2;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      left: 16px;
+      border-radius: 4px;
+      box-shadow: none;
+      outline: 0;
+    }
+  }
+
+  &_mapPopupCenterButton
+  {
+    position: absolute;
+    right: 10px;
+    background: #fff;
+    padding: 7.5px;
+    top: 12px;
+    border: none;
+    border-radius: 4px;
+    margin: 0 !important;
+  }
+
+  &_mapPopupLabelAddress
+  {
+    font-size: 14px;
+    background: $color_white;
+    color: $color_black;
+    padding: 15px;
+  }
+}
+
 .tab-pane {
   border: 1px solid $color_gray_semi_dark;
   padding: 1em;
@@ -466,7 +913,7 @@
   }
 
   &-items {
-    border: 1px solid #fece6c;
+    border: 1px solid $color_base_red;
     box-sizing: border-box;
     border-radius: 3px;
     margin-bottom: 48px;
@@ -540,10 +987,10 @@
         top: 0;
         right: 0;
         background-color: $color_white;
-        border: 1px solid #f7be16;
+        border: 1px solid $color_base_red;
         box-sizing: border-box;
         border-radius: 3px;
-        color: #f7be16;
+        color:  $color_base_red;
         /*
         padding: 12px;
         margin-top: 23px;
@@ -575,7 +1022,7 @@
           width: 80%;
 
           li {
-            background: $color_orange_low;
+            background: $color_base_red_light;
             border-radius: 3px;
             padding: 8px 10px;
             width: fit-content;
@@ -653,7 +1100,7 @@
     background: #fffff1;
 
     &__total-cost {
-      border-top: 1px solid #fece6c;
+      border-top: 1px solid $color_base_red;
       font-weight: 600;
       font-size: 14px;
       line-height: 21px;
@@ -728,7 +1175,7 @@
     }
 
     &__note {
-      background-color: $color_orange_light;
+      background-color: $color_base_red_light;
     }
 
     &__footer {
@@ -1078,7 +1525,7 @@
     display: none;
 
     &:checked + .notification_mediaCheckboxSlider {
-      background-color: $color_orange;
+      background-color: $color_red;
     }
 
     &:checked + .notification_mediaCheckboxSlider:before {
@@ -1153,7 +1600,7 @@
     opacity: 0;
 
     &:checked ~ .notification_mediaDetailCheckboxLabel {
-      background-color: $color_orange;
+      background-color: $color_red;
     }
 
     &:disabled ~ .notification_mediaDetailCheckboxLabel {
@@ -1174,7 +1621,7 @@
     width: 15px;
     background-color: $color_white;
     margin-bottom: 0;
-    outline: 1px solid $color_orange;
+    outline: 1px solid $color_red;
 
     &::after {
       content: "";
@@ -1191,15 +1638,4 @@
       transform: rotate(45deg);
     }
   }
-}
-
-.Account_membership_info_container__1MANA {
-  background: rgba(251,192,45,.5);
-  padding: 10px 12px;
-  width: 100%;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: flex;
-  margin-bottom: 12px;
-  border-radius: 3px;
 }

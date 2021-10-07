@@ -84,6 +84,8 @@
         "product": "Product Name, Size & Color",
         "quantity": "Quantity",
         "title": "Shopping Cart",
+        "continue" : "Not ready yet?",
+        "Toproduct" : "Continue Shopping",
         "unknownSKU": "Unknown SKU",
         "unpublishedProduct": "Unpublish Product",
         "writeNoteToSeller": "Write Note To Seller"
@@ -297,6 +299,7 @@
         "shipping": "Shipping",
         "uniqueCode": "Unique Code",
         "voucher": "Voucher",
+        "title": "Payment",
         "warning": "Unable to proceed transaction amount below 10,000"
     },
     "paymentConfirm": {
@@ -341,11 +344,14 @@
         "unfinishDesc": "Please make a repayment process"
     },
     "placeOrder": {
+        "checkOrder": "Check Orders",
         "fieldNotComplete": "Please complete the field",
-        "haveAnAccount": "Already have an account?",
-        "shipToDiffAddress": "Send to different address?",
-        "signUp": "Sign up an Account",
-        "title": "Place Order"
+        "haveAnAccount": "Do you have an account?",
+        "orderSummary": "Order Summary",
+        "shipToDiffAddress": "Ship to different address?",
+        "signUp": "Also sign me up on Checkout",
+        "userInformation": "Information",
+        "notes": "Notes"
     },
     "product": {
         "addToCart": "Add To Cart",
@@ -604,5 +610,9 @@
         "whatsappNumber": "Whatsapp Number",
         "willSendOTP": "We will send a verification code via WhatsApp number",
         "wrongOTP": "Incorrect OTP code"
+    },
+    "instaFeed": {
+        "title": "@drivenon_club",
+        "titleDesc": "Follow On Instagram"
     }
 }

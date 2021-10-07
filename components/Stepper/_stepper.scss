@@ -24,7 +24,7 @@
       &-active
       {
         color: $color_white;
-        background: $color_orange;
+        background: $color_base_red;
         border: 0;
       }
     }
@@ -84,7 +84,7 @@
 $borderWidth: 5px;
 $animationTime: 1.5s;
 $border-color-default: #eee;
-$border-color-fill: $color_orange;
+$border-color-fill: $color_base_red;
 $size: 80px;
 $howManySteps: 10;
 

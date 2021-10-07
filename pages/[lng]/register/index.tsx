@@ -26,14 +26,14 @@ import LoaderPages from 'components/Loader/LoaderPages'
 
 const classesRegister = {
   containerClassName: "row register-page-form",
-  basicInfoContainerClassName: "col-12 col-md-6",
-  deliveryAddressContainerClassName: "col-12 col-md-6",
+  basicInfoContainerClassName: "col-12",
+  deliveryAddressContainerClassName: "col-12",
   headerLabelClassName: "register-page-form--label",
   inputContainerClassName: "sirclo-form-row",
   inputClassName: "form-control sirclo-form-input",
   labelRequiredClassName: "col-12",
   verificationContainerClassName: "col-12 mb-3",
-  buttonClassName: "btn btn-orange btn-long m-3",
+  buttonClassName: "btn col-12 btn-danger btn-long",
   passwordStrengthBarContainerClassName:
     "sirclo-form-password-strength-bar-container",
   passwordStrengthBarClassName: "sirclo-form-password-strength-bar",
@@ -67,75 +67,77 @@ const RegisterPage: FC<any> = ({
       brand={brand}
     >
       <Breadcrumb
-        title={i18n.t("register.title")}
+        // title={i18n.t("register.title")}
         links={linksBreadcrumb}
         lng={lng}
       />
       <section>
         <div className="container">
           <div className="register-page-container">
-            <div className="row mb-5">
-              <div className="col-12 col-sm-12 col-lg-6">
-                <h3 className="login-page-title">
-                  {i18n.t("register.newAccount")}
-                </h3>
-                <span className="login-page-subtitle">
-                  {i18n.t("register.promo")}
-                </span>
-                {(hasGoogleAuth || hasFacebookAuth) &&
-                  <>
-                    <div className="login-page-withGoogle register">
-                      <SingleSignOn
-                        className="login-page-withGoogleButton"
-                        buttonText={i18n.t("register.sso")}
-                        onErrorMsg={(msg: string) => toast.error(msg)}
-                        loadingComponent={
-                          <div className="quickdetail__overlay">
-                            <LoaderPages />
-                          </div>
-                        }
-                      />
-                    </div>
-                    <label className="login-page-orTitle"><span>{i18n.t("testimonials.or")}</span></label>
-                  </>
-                }
+            <div className="register-page-inner">
+              <div className="row mb-5">
+                <div className="col-12 col-sm-12">
+                  <h3 className="login-page-title">
+                    {i18n.t("register.title")}
+                  </h3>
+                  <span className="login-page-subtitle">
+                    {i18n.t("register.promo")}
+                  </span>
+                  {(hasGoogleAuth || hasFacebookAuth) &&
+                    <>
+                      <div className="login-page-withGoogle register">
+                        <SingleSignOn
+                          className="login-page-withGoogleButton"
+                          buttonText={i18n.t("register.sso")}
+                          onErrorMsg={(msg: string) => toast.error(msg)}
+                          loadingComponent={
+                            <div className="quickdetail__overlay">
+                              <LoaderPages />
+                            </div>
+                          }
+                        />
+                      </div>
+                      <label className="login-page-orTitle"><span>{i18n.t("testimonials.or")}</span></label>
+                    </>
+                  }
+                </div>
               </div>
-            </div>
-            <div className="row mb-3">
-              <div className="col-12 col-md-12">
-                <Register
-                  classes={classesRegister}
-                  withHeaderLabel={true}
-                  onErrorMsg={(msg) => toast.error(msg)}
-                  onSuccessMsg={(msg) => toast.success(msg)}
-                  redirectPage={() =>
-                    Router.push(`/[lng]/login`, `/${lng}/login`)
-                  }
-                  passwordViewIcon={
-                    <FontAwesomeIcon className="icon-password" icon={faEye} />
-                  }
-                  passwordHideIcon={
-                    <FontAwesomeIcon
-                      className="icon-password"
-                      icon={faEyeSlash}
-                    />
-                  }
-                  passwordUnfulfilledCriteriaIcon={
-                    <FontAwesomeIcon icon={faCheckCircle} height="1.25em" />
-                  }
-                  passwordFulfilledCriteriaIcon={
-                    <FontAwesomeIcon icon={faCheckCircle} height="1.25em" />
-                  }
-                  withVerification={true}
-                  isVerified={isVerified}
-                  verificationComponent={
-                    <ReCAPTCHA
-                      sitekey={process.env.NEXT_PUBLIC_SITEKEY_RECAPTCHA}
-                      onChange={() => setIsVerified(true)}
-                    />
-                  }
-                  loadingComponent={<Loader color="text-light" />}
-                />
+              <div className="row mb-3">
+                <div className="col-12 col-md-12">
+                  <Register
+                    classes={classesRegister}
+                    withHeaderLabel={true}
+                    onErrorMsg={(msg) => toast.error(msg)}
+                    onSuccessMsg={(msg) => toast.success(msg)}
+                    redirectPage={() =>
+                      Router.push(`/[lng]/login`, `/${lng}/login`)
+                    }
+                    passwordViewIcon={
+                      <FontAwesomeIcon className="icon-password" icon={faEye} />
+                    }
+                    passwordHideIcon={
+                      <FontAwesomeIcon
+                        className="icon-password"
+                        icon={faEyeSlash}
+                      />
+                    }
+                    passwordUnfulfilledCriteriaIcon={
+                      <FontAwesomeIcon icon={faCheckCircle} height="1.25em" />
+                    }
+                    passwordFulfilledCriteriaIcon={
+                      <FontAwesomeIcon icon={faCheckCircle} height="1.25em" />
+                    }
+                    withVerification={true}
+                    isVerified={isVerified}
+                    verificationComponent={
+                      <ReCAPTCHA
+                        sitekey={process.env.NEXT_PUBLIC_SITEKEY_RECAPTCHA}
+                        onChange={() => setIsVerified(true)}
+                      />
+                    }
+                    loadingComponent={<Loader color="text-light" />}
+                  />
+                </div>
               </div>
             </div>
           </div>

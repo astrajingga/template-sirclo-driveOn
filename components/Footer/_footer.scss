@@ -46,6 +46,10 @@ footer {
           margin-bottom: 1rem;
         }
 
+        ul {
+          list-style-type: none;
+        }
+
         p {
           margin-bottom: 0.5rem;
         }
@@ -86,6 +90,7 @@ footer {
 
           .icon-sosmed {
             font-size: 20px;
+            color: $color_base_red;
           }
         }
       }
@@ -168,13 +173,20 @@ footer {
       text-align: center;
       text-transform: uppercase;
 
-      & img, video, iframe
-      {
+      & img,
+      video,
+      iframe {
         display: none !important;
       }
-  
-      div, h1, h2, h3, h4, h5, h6, p
-      {
+
+      div,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p {
         text-align: center !important;
         font-size: 13px !important;
         margin-bottom: 0 !important;

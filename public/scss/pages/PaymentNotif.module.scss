@@ -49,15 +49,19 @@
 {
   &_buttonConfirm {
     @extend 
-      .btn,
-      .btn_primary;
+      .btn;
 
     width: 100%;
     margin-top: 17px;
     height: 40px;
+    background: $color_base_red;
     
     &:disabled{
       background-color: $color_gray_semi_dark !important;
+    }
+
+    &:hover{
+      background-color: $color_base_red_dark;
     }
   }
 
@@ -75,8 +79,9 @@
   }
   &_detailHeader {
     padding: 16px;
-    background:rgba(251, 192, 45, 0.5);
+    background-color: $color_base_red;
     display: flex;
+    color: $color_white;
     justify-content: space-between;
   }
   &_detailTitle {
@@ -89,7 +94,7 @@
     margin: auto 0px;
     height: auto;
     color: $color_white;
-    background: $color_orange_dark;
+    background: $color_base_red_dark;
     padding: 5px 10px;
     border-radius: 20px;
     font-weight: inherit;
@@ -141,7 +146,7 @@
   }
 
   &_detailDropdown {
-    color: $color_orange_dark;
+    color: $color_base_red_dark;
   }
 
   &_detailPriceBreakdown, &_detailTotalField {
@@ -182,5 +187,13 @@
     line-height: 16px;
     color: $color_error;
     margin-top: 6px;
+  }
+
+  &_detailStatusUnpaid{
+    background: $color_base_red_dark;
+  }
+
+  &-paymentStatusUnpaidClassName{
+    background: $color_base_red_dark;
   }
 }

@@ -85,6 +85,8 @@
         "price": "Harga",
         "product": "Nama Produk, Ukuran dan Warna",
         "quantity": "Kuantitas",
+        "continue" : "Belum siap checkout?",
+        "Toproduct" : "Lakukan belanja lagi",
         "title": "Keranjang Belanja",
         "unknownSKU": "SKU tidak ditemukan",
         "unpublishedProduct": "Produk sudah tidak tersedia",
@@ -299,6 +301,7 @@
         "shipping": "Pengiriman",
         "uniqueCode": "Kode Unik",
         "voucher": "Voucher",
+        "title": "Pembayaran",
         "warning": "Transaksi di bawah 10,000 tidak dapat diproses"
     },
     "paymentConfirm": {
@@ -343,11 +346,14 @@
         "unfinishDesc": "Silakan lakukan proses pembayaran kembali"
     },
     "placeOrder": {
+        "checkOrder": "Periksa Pesanan",
         "fieldNotComplete": "Mohon dilengkapi form yang tersedia",
-        "haveAnAccount": "Sudah memiliki akun?",
+        "haveAnAccount": "Sudah punya akun?",
+        "orderSummary": "Ringkasan Pesanan",
         "shipToDiffAddress": "Kirim ke alamat berbeda?",
-        "signUp": "Buat Akun",
-        "title": "Pesanan"
+        "signUp": "Daftarkan akun baru",
+        "userInformation": "Informasi",
+        "notes": "Catatan"
     },
     "product": {
         "addToCart": "Masukan Keranjang",
@@ -612,5 +618,9 @@
         "whatsappNumber": "Nomor Whatsapp",
         "willSendOTP": "Kami Akan mengirimkan kode verifikasi melalui nomor WhatsApp",
         "wrongOTP": "Kode OTP salah"
+    },
+    "instaFeed": {
+        "title": "@drivenon_club",
+        "titleDesc": "Follow On Instagram"
     }
 }

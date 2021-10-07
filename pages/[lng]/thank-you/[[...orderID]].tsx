@@ -32,6 +32,7 @@ const classesThankYouPage = {
   detailStatusClassName: stylesOrder.paymentConfirmation_detailStatus,
   paymentStatusCancelledClassName: stylesOrder.paymentConfirmation_detailStatusCancelled,
   paymentStatusReturnedClassName: styles.paymentConfirmation_detailStatusReturned,
+  paymentStatusUnpaidClassName: styles.paymentConfirmation_detailStatusUnpaid,
   detailTotalAmountClassName: stylesOrder.paymentConfirmation_detailTotalAmount,
   detailDropdownClassName: stylesOrder.paymentConfirmation_detailDropdown,
   detailItemClassName: `d-flex`,

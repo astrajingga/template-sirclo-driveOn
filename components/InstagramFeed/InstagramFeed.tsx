@@ -2,6 +2,9 @@ import { FC, useState } from "react";
 import { InstagramFeed as InstaFeed } from "@sirclo/nexus";
 import Carousel from "@brainhubeu/react-carousel";
 import dynamic from "next/dynamic";
+import {
+  useI18n,
+} from "@sirclo/nexus";
 
 const Placeholder = dynamic(() => import("components/Placeholder"));
 const InstagramQuickView = dynamic(() =>
@@ -35,8 +38,19 @@ const InstagramFeed: FC<{size: TSize}> = ({ size }) => {
   const [instagramQuickView, setInstagramQuickView] = useState<boolean>(false);
   const [instagramMedia, setInstagramMedia] = useState<any>({});
 
+  const i18n: any = useI18n();
+  
   return (
+    
     <div className="container">
+          <br></br>
+        <div className="heading">
+          <div className="heading__title">
+            <br></br>
+            <h6>{i18n.t("instaFeed.titleDesc")}</h6>
+            {/* <h1>{i18n.t("instaFeed.title")}</h1> */}
+          </div>
+        </div>
       {(instagramQuickView && instagramMedia) &&
         <InstagramQuickView
           classes={classesInstagramQuickView}
@@ -52,7 +66,7 @@ const InstagramFeed: FC<{size: TSize}> = ({ size }) => {
 
       <InstaFeed
         Carousel={Carousel}
-        slidesPerPage={size.width < 575 ? 4 : 6}
+        slidesPerPage={size.width < 575 ? 2 : 3}
         slidesPerScroll={1}
         autoPlay={10000}
         infinite

@@ -16,18 +16,19 @@ import { GRAPHQL_URI } from "lib/Constants";
 import { useBrand } from "lib/utils/useBrand";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faNewspaper } from "@fortawesome/free-solid-svg-icons";
+import styles from "public/scss/pages/Blog.module.scss";
 
 const EmptyComponent = dynamic(() => import("components/EmptyComponent/EmptyComponent"));
 const Placeholder = dynamic(() => import("components/Placeholder"));
 
 const classesBlogs = {
   blogsContainerClassName: "row blogs-page",
-  blogContainerClassName: "col-12 col-md-6 blogs-page__items",
+  blogContainerClassName: "col-12 col-md-12 blogs-page__items row",
   categoryClassName: "blogs-page__items--category",
-  imageContainerClassName: "blogs-page__items--container",
+  imageContainerClassName: "blogs-page__items--container col-12 col-md-4",
   imageClassName: "blogs-page__items--container-image",
   contentContainerClassName: "blogs-page__items--contentContainer",
-  descriptionClassName: "blogs-page__items--container",
+  descriptionClassName: "blogs-page__items--container col-12 col-md-8 ",
   titleClassName: "blogs-page__items--container-title",
   descriptionFooterClassName: "blogs-page__items--container-details",
   authorPicClassName: "d-none",
@@ -38,7 +39,7 @@ const classesBlogs = {
 
 const classesBlogCategories = {
   containerClassName: "blogs-category",
-  categoryClassName: "blogs-category__items",
+  categoryClassName: "blogs-category__items ",
   linkClassName: "blogs-category__items--link",
 }
 
@@ -78,6 +79,7 @@ const Blog: FC<any> = ({
   const allowedBlog = isBlogAllowed();
 
   const [totalCategories, setTotalCategories] = useState(null);
+  console.log(headerImage)
 
   const linksBreadcrumb = [`${i18n.t("home.title")}`, `${i18n.t("blog.title")}`]
 
@@ -91,12 +93,20 @@ const Blog: FC<any> = ({
       {allowedBlog &&
         <>
           <Breadcrumb
-            title={i18n.t("blog.title")}
+            // title={i18n.t("blog.title")}
             links={linksBreadcrumb}
-            withImage={headerImage}
             lng={lng}
           />
           <div className="container">
+            <div
+              className={`${styles.blog_headerContainer} ${!headerImage && styles.blog_headerWithoutBackground}`}
+              style={{ backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${headerImage})` }}
+            >
+              <h1 className={styles.blog_headerTitle}>
+                {i18n.t("blog.title")}
+              </h1>
+            </div>
+            <br></br>
             <div className="row">
               <div className="col-12 col-lg-9">
                 <Blogs
@@ -104,6 +114,7 @@ const Blog: FC<any> = ({
                   paginationClasses={classesPagination}
                   withPagination
                   itemPerPage={4}
+                  withReadMoreButton
                   thumborSetting={{
                     width: size.width < 768 ? 375 : 512,
                     format: "webp",
@@ -138,9 +149,9 @@ const Blog: FC<any> = ({
                   <div className="col-12 col-md-6 col-lg-12">
                     {(totalCategories > 0 || totalCategories === null) &&
                       <>
-                        <h2 className="title-side-blogs">
+                        <h1 className="title-side-blogs">
                           {i18n.t("blog.categories")}
-                        </h2>
+                        </h1>
                         <BlogCategories
                           classes={classesBlogCategories}
                           getCategoriesCount={(categoriesCount) => setTotalCategories(categoriesCount)}

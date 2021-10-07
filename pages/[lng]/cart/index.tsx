@@ -6,6 +6,7 @@ import {
   Products,
   isProductRecommendationAllowed
 } from "@sirclo/nexus";
+import Link from "next/link";
 import Layout from "components/Layout/Layout";
 import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 import EmptyComponent from "components/EmptyComponent/EmptyComponent";
@@ -61,9 +62,9 @@ const classesProducts = {
   productContainerClassName: "col-6 col-md-3 products__item",
   productImageClassName: "products__item--image",
   productImageContainerClassName: "image-container",
-  productLabelContainerClassName: "products__item--content",
-  productTitleClassName: "products__item--content-title",
-  productPriceClassName: "products__item--content-price",
+  productLabelContainerClassName: "products__item--contentRecomendation",
+  productTitleClassName: "products__item--contentRecomendation-title",
+  productPriceClassName: "products__item--contentRecomendation-price",
   stickerContainerClassName: "products__item-sticker",
   outOfStockLabelClassName: "products__item-sticker--outofstock",
   comingSoonLabelClassName: "products__item-sticker--comingsoon",
@@ -72,7 +73,7 @@ const classesProducts = {
   preOrderLabelClassName: "products__item-sticker--preorder",
   newLabelClassName: "products__item-sticker--new",
   buttonClassName: "products__item--buttonQuickview",
-  salePriceClassName: "products__item--content-price--sale"
+  salePriceClassName: "products__item--contentRecomendation-price--sale"
 }
 
 const paginationClasses = {
@@ -120,7 +121,7 @@ const Cart: FC<any> = ({
       brand={brand}
     >
       <Breadcrumb
-        title={i18n.t("cart.title")}
+        // title={i18n.t("cart.title")}
         links={linksBreadcrumb}
         lng={lng}
       />
@@ -128,6 +129,16 @@ const Cart: FC<any> = ({
         <div className="cart margin-step-payment">
           <div className="row">
             <div className="col-12 col-lg-8">
+            <div className="heading__titlecart">
+              <h2>{i18n.t("cart.title")}</h2>
+              <br></br>
+              <h3>{i18n.t("cart.continue")} <Link href="/[lng]/products" as={`/${lng}/products`}>
+              <a className="heading__titlecart--colorLink">
+                {i18n.t("cart.Toproduct")}
+              </a>
+            </Link>
+            </h3>
+            </div>
               {invalidMsg !== "" &&
                 <div className="cart-table__errorCart">
                   {invalidMsg}
@@ -212,6 +223,9 @@ const Cart: FC<any> = ({
                         <div className="col-6 col-md-3 mb-4">
                           <Placeholder classes={classesPlaceholderProduct} withImage />
                         </div>
+                        <div className="col-6 col-md-3 mb-4">
+                          <Placeholder classes={classesPlaceholderProduct} withImage />
+                        </div>
                       </>
                     }
                   />
@@ -219,6 +233,7 @@ const Cart: FC<any> = ({
               </div>
             </>
           }
+          
         </div>
       </div>
     </Layout>
