@@ -1,77 +1,183 @@
-import { FC } from "react";
+import { FC, useState } from "react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Router from "next/router";
 import {
-  ShippingMethods,
   CustomerDetail,
+  ShippingMethods,
+  CartSummary,
+  useI18n,
   PrivateRoute,
-  useI18n
+  useBuyerNotes
 } from "@sirclo/nexus";
+import SEO from "components/SEO/SEO";
 import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import Stepper from "components/Stepper/Stepper";
-import { parseCookies } from "lib/parseCookies";
+import Footer from "components/Footer/Footer";
+import Breadcrumb from "components/Breadcrumb/BreadcrumbUNO";
+import EmptyComponent from "components/EmptyComponent/EmptyComponent";
+import useWindowSize from "lib/utils/useWindowSize";
 import { useBrand } from "lib/utils/useBrand";
-import { toast } from "react-toastify";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faTimes,
-  faDotCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import OrderSummaryBox from 'components/OrderSummaryBox/OrderSummaryBox';
+  ArrowLeft,
+  ShoppingCart,
+  X as XIcon,
+  ChevronDown,
+  ChevronUp,
+  Info,
+  Crosshair
+} from "react-feather";
+import { toast } from "react-toastify";
+import styles from "public/scss/pages/ShippingMethod.module.scss";
 
+const Popup = dynamic(() => import("components/Popup/PopupUno"));
+const Placeholder = dynamic(() => import("components/Placeholder"));
 const LoaderPages = dynamic(() => import("components/Loader/LoaderPages"));
 
 const classesCustomerDetail = {
-  customerDetailBoxClass: "customer-detail__container",
-  customerDetailBoxInnerClass: "customer-detail__inner",
-  addressContainerClassName: "customer-detail__info",
-  addressDetailClassName: "customer-detail__info--person",
-  addressValueClassName: "customer-detail__info--person-value",
-}
+  customerDetailBoxClass: styles.customer,
+  addressContainerClassName: styles.customer_info,
+  addressDetailClassName: styles.customer_infoPerson,
+  addressValueClassName: styles.customer_infoPersonValue,
+  changePinClassName: styles.customer_changePin,
+  mapPopupClassName: styles.customer_mapPopup,
+  mapPopupBackgroundClassName: styles.customer_mapPopupContainer,
+  mapClassName: styles.customer_mapPopupMaps,
+  mapHeaderWrapperClassName: styles.customer_mapPopupHeader,
+  mapHeaderTitleClassName: styles.customer_mapPopupHeaderTitle,
+  mapHeaderCloseButtonClassName: styles.customer_mapPopupClose,
+  mapHeaderNoteClassName: styles.customer_mapPopupNote,
+  mapLabelAddressClassName: styles.customer_mapPopupLabelAddress,
+  mapButtonFooterClassName: `btn ${styles.btn_primary} ${styles.btn_long} d-block mx-auto my-3`,
+  mapCenterButtonClassName: styles.customer_mapPopupCenterButton
+};
 
 const classesShippingMethod = {
-  containerClass: "container shipping-method__container",
-  shippingRadioDiv: "row shipping-method__items",
-  divInputClass: "col-2 col-md-1 shipping-method__items--radio",
-  inputClass: "shipping-method__items--radio-input",
-  inputLabel: "shipping-method__items--radio-label",
-  shippingNameDivClass: "col-10 col-md-8 shipping-method__items--name",
-  shippingNameClass: "shipping-method__items--name-title",
-  shippingPriceDivClass: "col-10 offset-2 offset-md-0 col-md-3 shipping-method__items--price",
-  shippingPriceClass: "shipping-method__items--price-title",
-  warningPinPointClassName: "col-12 shipping-method__warningPinPoin",
-  warningPinPointTextClassName: "shipping-method__warningPinPoinText",
-  pinPointLocationClassName: "btn btn-orange-outer btn-long d-block w-100 m-3",
-  mapNoteClassName: "place-order_mapNote",
-  mapSelectAreaClassName: "place-order_mapChooseLocation",
-  mapAreaClassName: "place-order_mapArea",
-  mapPopupClassName: "place-order_mapPopup",
-  mapPopupBackgroundClassName: "place-order_mapPopupContainer",
-  mapClassName: "place-order_mapPopupMaps",
-  mapHeaderWrapperClassName: "place-order_mapPopupHeader",
-  mapHeaderTitleClassName: "place-order_mapPopupHeaderTitle",
-  mapHeaderCloseButtonClassName: "place-order_mapPopupClose",
-  mapHeaderNoteClassName: "place-order_mapPopupNote",
-  mapLabelAddressClassName: "place-order_mapPopupLabelAddress",
-  mapCenterButtonClassName: "place-order_mapPopupCenterButton",
-  mapButtonFooterClassName: "btn btn-orange btn-long d-block mx-auto my-3"
+  containerClass: styles.shippingMethod_container,
+  shippingRadioDiv: styles.shippingMethodItem,
+  divInputClass: styles.shippingMethodItem_radio,
+  shippingNameDivClass: styles.shippingMethodItem_label,
+  shippingNameClass: styles.shippingMethodItem_title,
+  shippingPriceDivClass: styles.shippingMethodItem_price,
+  pinPointLocationClassName: `${styles.shippingMethodItem_pinButton} btn ${styles.btn_primary} ${styles.btn_long} ${styles.btn_full_width}`,
+  warningPinPointClassName: styles.shippingmethod__itemWarning,
+  mapPopupClassName: styles.customer_mapPopup,
+  mapPopupBackgroundClassName: styles.customer_mapPopupContainer,
+  mapClassName: styles.customer_mapPopupMaps,
+  mapHeaderWrapperClassName: styles.customer_mapPopupHeader,
+  mapHeaderTitleClassName: styles.customer_mapPopupHeaderTitle,
+  mapHeaderCloseButtonClassName: styles.customer_mapPopupClose,
+  mapHeaderNoteClassName: styles.customer_mapPopupNote,
+  mapLabelAddressClassName: styles.customer_mapPopupLabelAddress,
+  mapButtonFooterClassName: `btn ${styles.btn_primary} ${styles.btn_long} d-block mx-auto my-3`,
+  mapCenterButtonClassName: styles.customer_mapPopupCenterButton
+}
+
+const classesOrderSummary = {
+  containerClassName: styles.ordersummary_container,
+  headerClassName: styles.ordersummary_header,
+  pointsButtonClassName: styles.ordersummary_headerRow,
+  pointsIconClassName: styles.ordersummary_headerIcon,
+  pointsTextClassName: styles.ordersummary_headerLabel,
+  expandedDivClassName: styles.ordersummary_expanded,
+  expandedLabelClassName: styles.ordersummary_expandedLabel,
+  expandedPriceClassName: styles.ordersummary_expandedPrice,
+  expandButtonClassName: styles.ordersummary_expandedButton,
+  subTotalClassName: styles.ordersummary_subTotal,
+  subTotalTextClassName: styles.ordersummary_subTotalLabel,
+  subTotalPriceClassName: styles.ordersummary_subTotalPrice,
+  footerClassName: styles.ordersummary_footer,
+  submitButtonClassName: `btn ${styles.btn_primary} ${styles.btn_long} ${styles.btn_full_width} m-0`,
+  continueShoppingClassName: "d-none",
+  popupClassName: styles.ordersummary_overlay,
+  numberOfPointsClassName: styles.ordersummary_popupPoints,
+  labelClassName: styles.ordersummary_popupPointsLabel,
+  valueClassName: styles.ordersummary_popupPointsValue,
+  closeButtonClassName: styles.ordersummary_popupClose,
+  //voucher
+  voucherButtonClassName: styles.ordersummary_headerRow,
+  voucherIconClassName: styles.ordersummary_headerIcon,
+  voucherTextClassName: styles.ordersummary_headerLabel,
+  voucherButtonAppliedClassName: styles.ordersummary_voucherAppliedButton,
+  voucherAppliedIconClassName: styles.ordersummary_voucherAppliedIcon,
+  voucherAppliedTextClassName: styles.ordersummary_voucherAppliedText,
+  voucherButtonRemoveClassName: styles.ordersummary_voucherAppliedRemove,
+  voucherContainerClassName: `${styles.ordersummary_popupVoucherContainer} ${styles.ordersummary_popup}`,
+  voucherFormContainerClassName: `${styles.ordersummary_voucherFormContainer} ${styles.ordersummary_popupFormContainer}`,
+  voucherFormClassName: `${styles.ordersummary_voucherForm} ${styles.sirclo_form_row}`,
+  voucherInputClassName: `form-control ${styles.sirclo_form_input} ${styles.ordersummary_popupFormInput}`,
+  voucherSubmitButtonClassName: `btn ${styles.btn_primary} ${styles.ordersummary_popupFormButton}`,
+  voucherListClassName: styles.ordersummary_popupVoucher,
+  voucherListHeaderClassName: styles.ordersummary_popupVoucherTitle,
+  voucherClassName: styles.ordersummary_popupVoucherItem,
+  voucherDetailClassName: styles.ordersummary_popupVoucherDetail,
+  voucherDetailHeaderClassName: styles.ordersummary_popupVoucherDetailHeader,
+  voucherDetailCodeClassName: styles.ordersummary_popupVoucherDetailCode,
+  voucherDetailTitleClassName: styles.summarycart_popupVoucherDetailTitle,
+  voucherDetailDescClassName: styles.summarycart_popupVoucherDetailDesc,
+  voucherDetailEstimateClassName: styles.summarycart_popupVoucherDetailEstimate,
+  voucherDetailEstimateDescClassName: styles.summarycart_popupVoucherDetailEstimateDesc,
+  //point
+  pointsContainerClassName: styles.ordersummary_popup,
+  pointsButtonAppliedClassName: styles.ordersummary_pointsButtonApplied,
+  pointsAppliedTextClassName: styles.ordersummary_pointsAppliedText,
+  pointLabelClassName: styles.ordersummary_pointLabel,
+  totalPointsClassName: styles.ordersummary_totalPoints,
+  pointValueClassName: styles.ordersummary_pointValue,
+  pointsFormContainerClassName: styles.ordersummary_pointsFormContainer,
+  pointsFormClassName: styles.ordersummary_pointsForm,
+  changePointsClassName: styles.ordersummary_buttonChangePoint,
+  pointsInsufficientClassName: styles.ordersummary_pointsInsufficient,
+  pointsSubmitButtonClassName: `btn ${styles.btn_primary} ${styles.btn_long} w-100 mt-4 mb-0`,
+  pointsWarningClassName: styles.ordersummary_pointsWarning
+};
+
+const classesCartDetails = {
+  className: styles.cartsummary,
+  cartBodyClassName: styles.cartsummary_body,
+  itemClassName: `${styles.cartItem} ${styles.cart_itemSummary} ${styles.cartsummary_item}`,
+  itemImageClassName: `${styles.cartItem_image} ${styles.cartsummary_image}`,
+  itemTitleClassName: styles.cartItem_detailSummary,
+  titleClassName: styles.cartItem_detail_title,
+  itemPriceClassName: styles.cartItem_priceCalculateSummary,
+  itemRegularAmountClassName: "d-none",
+  itemRegularPriceClassName: styles.cartItem_priceCalculatePriceSummary,
+  itemSalePriceWrapperClassName: styles.cartItem_priceSalePriceWrapperSummary,
+  itemSalePriceClassName: styles.cartItem_priceSalePriceSummary,
+  itemAmountClassName: `${styles.cartItem_priceSummary} ${styles.cartsummary_priceSummary}`,
+  itemQtyClassName: `${styles.cartsummary_qty__clean} ${styles.cartItem_qtySummary}`,
+  itemDiscountNoteClassName: styles.cartItem_discountNoteSummary,
+  itemRemoveClassName: styles.cartsummary_itemRemove,
+  removeButtonClassName: "d-none",
+}
+
+const classesEmptyComponent = {
+  emptyContainer: styles.cart__empty,
+  emptyTitle: styles.cart__empty__title
+}
+
+const classesPlaceholderCartPlaceorder = {
+  placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_cartPlaceorder}`,
+  placeholderTitle: `${styles.placeholderItem} ${styles.placeholderItem_cartPlaceorderTitle}`
+}
+
+const classesPlaceholderCustomerDetail = {
+  placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_customerDetail}`,
+}
+
+const classesPlaceholderShipping = {
+  placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_shippingMethod}`,
 }
 
 type PrivateComponentPropsType = {
   children: any;
 };
 
-type TypeCustomerDetailHeader = {
-  title: string,
-  subtitle: string
-}
-
 const PrivateRouteWrapper = ({ children }: PrivateComponentPropsType) => (
   <PrivateRoute
     page="shipping_method"
     loadingComponent={<LoaderPages />}
+    redirectCart="products"
   >
     {children}
   </PrivateRoute>
@@ -80,26 +186,27 @@ const PrivateRouteWrapper = ({ children }: PrivateComponentPropsType) => (
 const ShippingMethodPage: FC<any> = ({
   lng,
   lngDict,
-  auth,
   brand
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n();
-  const linksBreadcrumb = [`${i18n.t("home.title")}`, `${i18n.t("placeOrder.title")}`]
+  const size = useWindowSize();
+  const { data: databuyerNotes} = useBuyerNotes();
 
-  const CustomerDetailHeader = ({
-    title,
-    subtitle
-  }: TypeCustomerDetailHeader) => (
-    <div className="customer-detail__header">
-      <div className="customer-detail__header--left">
-        <h3 className="customer-detail__header--left-title">{title}</h3>
-        <p className="customer-detail__header--left-subtitle">{subtitle}</p>
+  const [openOrderSummary, setOpenOrderSummary] = useState<boolean>(true);
+  const [showModalErrorAddToCart, setShowModalErrorAddToCart] = useState<boolean>(false);
+
+  const toogleOrderSummary = () => setOpenOrderSummary(!openOrderSummary);
+  const toogleErrorAddToCart = () => setShowModalErrorAddToCart(!showModalErrorAddToCart);
+
+  const CustomerDetailHeader = ({ title }) => (
+    <div className={styles.customer_infoHeader}>
+      <div className={styles.customer_infoHeaderContainer}>
+        <h3 className={styles.customer_infoHeaderTitle}>{title}</h3>
+        <Info color="#767676" size="18" />
       </div>
-      <div className="customer-detail__header--right">
-        <Link href="/[lng]/place_order" as={`/${lng}/place_order`}>
-          <a className="customer-detail__header--right-link">{i18n.t("customerDetail.change")}</a>
-        </Link>
-      </div>
+      <Link href="/[lng]/place_order" as={`/${lng}/place_order`}>
+        <a className={styles.customer_infoHeaderLink}>{i18n.t("shipping.change")}</a>
+      </Link>
     </div>
   )
 
@@ -110,91 +217,254 @@ const ShippingMethodPage: FC<any> = ({
         lng={lng}
         lngDict={lngDict}
         brand={brand}
+        withHeader={false}
+        withFooter={false}
       >
-        <Breadcrumb
-          title={i18n.t("placeOrder.title")}
-          links={linksBreadcrumb}
-          lng={lng}
-        />
-        <section>
-          <div className="container">
-            <div className="row">
-              <div className="col-12 col-lg-8">
-                <Stepper
-                  i18n={i18n}
-                  step={2}
-                  pageTitle={i18n.t("pageStepper.shippingDetails")}
-                  nextPage={i18n.t("pageStepper.paymentMethod")}
-                />
-                <hr className="d-none d-md-block my-4" />
-                <div className="mobile-box">
-                  <div className="customer-detail">
-                    <CustomerDetail
-                      isBilling={true}
-                      contactInfoHeader={
-                        <CustomerDetailHeader
-                          title={i18n.t("shipping.contactInfo")}
-                          subtitle={i18n.t("shipping.subtitleContactInfo")}
+        <SEO title="Shipping Method" />
+        {showModalErrorAddToCart &&
+          <Popup
+            withHeader
+            setPopup={toogleErrorAddToCart}
+            mobileFull={false}
+            classPopopBody
+          >
+            <div className={styles.shipping_popupError}>
+              <h3 className={styles.shipping_popupErrorTitle}>{i18n.t("cart.errorSKUTitle")}</h3>
+              <p className={styles.shipping_popupErrorDesc}>{i18n.t("cart.errorSKUDesc")} </p>
+            </div>
+          </Popup>
+        }
+        <div id="summaryCart" className={styles.shipping}>
+          <div className="row mx-0">
+            <div className="col-12 col-md-6 col-lg-7 p-0">
+              <div className={styles.shipping_container}>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-12 col-md-12 col-lg-10 offset-lg-2 p-0">
+                      <div className={styles.shipping_heading}>
+                        <div
+                          className={styles.shipping_headingIcon}
+                          onClick={() => Router.push("/[lng]/products", `/${lng}/products`)}
+                        >
+                          <ArrowLeft color="black" />
+                        </div>
+                        <h6>{i18n.t("placeOrder.checkOrder")}</h6>
+                      </div>
+                      <hr className={styles.shipping_line} />
+                      <div className={styles.shipping_steps}>
+                        <Breadcrumb currentStep={2} />
+                      </div>
+                      <hr className={`${styles.shipping_lineSecond}`} />
+                    </div>
+                    {size.width < 576 &&
+                      <div className={styles.ordersummary_collapse}>
+                        <div
+                          className={styles.ordersummary_collapseHeading}
+                          onClick={toogleOrderSummary}
+                        >
+                          <div className={styles.ordersummary_collapseTitle}>
+                            <ShoppingCart color="white" />
+                            <h6>{i18n.t("placeOrder.orderSummary")}</h6>
+                          </div>
+                          {openOrderSummary ?
+                            <ChevronUp color="white" /> :
+                            <ChevronDown color="white" />
+                          }
+                        </div>
+                        <div
+                          className={openOrderSummary ?
+                            styles.ordersummary_collapseBody :
+                            styles.ordersummary_collapseBodyClose
+                          }
+                        >
+                          <CartSummary
+                            cartProps={{
+                              classes: classesCartDetails,
+                              withoutQtyInput: false,
+                              onErrorMsg: () => setShowModalErrorAddToCart(true),
+                              loadingComponent: (
+                                <div className="row">
+                                  <div className="col-4 pr-0">
+                                    <Placeholder classes={classesPlaceholderCartPlaceorder} withImage />
+                                  </div>
+                                  <div className="col-8">
+                                    <Placeholder classes={classesPlaceholderCartPlaceorder} withImage />
+                                  </div>
+                                </div>
+                              ),
+                              emptyCartPlaceHolder: (
+                                <EmptyComponent
+                                  classes={classesEmptyComponent}
+                                  title={i18n.t("cart.isEmpty")}
+                                />
+                              ),
+                            }}
+                            orderSummaryProps={{
+                              classes: classesOrderSummary,
+                              isAccordion: true,
+                              page: "shipping_method",
+                              currency: "IDR",
+                              submitButtonLabel: i18n.t("orderSummary.placeOrder"),
+                              onErrorMsg: () => setShowModalErrorAddToCart(true),
+                              onErrorMsgCoupon: (msg) => toast.error(msg),
+                              loadingComponent: (
+                                <Placeholder classes={classesPlaceholderCartPlaceorder} withTitle />
+                              ),
+                              icons: {
+                                voucher: <img src="/images/mdi_ticket-percent.svg" alt="icon" />,
+                                voucherApplied: <img src="/images/mdi_ticket-percent.svg" alt="icon" />,
+                                points: <img src="/images/mdi_star-circle.svg" alt="icon" />,
+                                pointsApplied: <img src="/images/mdi_star-circle.svg" alt="icon" />,
+                                close: <XIcon />,
+                                collapse: <ChevronUp />,
+                                expand: <ChevronDown />,
+                                voucherRemoved: <XIcon />
+                              }
+                            }}
+                          />
+                        </div>
+                      </div>
+                    }
+                    <div className="col-12 col-md-12 col-lg-8 offset-lg-2">
+                      <CustomerDetail
+                        classes={classesCustomerDetail}
+                        isBilling={true}
+                        contactInfoHeader={
+                          <CustomerDetailHeader
+                            title={i18n.t("shipping.contactInfo")}
+                          />
+                        }
+                        loadingComponent={
+                          <Placeholder classes={classesPlaceholderCustomerDetail} withImage />
+                        }
+                      />
+                      <CustomerDetail
+                        classes={classesCustomerDetail}
+                        isBilling={false}
+                        shippingInfoHeader={
+                          <CustomerDetailHeader
+                            title={i18n.t("shipping.shipTo")}
+                          />
+                        }
+                        loadingComponent={
+                          <Placeholder classes={classesPlaceholderCustomerDetail} withImage />
+                        }
+                      />
+                      <div className={`${styles.notes}`}>
+                        <h3>{i18n.t("placeOrder.notes")}</h3>
+                        <Link href="/[lng]/cart" as={`/${lng}/cart`}>
+                            <a className={styles.notes_change}>
+                              {i18n.t("shipping.change")}
+                            </a>
+                          </Link>
+                        <div className={`${styles.notes_box}`}>
+                          {databuyerNotes?.buyerNotes?.buyerNotes || i18n.t("global.notesEmpty")}
+                        </div>
+                      </div>
+                      <div className={styles.shippingmethod}>
+                        <h3 className={styles.shippingmethod_title}>{i18n.t("account.shippingMethod")}</h3>
+                        <ShippingMethods
+                          classes={classesShippingMethod}
+                          onErrorMsg={(msg) => toast.error(msg)}
+                          mapCenterIcon={<Crosshair />}
+                          loadingComponent={
+                            <Placeholder classes={classesPlaceholderShipping} withList listMany={5} />
+                          }
                         />
-                      }
-                      classes={classesCustomerDetail}
-                    />
-                    <hr className="my-4" />
-                    <CustomerDetail
-                      isBilling={false}
-                      shippingInfoHeader={
-                        <CustomerDetailHeader
-                          title={i18n.t("shipping.shipTo")}
-                          subtitle={i18n.t("shipping.subtitleShipTo")}
-                        />
-                      }
-                      classes={classesCustomerDetail}
-                    />
-                  </div>
-                  <div className="shipping-method">
-                    <h3 className="shipping-method__title">{i18n.t("shipping.shippingMethod")}</h3>
-                    <ShippingMethods
-                      classes={classesShippingMethod}
-                      onErrorMsg={(msg) => toast.error(msg)}
-                      mapCenterIcon={<FontAwesomeIcon icon={faDotCircle} size="1x" />}
-                      mapButtonCloseIcon={<FontAwesomeIcon icon={faTimes} height="1.25em" />}
-                    />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="col-12 col-lg-4 margin-step-payment no-padding-mobile-pad">
-                <OrderSummaryBox
-                  i18n={i18n}
-                  auth={auth}
-                  page="shipping_method"
-                  withOrderDetail
-                />
-              </div>
+              <div style={{marginBottom : 20}}/>
             </div>
+            {size.width > 575 &&
+              <div className="col-12 col-md-6 col-lg-5 p-0">
+                <div className={styles.ordersummary}>
+                  <div className={styles.ordersummary_heading}>
+                    <ShoppingCart color="white" />
+                    <h6>{i18n.t("placeOrder.orderSummary")}</h6>
+                  </div>
+                  <hr className={styles.ordersummary_line} />
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-12 col-md-12 col-lg-8">
+                        <CartSummary
+                          cartProps={{
+                            classes: classesCartDetails,
+                            withoutQtyInput: false,
+                            onErrorMsg: (msg) => toast.error(msg),
+                            loadingComponent: (
+                              <div className="p-3">
+                                <div className="row">
+                                  <div className="col-4 pr-0">
+                                    <Placeholder classes={classesPlaceholderCartPlaceorder} withImage />
+                                  </div>
+                                  <div className="col-8">
+                                    <Placeholder classes={classesPlaceholderCartPlaceorder} withImage />
+                                  </div>
+                                </div>
+                              </div>
+                            ),
+                            emptyCartPlaceHolder: (
+                              <EmptyComponent
+                                classes={classesEmptyComponent}
+                                title={i18n.t("cart.isEmpty")}
+                              />
+                            ),
+                          }}
+                          orderSummaryProps={{
+                            classes: {
+                              ...classesOrderSummary,
+                              submitButtonClassName: `btn ${styles.btn_white} ${styles.btn_long} ${styles.btn_full_width} mt-3`
+                            },
+                            isAccordion: true,
+                            page: "shipping_method",
+                            currency: "IDR",
+                            submitButtonLabel: i18n.t("orderSummary.placeOrder"),
+                            onErrorMsg: (msg) => toast.error(msg),
+                            onErrorMsgCoupon: (msg) => toast.error(msg),
+                            loadingComponent: (
+                              <div className="px-3">
+                                <Placeholder classes={classesPlaceholderCartPlaceorder} withTitle />
+                              </div>
+                            ),
+                            icons: {
+                              voucher: <img src="/images/mdi_ticket-percent.svg" alt="icon" />,
+                              voucherApplied: <img src="/images/mdi_ticket-percent.svg" alt="icon" />,
+                              points: <img src="/images/mdi_star-circle.svg" alt="icon" />,
+                              pointsApplied: <img src="/images/mdi_star-circle.svg" alt="icon" />,
+                              close: <XIcon />,
+                              collapse: <ChevronUp />,
+                              expand: <ChevronDown />,
+                              voucherRemoved: <XIcon />
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
           </div>
-        </section>
+        </div>
       </Layout>
     </PrivateRouteWrapper>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
-  const { default: lngDict = {} } = await import(
-    `locales/${params.lng}.json`
-  );
-
   const brand = await useBrand(req);
-
-  const cookies = parseCookies(req);
-  const auth = cookies.AUTH_KEY;
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
+  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
 
   return {
     props: {
-      lng: params.lng,
+      lng: defaultLanguage,
       lngDict,
-      auth: auth || null,
-      brand: brand || ''
-    },
+      brand: brand || ""
+    }
   };
 }
 

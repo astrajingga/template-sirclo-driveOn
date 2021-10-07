@@ -646,7 +646,7 @@
     flex-wrap: nowrap;
     margin: 0 0 1rem;
     padding: 0.5rem 1rem;
-    background: $color_blue_low;
+    background: $color_base_red;
     border: 1px solid $color_white;
     border-radius: 3px;
     color: $color_white;
@@ -717,7 +717,7 @@
 
       &:focus
       {
-        background: $color_base_red_light;
+        background: $color_white;
         border: 1px solid $color_base_red;
       }
     }

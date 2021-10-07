@@ -356,8 +356,11 @@
         "notes": "Catatan"
     },
     "product": {
+        "clear" : "Bersihkan Semua",
         "addToCart": "Masukan Keranjang",
+        "adjust": "Sesuaikan",
         "all": "Semua",
+        "back": "Kembali",
         "backToHome": "Kembali ke Beranda",
         "buyNow": "Beli Sekarang",
         "comingSoon": "Segera Datang",

@@ -1,58 +1,32 @@
 import { FC, useState, useEffect } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import Router, { useRouter } from "next/router";
-import { ProductFilter, ProductSort, Products, useI18n } from "@sirclo/nexus";
-import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import SideMenu from "components/SideMenu/SideMenu";
-import Placeholder from "components/Placeholder";
-import EmptyComponent from "components/EmptyComponent/EmptyComponent";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSlidersH,
-  faChevronDown,
-  faBoxOpen,
-  faCheckCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import {
+  Products,
+  ProductFilter,
+  ProductCategory,
+  useI18n,
+} from "@sirclo/nexus";
 import useQuery from "lib/utils/useQuery";
-import { useBrand } from "lib/utils/useBrand";
 import useWindowSize from "lib/utils/useWindowSize";
-import useInfiniteScroll from "lib/utils/useInfiniteScroll";
+import convertToTextFromQuery from "lib/utils/convertToTextFromQuery";
+import SEO from "components/SEO/SEO";
+import Layout from "components/Layout/Layout";
+import EmptyComponent from "components/EmptyComponent/EmptyComponentUNO";
+import Placeholder from "components/Placeholder";
+import { useBrand } from "lib/utils/useBrand";
+import { Sliders, ArrowUp } from "react-feather";
+import styles from "public/scss/pages/Products.module.scss";
 
-const Quickview = dynamic(() => import("components/Quickview/Quickview"));
+const Popup = dynamic(() => import("components/Popup/PopupUno"));
 
-const Popup = dynamic(() => import("components/Popup/Popup"));
 
 const classessPagination = {
   pagingClassName: "paging",
   activeClassName: "active_paging",
   itemClassName: "item_paging",
   linkClassName: "link_paging",
-};
-
-const classesProductFilter = {
-  filterClassName: "products_filter",
-  filterNameClassName: "products_filterName",
-  filterOptionPriceClassName: "products_filterPrice",
-  filterPriceLabelClassName: "products_filterPriceLabel",
-  filterOptionClassName: "products_filterOption",
-  filterLabelClassName: "products_filterOptionLabel",
-  filterSliderClassName: "products_filterSlider",
-  filterSliderRailClassName: "products_filterSliderRail",
-  filterSliderHandleClassName: "products_filterSliderHandle",
-  filterSliderTrackClassName: "products_filterSliderTrack",
-  filterSliderTooltipClassName: "products_filterSliderTooltip",
-  filterSliderTooltipContainerClassName:
-    "products_filterSliderTooltipContainer",
-  filterSliderTooltipTextClassName: "products_filterSliderTooltipText",
-};
-
-const classesProductSort = {
-  sortClassName: "products-sort",
-  sortOptionsClassName: "products-sort__list",
-  sortOptionClassName: "products-sort__list--items",
-  sortOptionButtonClassName: "products-sort__list--items-button",
 };
 
 const classesProducts = {
@@ -71,69 +45,99 @@ const classesProducts = {
   salePriceClassName: "products__item--content-price--sale",
 };
 
-const classesPlaceholderFilter = {
-  placeholderList: "placeholder-item placeholder-item__header--nav-mobile",
+const classesProductSort = {
+  sortClassName: `form-group ${styles.sirclo_form_select}`,
+  sortOptionsClassName: `form-control ${styles.sirclo_form_input}`,
+  sortOptionClassName: 'opsi',
+  sortActiveClassName: 'opsi-selected',
 };
 
-const classesPlaceholderProduct = {
-  placeholderImage: "placeholder-item placeholder-item__product--card",
+const classesProductFilterSort = {
+  filterClassName: styles.products_filter,
+  filterNameClassName: styles.products_filterName,
+  filterOptionPriceClassName: styles.products_filterPrice,
+  filterPriceLabelClassName: styles.products_filterPriceLabel,
+  filterPriceInputClassName: styles.products_filterPriceInput,
+  filterOptionClassName: styles.products_filterOption,
+  filterColorLabelClassName: styles.products_filterOptionLabel,
+  filterLabelClassName: styles.products_filterOptionLabel,
+  filterCheckboxClassName: styles.products_filterOptionCheckbox,
+  filterSliderClassName: styles.products_filterSlider,
+  filterSliderRailClassName: styles.products_filterSliderRail,
+  filterSliderHandleClassName: styles.products_filterSliderHandle,
+  filterSliderTrackClassName: styles.products_filterSliderTrack,
+  filterSliderTooltipClassName: styles.products_filterSliderTooltip,
+  filterSliderTooltipContainerClassName: styles.products_filterSliderTooltipContainer,
+  filterSliderTooltipTextClassName: styles.products_filterSliderTooltipText,
+};
+
+const classesProductCategory = {
+  parentCategoryClassName: styles.category_order,
+  categoryItemClassName: styles.category_list,
+  categoryValueClassName: styles.category_list_link,
+  categoryNameClassName: styles.category_list_item,
+  categoryNumberClassName: "ml-1",
+  dropdownIconClassName: "d-none",
 };
 
 const classesEmptyComponent = {
-  emptyContainer: "products__empty",
-  emptyTitle: "products__empty--title",
-  emptyDesc: "products__empty--desc",
+  emptyContainer: styles.products_empty,
+  emptyTitle: styles.products_empty_title,
+  emptyDesc: styles.products_empty_desc,
+};
+
+const classesPlaceholderCatProduct = {
+  placeholderTitle: `${styles.placeholderItem} ${styles.placeholderItem_productCat__title}`,
+};
+
+const classesPlaceholderProduct = {
+  placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_product__card}`,
 };
 
 const ProductsPage: FC<any> = ({
   lng,
   lngDict,
   brand,
-  urlSite,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const i18n: any = useI18n();
   const router = useRouter();
-  const size: any = useWindowSize();
+  const i18n: any = useI18n();
+  const size = useWindowSize();
   const categories: string = useQuery("categories");
   const tagname: string | string[] = router.query.tagname || null;
 
-  const [openFilter, setOpenFilter] = useState<boolean>(false);
   const [openSort, setOpenSort] = useState<boolean>(false);
   const [sort, setSort] = useState(null);
   const [filterProduct, setFilterProduct] = useState({});
-  const [isQuickview, setIsQuickview] = useState<boolean>(false);
-  const [slug, setSlug] = useState<string>("");
-  const [showModalErrorAddToCart, setShowModalErrorAddToCart] =
-    useState<boolean>(false);
-  const [showModalAddToCart, setShowModalAddToCart] = useState<boolean>(false);
-  const [showModalNotifyMe, setShowModalNotifyMe] = useState<boolean>(false);
 
+  const [currPage, setCurrPage] = useState(0);
   const [pageInfo, setPageInfo] = useState({
     pageNumber: 0,
     itemPerPage: 8,
     totalItems: 0,
   });
+  const totalPage = Math.ceil(pageInfo.totalItems / pageInfo.itemPerPage);
 
-  const { currPage, setCurrPage } = useInfiniteScroll(
-    pageInfo,
-    "products__item"
-  );
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
 
-  const linksBreadcrumb = [
-    `${i18n.t("home.title")}`,
-    `${i18n.t("product.title")}`,
-  ];
+  const handleScroll = () => {
+    const lastTestimonial = document.querySelector(
+      ".products_list:last-child"
+    ) as HTMLElement;
 
-  const [search, setsearch] = useState("");
-
-  const searchProduct = (val: any) => {
-    console.log(val);
-    if (val !== "" && typeof val !== "undefined") {
-      Router.push(`/${lng}/products?q=${val}`);
-      // setOpenSearch(false);
-    } else {
-      Router.push(`/${lng}/products`);
-      // setOpenSearch(false);
+    if (lastTestimonial) {
+      const lastTestimonialOffset =
+        lastTestimonial.offsetTop + lastTestimonial.clientHeight;
+      const pageOffset = window.pageYOffset + window.innerHeight;
+      if (pageOffset > lastTestimonialOffset) {
+        if (currPage < totalPage - 1) {
+          setCurrPage(currPage + 1);
+        }
+      }
     }
   };
 
@@ -141,194 +145,90 @@ const ProductsPage: FC<any> = ({
     setCurrPage(0);
   }, [filterProduct, categories]);
 
-  const handleFailedAddToCart = () => {
-    setIsQuickview(false);
-    setShowModalErrorAddToCart(true);
-  };
-
-  const handleCompleteAddToCart = () => {
-    setIsQuickview(false);
-    setShowModalAddToCart(true);
-  };
-
-  const handleCompleteNotifyMe = () => {
-    setIsQuickview(false);
-    setShowModalNotifyMe(true);
-  };
-
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const toogleSort = () => setOpenSort(!openSort);
   const handleFilter = (selectedFilter: any) =>
     setFilterProduct(selectedFilter);
 
-  const toogleFilter = () => setOpenFilter(!openFilter);
-  const toogleSort = () => setOpenSort(!openSort);
-
   return (
     <Layout i18n={i18n} lng={lng} lngDict={lngDict} brand={brand}>
-      {isQuickview && slug && (
-        <Quickview
-          slug={slug}
-          setIsQuickView={setIsQuickview}
-          handleFailedAddToCart={handleFailedAddToCart}
-          handleCompleteAddToCart={handleCompleteAddToCart}
-          handleCompleteNotifyMe={handleCompleteNotifyMe}
-          i18n={i18n}
-          urlSite={urlSite}
-        />
-      )}
-      {showModalNotifyMe && (
-        <Popup setPopup={setShowModalNotifyMe} withClose={false}>
-          <div className="product-detail_errorAddCart">
-            <h3 className="product-detail_errorAddCartTitle">
-              {i18n.t("product.notifyTitleSuccess")}
-            </h3>
-            <p className="product-detail_errorAddCartDesc">
-              {i18n.t("product.notifySuccess")}
-            </p>
-            <button
-              className="btn btn-orange btn-long mt-3"
-              onClick={() => {
-                setShowModalNotifyMe(false);
-                Router.push("/[lng]/products", `/${lng}/products`);
-              }}
-            >
-              {i18n.t("global.continueShopping")}
-            </button>
-          </div>
-        </Popup>
-      )}
-      {showModalAddToCart && (
-        <Popup setPopup={setShowModalAddToCart} withClose={false}>
-          <div className="product-detail_errorAddCart">
-            <FontAwesomeIcon
-              icon={faCheckCircle}
-              size="6x"
-              color="#00BA3F"
-              className="mb-4"
-            />
-            <p className="product-detail_errorAddCartDesc">
-              {i18n.t("product.successAddToCart")}
-            </p>
-            <button
-              className="btn btn-orange btn-long mt-4"
-              onClick={() => {
-                setShowModalAddToCart(false);
-                Router.push("/[lng]/cart", `/${lng}/cart`);
-              }}
-            >
-              {i18n.t("cart.title")}
-            </button>
-            <button
-              className="btn btn-orange-outer btn-long mt-3"
-              onClick={() => {
-                setShowModalAddToCart(false);
-                Router.push("/[lng]/products", `/${lng}/products`);
-              }}
-            >
-              {i18n.t("global.continueShopping")}
-            </button>
-          </div>
-        </Popup>
-      )}
-      {showModalErrorAddToCart && (
-        <Popup setPopup={setShowModalErrorAddToCart}>
-          <div className="product-detail_errorAddCart">
-            <h3 className="product-detail_errorAddCartTitle">
-              {i18n.t("cart.errorSKUTitle")}
-            </h3>
-            <p className="product-detail_errorAddCartDesc">
-              {i18n.t("cart.errorSKUDetail")}{" "}
-            </p>
-          </div>
-        </Popup>
-      )}
-      <Breadcrumb links={linksBreadcrumb} lng={lng} />
-      {/* <section> */}
-      <div className="contain">
-        {/* <div className="categories">
-            <a onClick={toogleFilter} className="categories__item">
-              <span className="categories__item--title">
-                {i18n.t("product.filter")}
-              </span>
-              <FontAwesomeIcon
-                className="categories__item--icon ml-2"
-                icon={faSlidersH}
+      <SEO title={i18n.t("product.products")} />
+      <div className={styles.category}>
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-lg-8 offset-lg-2">
+              <ProductCategory
+                classes={classesProductCategory}
+                showCategoryNumber={false}
+                loadingComponent={
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-4 col-md-2">
+                        <Placeholder
+                          classes={classesPlaceholderCatProduct}
+                          withTitle
+                        />
+                      </div>
+                      <div className="col-4 col-md-2">
+                        <Placeholder
+                          classes={classesPlaceholderCatProduct}
+                          withTitle
+                        />
+                      </div>
+                      <div className="col-4 col-md-2">
+                        <Placeholder
+                          classes={classesPlaceholderCatProduct}
+                          withTitle
+                        />
+                      </div>
+                      <div className="d-none d-md-block col-md-2">
+                        <Placeholder
+                          classes={classesPlaceholderCatProduct}
+                          withTitle
+                        />
+                      </div>
+                      <div className="d-none d-md-block col-md-2">
+                        <Placeholder
+                          classes={classesPlaceholderCatProduct}
+                          withTitle
+                        />
+                      </div>
+                      <div className="d-none d-md-block col-md-2">
+                        <Placeholder
+                          classes={classesPlaceholderCatProduct}
+                          withTitle
+                        />
+                      </div>
+                    </div>
+                  </div>
+                }
               />
-            </a>
-            <a onClick={toogleSort} className="categories__item">
-              <span className="categories__item--title">
-                {i18n.t("product.sort")}
-              </span>
-              <FontAwesomeIcon
-                className="categories__item--icon ml-2"
-                icon={faChevronDown}
-              />
-            </a>
-          </div> */}
-        {/* <div className="container"> */}
-        <div className="row">
-          <div className="col-2 sidebar">
-            <span className="filter">{i18n.t("product.filter")}</span>
-            <ProductFilter
-              classes={classesProductFilter}
-              withPriceInput={true}
-              withPriceValueLabel
-              withTooltip
-              tagType="radio"
-              variantType="radio"
-              colorFilterType="radio"
-              handleFilter={handleFilter}
-              loadingComponent={
-                <Placeholder
-                  classes={classesPlaceholderFilter}
-                  withList={true}
-                  listMany={10}
-                />
-              }
-            />
-          </div>
-          <div className="col-12 col-md-8">
-            <div
-              className="search"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignSelf: "center",
-                paddingBottom: 20,
-              }}
-            >
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  searchProduct(search);
-                }}
-              >
-                <label>
-                  <input
-                    type="text"
-                    className="search-bar"
-                    placeholder={i18n.t("header.searchProduct")}
-                    value={search}
-                    onChange={(e) => setsearch(e.target.value)}
-                  />
-                </label>
-                <input type="submit" value="Submit" className="submit" />
-              </form>
             </div>
-            <div className="row products">
+          </div>
+        </div>
+      </div>
+      <div className={`container ${styles.products}`}>
+        <div className="row">
+          <div className="col-12 col-lg-8 offset-lg-2">
+            <div className={styles.products_header}>
+              <h3 className="text-capitalize">
+                {categories
+                  ? convertToTextFromQuery(categories)
+                  : i18n.t("product.all")}
+              </h3>
+            </div>
+            <div className="row">
               {Array.from(Array(currPage + 1)).map((_, i) => (
                 <Products
                   key={i}
                   tagName={tagname}
                   pageNumber={i}
-                  itemPerPage={8}
-                  paginationClasses={classessPagination}
+                  itemPerPage={4}
                   getPageInfo={setPageInfo as any}
                   collectionSlug={categories}
-                  isQuickView={setIsQuickview}
-                  getQuickViewSlug={setSlug}
-                  quickViewFeature={true}
                   sort={sort}
                   callPagination={true}
+                  paginationClasses={classessPagination}
                   filter={filterProduct}
                   withSeparatedVariant={true}
                   classes={classesProducts}
@@ -336,7 +236,7 @@ const ProductsPage: FC<any> = ({
                   pathPrefix={`product`}
                   lazyLoadedImage={false}
                   thumborSetting={{
-                    width: size.width < 575 ? 350 : 500,
+                    width: size.width < 768 ? 512 : 800,
                     format: "webp",
                     quality: 85,
                   }}
@@ -344,14 +244,17 @@ const ProductsPage: FC<any> = ({
                     <div className="col-12">
                       <EmptyComponent
                         classes={classesEmptyComponent}
-                        logo={
-                          <FontAwesomeIcon
-                            icon={faBoxOpen}
-                            className="products__empty--icon"
-                          />
-                        }
                         title={i18n.t("product.isEmpty")}
-                        desc={i18n.t("product.isEmptyDesc")}
+                        button={
+                          <button
+                            className={`btn mt-2 ${styles.btn_primary} ${styles.btn_long}`}
+                            onClick={() =>
+                              router.push(`/[lng]/products`, `/${lng}/products`)
+                            }
+                          >
+                            {i18n.t("product.back")}
+                          </button>
+                        }
                       />
                     </div>
                   }
@@ -369,13 +272,13 @@ const ProductsPage: FC<any> = ({
                           withImage={true}
                         />
                       </div>
-                      <div className="col-6 col-md-3 mb-4">
+                      <div className="d-none d-md-block col-md-3 mb-4">
                         <Placeholder
                           classes={classesPlaceholderProduct}
                           withImage={true}
                         />
                       </div>
-                      <div className="col-6 col-md-3 mb-4">
+                      <div className="d-none d-md-block col-md-3 mb-4">
                         <Placeholder
                           classes={classesPlaceholderProduct}
                           withImage={true}
@@ -387,76 +290,70 @@ const ProductsPage: FC<any> = ({
               ))}
             </div>
           </div>
-          <div className="col-2 sidebar">
-          <span className="filter">{i18n.t("product.sort")}</span>
-            <ProductSort
-              classes={classesProductSort}
-              type="dropdown"
-              handleSort={(selectedSort: any) => {
-                setSort(selectedSort);
-                setOpenSort(false);
-              }}
-            />
-          </div>
         </div>
-        {/* </div> */}
       </div>
-      {/* </section> */}
-      <SideMenu
-        title={i18n.t("product.filter")}
-        openSide={openFilter}
-        toogleSide={toogleFilter}
-        positionSide="right"
-      >
-        <ProductFilter
-          classes={classesProductFilter}
-          withPriceValueLabel
-          withTooltip
-          handleFilter={handleFilter}
-          loadingComponent={
-            <Placeholder
-              classes={classesPlaceholderFilter}
-              withList={true}
-              listMany={10}
-            />
-          }
-        />
-      </SideMenu>
-      <SideMenu
-        title={i18n.t("product.sort")}
-        openSide={openSort}
-        toogleSide={toogleSort}
-        positionSide="right"
-      >
-        <ProductSort
-          classes={classesProductSort}
-          type="dropdown"
-          handleSort={(selectedSort: any) => {
-            setSort(selectedSort);
-            setOpenSort(false);
-          }}
-        />
-      </SideMenu>
+      <div className={styles.products_action}>
+        <div
+          className={`${styles.products_action_sort} mr-2`}
+          onClick={toogleSort}
+        >
+          <span className="mr-2">
+            <Sliders color="white" />
+          </span>
+          <span className={styles.products_action_sort__title}>
+            {i18n.t("product.adjust")}
+          </span>
+        </div>
+        <div className={styles.products_action_top} onClick={() => scrollTop()}>
+          <span>
+            <ArrowUp color="white" />
+          </span>
+        </div>
+      </div>
+      {openSort && (
+        <Popup
+          withHeader
+          setPopup={toogleSort}
+          popupTitle={i18n.t("product.adjust")}
+        >
+          <div className={styles.products_sortLabel}>
+            {i18n.t("product.sort")}
+          </div>
+          <ProductFilter
+            withSort
+            sortType="dropdown"
+            sortClasses={classesProductSort}
+            classes={classesProductFilterSort}
+            withPriceMinimumSlider
+            withPriceValueLabel
+            withPriceInput
+            withTooltip
+            handleFilter={handleFilter}
+            handleSort={(selectedSort: any) => {
+              setSort(selectedSort);
+              setOpenSort(false);
+            }}
+          />
+        </Popup>
+      )}
     </Layout>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({
-  params,
   req,
+  params,
 }) => {
-  const { default: lngDict = {} } = await import(`locales/${params.lng}.json`);
-
   const brand = await useBrand(req);
-  const urlSite = `https://${req.headers.host}/${params.lng}/product/${params.slug}`;
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
+  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
 
   return {
     props: {
-      lng: params.lng,
+      lng: defaultLanguage,
       lngDict,
-      brand: brand || "",
-      urlSite,
-    },
+      brand: brand || ""
+    }
   };
 };
 

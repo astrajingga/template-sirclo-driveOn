@@ -354,12 +354,15 @@
         "notes": "Notes"
     },
     "product": {
+        "clear" : "Clear All",
         "addToCart": "Add To Cart",
+        "adjust": "Adjust",
         "all": "All",
         "backToHome": "Back to Home",
         "buyNow": "Buy Now",
         "comingSoon": "Coming Soon",
         "day": "Day",
+        "back": "Back",
         "description": "Description",
         "destination": "Destination",
         "detailProduct": "Product Detail",

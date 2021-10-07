@@ -53,26 +53,27 @@
 
   &_white
   {
-    color: $color_blue !important;
+    color: $color_base_red !important;
     background-color: $color_white !important;
     transition: all .3s;
+    border: 1px solid $color_base_red;
 
     &:hover{
-      color: $color_blue_dark !important;
-      background-color: $color_white !important;
+      color: $color_white !important;
+      background-color: $color_base_red !important;
     }
   }
 
   &_black
   {
     color: $color_white !important;
-    background-color: $color_black !important;
+    background-color: $color_base_red!important;
 
     &:hover,
     &:focus,
     &:active{
       color: $color_white;
-      background-color: $color_black;
+      background-color: $color_base_red;
     }
   }
 

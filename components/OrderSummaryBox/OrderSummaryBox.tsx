@@ -43,7 +43,7 @@ const classesOrderSummary = {
   voucherListHeaderClassName: "order-summary__popup--voucher-title",
   voucherClassName: "order-summary__popup--voucher-list",
   voucherFooterClassName: "order-summary__popup--voucher-footer",
-  voucherApplyButtonClassName: "btn btn-danger",
+  voucherApplyButtonClassName: "btn btn-orange",
 
   pointsButtonClassName: "order-summary__header--features b-left mt-3",
   pointsIconClassName: "order-summary__header--features-icon",

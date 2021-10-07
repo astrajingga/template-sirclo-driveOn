@@ -48,7 +48,7 @@
       align-items: center;
       padding: .5rem 1rem;
       border-radius: 34px;
-      background: $color_blue;
+      background: $color_base_red;
       color: $color_white;
       cursor: pointer;
 
@@ -272,14 +272,14 @@
     height: 20px;
     border-radius: 50%;
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);
-    background-color: $color_blue;
+    background-color: $color_base_red;
   }
 
   &_filterSliderTrack
   {
     position: absolute;
     height: 10px;
-    background-color: $color_blue;
+    background-color: $color_base_red;
     border-radius: 7px;
     cursor: pointer;
   }
