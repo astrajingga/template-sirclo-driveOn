@@ -94,7 +94,7 @@ const LoginPage: FC<any> = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n()
   const [step, setStep] = useState<string>("whatsapp-input");
-  const linksBreadcrumb = [`${i18n.t("home.title")}`, `${i18n.t("login.title")}`]
+  // const linksBreadcrumb = [`${i18n.t("home.title")}`, `${i18n.t("login.title")}`]
 
   const brandName = (brand: string): string => {
     const lower = brand?.toLowerCase();
