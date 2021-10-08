@@ -22,15 +22,22 @@ import styles from "public/scss/pages/Products.module.scss";
 const Popup = dynamic(() => import("components/Popup/PopupUno"));
 
 
-const classessPagination = {
-  pagingClassName: "paging",
-  activeClassName: "active_paging",
-  itemClassName: "item_paging",
-  linkClassName: "link_paging",
-};
+// const classessPagination = {
+//   pagingClassName: "paging",
+//   activeClassName: "active_paging",
+//   itemClassName: "item_paging",
+//   linkClassName: "link_paging",
+// };
+
+const classesPagination = {
+  pagingClassName: "col-12 products__pagination",
+  itemClassName: "products__paginationItem",
+  activeClassName: "products__paginationItemActive"
+}
+
 
 const classesProducts = {
-  productContainerClassName: "col-6 col-md-3 products__item",
+  productContainerClassName: "col-6 col-md-4 products__item",
   productImageClassName: "products__item--image",
   productImageContainerClassName: "image-container",
   productLabelContainerClassName: "products__item--content",
@@ -147,8 +154,9 @@ const ProductsPage: FC<any> = ({
 
   const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
   const toogleSort = () => setOpenSort(!openSort);
-  const handleFilter = (selectedFilter: any) =>
+  const handleFilter = (selectedFilter: any) => {
     setFilterProduct(selectedFilter);
+  }
 
   return (
     <Layout i18n={i18n} lng={lng} lngDict={lngDict} brand={brand}>
@@ -223,12 +231,12 @@ const ProductsPage: FC<any> = ({
                   key={i}
                   tagName={tagname}
                   pageNumber={i}
-                  itemPerPage={4}
+                  itemPerPage={6}
                   getPageInfo={setPageInfo as any}
                   collectionSlug={categories}
                   sort={sort}
                   callPagination={true}
-                  paginationClasses={classessPagination}
+                  paginationClasses={classesPagination}
                   filter={filterProduct}
                   withSeparatedVariant={true}
                   classes={classesProducts}
@@ -260,25 +268,37 @@ const ProductsPage: FC<any> = ({
                   }
                   loadingComponent={
                     <>
-                      <div className="col-6 col-md-3 mb-4">
+                      <div className="col-6 col-md-4 mb-4">
                         <Placeholder
                           classes={classesPlaceholderProduct}
                           withImage={true}
                         />
                       </div>
-                      <div className="col-6 col-md-3 mb-4">
+                      <div className="col-6 col-md-4 mb-4">
                         <Placeholder
                           classes={classesPlaceholderProduct}
                           withImage={true}
                         />
                       </div>
-                      <div className="d-none d-md-block col-md-3 mb-4">
+                      <div className="d-none d-md-block col-md-4 mb-4">
                         <Placeholder
                           classes={classesPlaceholderProduct}
                           withImage={true}
                         />
                       </div>
-                      <div className="d-none d-md-block col-md-3 mb-4">
+                      <div className="d-none d-md-block col-md-4 mb-4">
+                        <Placeholder
+                          classes={classesPlaceholderProduct}
+                          withImage={true}
+                        />
+                      </div>
+                      <div className="d-none d-md-block col-md-4 mb-4">
+                        <Placeholder
+                          classes={classesPlaceholderProduct}
+                          withImage={true}
+                        />
+                      </div>
+                      <div className="d-none d-md-block col-md-4 mb-4">
                         <Placeholder
                           classes={classesPlaceholderProduct}
                           withImage={true}

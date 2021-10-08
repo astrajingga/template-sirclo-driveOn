@@ -1,7 +1,7 @@
 .side-menu {
   width: 0;
   top: 0;
-  background-color: $color_white;
+  background-color: $color_black_light;
   height: 100vh;
   position: fixed;
   right: -300px;
@@ -34,7 +34,7 @@
     justify-content: space-between;
 
     .icon {
-      color: rgba(0, 0, 0, 0.5);
+      color: rgba(255, 255, 255, 0.898);
       height: 1.4em;
 
       &:hover {
@@ -52,6 +52,7 @@
     h6 {
       font-family: "karla-bold";
       font-size: 16px;
+      color: $color_white;
     }
   }
 

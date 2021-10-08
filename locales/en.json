@@ -171,6 +171,7 @@
         "featuredProducts": "Featured Products",
         "loading": "Please Wait",
         "new-arrivals": "New Arrival",
+        "newProduct": "New Arrival",
         "ourProducts": "Our Products",
         "ourProductsDesc": "We have several product recommendations for you",
         "preorder": "Pre Order",
@@ -616,6 +617,6 @@
     },
     "instaFeed": {
         "title": "@drivenon_club",
-        "titleDesc": "Follow On Instagram"
+        "titleDesc": "Follow us on Instagram"
     }
 }

@@ -102,7 +102,7 @@ const Home: React.FC<any> = ({
 
   const [isQuickview, setIsQuickview] = useState<boolean>(false);
   const [slug, setSlug] = useState<string>("");
-  const [tabActive, setTabActive] = useState<string>("featured");
+  const [tabActive, setTabActive] = useState<string>("new-arrivals");
   const [showModalErrorAddToCart, setShowModalErrorAddToCart] = useState<boolean>(false);
   const [showModalAddToCart, setShowModalAddToCart] = useState<boolean>(false);
   const [showModalNotifyMe, setShowModalNotifyMe] = useState<boolean>(false);
@@ -229,22 +229,6 @@ const Home: React.FC<any> = ({
       </div>
       <section>
         <div className="container">
-          {/* <LazyLoadComponent>
-                <div className="row mb-5">
-                  <div className="col-3 col-md-3">
-                  <img className="size-capability__image" src="/images/capability-quality.png" />
-                  </div>
-                  <div className="col-3 col-md-3">
-                    <img className="size-capability__image" src="/images/capability-protection.png" />
-                  </div>
-                  <div className="col-3 col-md-3">
-                    <img className="size-capability__image" src="/images/capability-shipping.png" />
-                  </div>
-                  <div className="col-3 col-md-3">
-                    <img className="size-capability__image" src="/images/capability-support.png" />
-                  </div>
-                </div>
-          </LazyLoadComponent> */}
           <div className="heading">
             <div className="heading__title">
               <h2>{i18n.t("home.ourProducts")}</h2>
@@ -306,6 +290,7 @@ const Home: React.FC<any> = ({
               </a>
             </Link>
           </div>
+          
         </div>
       </section>
       <br></br>
@@ -314,6 +299,7 @@ const Home: React.FC<any> = ({
         <div className="container">
           <LazyLoadComponent>
               <Widget
+                widgetClassName="widget-contain"
                 pos='main-content-2'
                 thumborSetting={{
                   width: 0,
@@ -325,76 +311,14 @@ const Home: React.FC<any> = ({
             </LazyLoadComponent>
         </div>
       </section>
-      {/* <section>
-        <div className="container">
-          <div className="row">
-            <div className="col-12 col-md-6">
-              <LazyLoadComponent>
-                <Widget
-                  pos="main-content-1"
-                  widgetClassName="widget-image-home"
-                  thumborSetting={{
-                    width: size.width < 768 ? 512 : 800,
-                    format: "webp",
-                    quality: 85,
-                  }}
-                  loadingComponent={
-                    <Placeholder classes={classesPlaceholderWidget} withImage />
-                  }
-                />
-              </LazyLoadComponent>
-            </div>
-            <div className="col-12 col-md-6">
-              <LazyLoadComponent>
-                <Widget
-                  pos="main-content-2"
-                  widgetClassName="widget-image-home"
-                  thumborSetting={{
-                    width: size.width < 768 ? 512 : 800,
-                    format: "webp",
-                    quality: 85,
-                  }}
-                  loadingComponent={
-                    <Placeholder classes={classesPlaceholderWidget} withImage />
-                  }
-                />
-              </LazyLoadComponent>
-            </div>
-          </div>
-        </div>
-      </section> */}
       <section>
-        {/* <div className="container">
+        <div className="container">
           <div className="heading">
             <div className="heading__title">
-              <h5>{i18n.t("home.featuredProducts")}</h5>
-            </div>
-            <div className="heading__desc">
-              <p>{i18n.t("home.featuredDesc")}</p>
+              <h2>{i18n.t("home.newProduct")}</h2>
             </div>
           </div>
           <div className="featured-products">
-            <div className="featured-products__tabs">
-              <ul className="nav nav-pills featured-products__tabs--row mb-4">
-                {tabMenu.map((el, idx) => (
-                  <li
-                    className="nav-item featured-products__tabs--row-item"
-                    key={idx}
-                  >
-                    <a
-                      className={
-                        tabActive === el
-                          ? "nav-link featured-products__tabs--row-item-link active-tab"
-                          : "nav-link featured-products__tabs--row-item-link"
-                      }
-                      onClick={() => toogleTab(el)}
-                    >
-                      {i18n.t(`home.${el}`)}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
             <div className="featured-products__container">
               <div className="row products-page">
                 <LazyLoadComponent>
@@ -460,7 +384,7 @@ const Home: React.FC<any> = ({
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         {brand?.socmedSetting?.instagramToken &&
           <LazyLoadComponent threshold={300}>
             <InstagramFeed size={size} />

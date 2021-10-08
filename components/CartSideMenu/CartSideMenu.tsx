@@ -12,9 +12,10 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import dynamic from "next/dynamic";
+import styles from "public/scss/pages/Placeorder.module.scss";
 
 const Quickdetail = dynamic(() => import("../Quickdetail/Quickdetail"));
-const Popup = dynamic(() => import("../Popup/Popup"));
+const Popup = dynamic(() => import("../Popup/PopupUno"));
 
 const PrivateComponent = dynamic(() =>
   import("@sirclo/nexus").then((mod) => mod.PrivateComponent)
@@ -34,6 +35,7 @@ const classesCartDetails = {
   itemQtyClassName: "d-none",
   qtyBoxClassName: "d-none",
   itemAmountClassName: "cart-side-menu__item--price",
+  itemRegularAmountClassName: "cart-side-menu__item--price--label",
   itemEditClassName: "cart-side-menu__item--edit",
   itemRemoveClassName: "cart-side-menu__item--remove",
   removeButtonClassName: "cart-side-menu__item--remove-link",
@@ -46,9 +48,28 @@ const classesCartDetails = {
 const classesOrderSummary = {
   containerClassName: "order-summary-side-menu",
   headerClassName: "row order-summary-side-menu__header",
-  voucherButtonClassName: "col-6 order-summary-side-menu__header--features",
-  voucherIconClassName: "d-none",
-  voucherTextClassName: "order-summary-side-menu__header--features-label",
+  voucherButtonClassName: styles.ordersummary_headerRow,
+  voucherIconClassName: styles.ordersummary_headerIcon,
+  voucherTextClassName: styles.ordersummary_headerLabel,
+  voucherButtonAppliedClassName: styles.ordersummary_voucherAppliedButton,
+  voucherAppliedIconClassName: styles.ordersummary_voucherAppliedIcon,
+  voucherAppliedTextClassName: styles.ordersummary_voucherAppliedText,
+  voucherButtonRemoveClassName: styles.ordersummary_voucherAppliedRemove,
+  voucherContainerClassName: `${styles.ordersummary_popupVoucherContainer} ${styles.ordersummary_popup}`,
+  voucherFormContainerClassName: `${styles.ordersummary_voucherFormContainer} ${styles.ordersummary_popupFormContainer}`,
+  voucherFormClassName: `${styles.ordersummary_voucherForm} ${styles.sirclo_form_row}`,
+  voucherInputClassName: `form-control ${styles.sirclo_form_input} ${styles.ordersummary_popupFormInput}`,
+  voucherSubmitButtonClassName: `btn ${styles.btn_primary} ${styles.ordersummary_popupFormButton}`,
+  voucherListClassName: styles.ordersummary_popupVoucher,
+  voucherListHeaderClassName: styles.ordersummary_popupVoucherTitle,
+  voucherClassName: styles.ordersummary_popupVoucherItem,
+  voucherDetailClassName: styles.ordersummary_popupVoucherDetail,
+  voucherDetailHeaderClassName: styles.ordersummary_popupVoucherDetailHeader,
+  voucherDetailCodeClassName: styles.ordersummary_popupVoucherDetailCode,
+  voucherDetailTitleClassName: styles.summarycart_popupVoucherDetailTitle,
+  voucherDetailDescClassName: styles.summarycart_popupVoucherDetailDesc,
+  voucherDetailEstimateClassName: styles.summarycart_popupVoucherDetailEstimate,
+  voucherDetailEstimateDescClassName: styles.summarycart_popupVoucherDetailEstimateDesc,
   pointsButtonClassName: "col-6 order-summary-side-menu__header--features",
   pointsIconClassName: "d-none",
   pointsTextClassName: "order-summary-side-menu__header--features-label",
@@ -62,22 +83,10 @@ const classesOrderSummary = {
     "col-12 order-2 px-0 btn btn-orange-outer btn-long my-1",
   //Popup
   popupClassName: "order-summary-side-menu__overlay",
-  voucherContainerClassName: "order-summary-side-menu__popup",
   numberOfPointsClassName: "order-summary-side-menu__popup--points",
   labelClassName: "order-summary-side-menu__popup--points-label",
   valueClassName: "order-summary-side-menu__popup--points-value",
-  closeButtonClassName: "order-summary-side-menu__popup-close",
-  voucherFormContainerClassName:
-    "order-summary-side-menu__popup-form-container",
-  voucherFormClassName:
-    "form-inline sirclo-form-row order-summary-side-menu__popup-form",
-  voucherInputClassName:
-    "form-control sirclo-form-input order-summary-side-menu__popup-form-input",
-  voucherSubmitButtonClassName:
-    "btn btn-black-outer order-summary-side-menu__popup-form-button",
-  voucherListClassName: "order-summary-side-menu__popup--voucher",
-  voucherListHeaderClassName: "order-summary-side-menu__popup--voucher-title",
-  voucherClassName: "order-summary-side-menu__popup--voucher-list",
+  closeButtonClassName: styles.ordersummary_popupClose,
   voucherFooterClassName: "order-summary-side-menu__popup--voucher-footer",
   voucherApplyButtonClassName: "btn btn-orange",
   pointsContainerClassName: "order-summary-side-menu__popup",
@@ -145,7 +154,7 @@ const CartSideMenu = () => {
         />
       )}
       {showModalErrorAddToCart &&
-        <Popup setPopup={setShowModalErrorAddToCart}>
+        <Popup withHeader setPopup={setShowModalErrorAddToCart}>
           <div className="cart-side-menu_errorAddCart">
             <h3 className="cart-side-menu_errorAddCartTitle">{i18n.t("cart.errorSKUTitle")}</h3>
             <p className="cart-side-menu_errorAddCartDesc">{i18n.t("cart.errorSKUDetail")} </p>

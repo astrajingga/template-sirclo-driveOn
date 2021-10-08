@@ -24,6 +24,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import OrderSummaryBox from 'components/OrderSummaryBox/OrderSummaryBox';
+import styles from "public/scss/pages/Placeorder.module.scss";
 
 const classesCartDetails = {
   className: "cart-table",
@@ -58,7 +59,7 @@ const classesCartDetails = {
   cartFooterTextareaClassName: "form-control sirclo-form-input cart-table__footer--input"
 };
 
-const classesProducts = {
+const classesRecomendation = {
   productContainerClassName: "col-6 col-md-3 products__item",
   productImageClassName: "products__item--image",
   productImageContainerClassName: "image-container",
@@ -74,7 +75,7 @@ const classesProducts = {
   newLabelClassName: "products__item-sticker--new",
   buttonClassName: "products__item--buttonQuickview",
   salePriceClassName: "products__item--contentRecomendation-price--sale"
-}
+  }
 
 const paginationClasses = {
   pagingClassName: "col-12 cart_pagination",
@@ -198,7 +199,7 @@ const Cart: FC<any> = ({
                   <Products
                     SKUs={SKUs}
                     getCrossSellPageInfo={(pageInfo: any) => setPageInfo({ totalItems: pageInfo.totalItems })}
-                    classes={classesProducts}
+                    classes={classesRecomendation}
                     paginationClasses={paginationClasses}
                     itemPerPage={size.width < 768 ? 2 : 4}
                     newPagination

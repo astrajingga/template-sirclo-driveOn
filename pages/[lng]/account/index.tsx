@@ -36,6 +36,7 @@ import styles from "public/scss/pages/Account.module.scss";
 const ACTIVE_CURRENCY = "IDR";
 
 const classesAccount = {
+  myAccountSeparatorClassName : "account-separator",
   containerClassName: "account-page_detail",
   tabClassName: "account-page_detail-tab",
   tabItemClassName: "account-page_detail-tab-item",
@@ -50,15 +51,20 @@ const classesAccount = {
   myAccountLabelClassName: "account-list-label d-md-flex",
   myAccountValueClassName: "account-list-value d-md-flex",
   loyaltyPointContainerClassName: "d-none",
+
   editAccountClassName: "edit-account",
-  inputContainerClassName: "sirclo-form-row d-md-flex align-items-center",
-  inputLabelClassName: "edit-account-label",
+  inputContainerClassName: `${styles.sirclo_form_row} d-md-flex align-items-center`,
+  inputLabelClassName: styles.account_edit__label,
   inputClassName: "form-control sirclo-form-input size-label",
-  changePasswordClassName: "change-password",
-  passwordContainerClassName: "d-flex align-items-center position-relative w-100",
-  passwordInputClassName: "form-control sirclo-form-input size-label",
-  passwordViewButtonClassName: "btn button-view-password",
-  buttonClassName: "btn btn-orange-outer btn-long float-right ml-2",
+  changePasswordClassName: styles.account_changePassword,
+  passwordContainerClassName: `d-flex align-items-center position-relative w-100`,
+  passwordInputClassName: `form-control ${styles.sirclo_form_input}`,
+  passwordStrengthBarClassName: styles.passwordBar,
+  passwordStrengthBarContainerClassName: `${styles.passwordValidation} ${styles.marginAccount}`,
+  passwordCriteriaListClassName: `${styles.formPassword} ${styles.marginAccount} ${styles.formPasswordAccount} d-none`,
+  passwordCriteriaClassName: styles.formPasswordList,
+  buttonClassName: `btn text-uppercase mr-2 ${styles.btn_primary} ${styles.btn_long}`,
+
   tableClassName: "table",
   orderHistoryContainerClassName: "order-history-container",
   orderItemClassName: "order-history-items",
@@ -100,11 +106,6 @@ const classesAccount = {
   paymentMethodLabelClassName: "label",
   orderFooterClassName: "order-history-footer",
   totalCostClassName: "order-history-footer__total-cost",
-  passwordStrengthBarContainerClassName: "sirclo-form-password-strength-bar-container",
-  passwordStrengthBarClassName: "sirclo-form-password-strength-bar",
-  passwordStrengthLabelClassName: "sirclo-form-password-strength-label",
-  passwordCriteriaListClassName: "sirclo-form-password-criteria-list",
-  passwordCriteriaClassName: "sirclo-form-password-criteria",
 
   /* tracker */
   shipmentTrackingClassName: "order-history-shipmentTracking__background",

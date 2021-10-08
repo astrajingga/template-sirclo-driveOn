@@ -36,22 +36,22 @@ const Quickview = dynamic(() => import("components/Quickview/Quickview"));
 const Popup = dynamic(() => import("components/Popup/Popup"));
 const SocialShare = dynamic(() => import("components/SocialShare/SocialShare"));
 
-const classesProducts = {
-  productContainerClassName: "col-6 col-md-3 products__item",
-  productImageClassName: "products__item--image",
-  productImageContainerClassName: "image-container",
-  productLabelContainerClassName: "products__item--content",
-  productTitleClassName: "products__item--content-title",
-  productPriceClassName: "products__item--content-price",
-  stickerContainerClassName: "products__item-sticker",
-  outOfStockLabelClassName: "products__item-sticker--outofstock",
-  comingSoonLabelClassName: "products__item-sticker--comingsoon",
-  openOrderLabelClassName: "products__item-sticker--openorder",
-  saleLabelClassName: "products__item-sticker--sale",
-  preOrderLabelClassName: "products__item-sticker--preorder",
-  newLabelClassName: "products__item-sticker--new",
-  buttonClassName: "products__item--buttonQuickview",
-  salePriceClassName: "products__item--content-price--sale"
+const classesRecomendation = {
+productContainerClassName: "col-6 col-md-3 products__item",
+productImageClassName: "products__item--image",
+productImageContainerClassName: "image-container",
+productLabelContainerClassName: "products__item--contentRecomendation",
+productTitleClassName: "products__item--contentRecomendation-title",
+productPriceClassName: "products__item--contentRecomendation-price",
+stickerContainerClassName: "products__item-sticker",
+outOfStockLabelClassName: "products__item-sticker--outofstock",
+comingSoonLabelClassName: "products__item-sticker--comingsoon",
+openOrderLabelClassName: "products__item-sticker--openorder",
+saleLabelClassName: "products__item-sticker--sale",
+preOrderLabelClassName: "products__item-sticker--preorder",
+newLabelClassName: "products__item-sticker--new",
+buttonClassName: "products__item--buttonQuickview",
+salePriceClassName: "products__item--contentRecomendation-price--sale"
 }
 
 const classesProductDetail = {
@@ -87,7 +87,7 @@ const classesProductDetail = {
   buyNowBtnClassName: "product-detail_buyNowBtn btn btn-orange",
   descriptionClassName: "product-detail__right--desc order-5",
   additionalInfoClassName: "d-none",
-  salePriceClassName: "products__item--content-price--sale",
+  salePriceClassName: "products__item--content-detail-price--sale ",
   notifyMeClassName: "product-detail_notifyMe",
   notifyMeLabelClassName: "product-detail_notifyMeLabel",
   notifyMeOptionsClassName: "product-detail_notifyMeOptions",
@@ -465,7 +465,7 @@ const Product: FC<any> = ({
                 <Products
                   filter={{ openOrderScheduled: false, published: true }}
                   slug={slug}
-                  classes={classesProducts}
+                  classes={classesRecomendation}
                   itemPerPage={4}
                   getPageInfo={(pageInfo: any) => setTotalItems(pageInfo.totalItems)}
                   withSeparatedVariant={true}

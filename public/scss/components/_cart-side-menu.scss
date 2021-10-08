@@ -25,6 +25,7 @@
       &-title
       {
         font-family: "karla-bold";
+        color: $color_white;
       }
 
       &-variant
@@ -48,7 +49,12 @@
     &--price
     {
       grid-row: 2/3;
+
+      &--label{
+        color : $color_white;
+      }
     }
+
 
     &--edit
     {
@@ -84,6 +90,7 @@
     {
       font-family: "karla-bold";
       font-size: 13px;
+      color: $color_white;
     }
   }
 
@@ -96,6 +103,7 @@
     {
       width: 2rem !important;
       height: 2rem !important;
+      color: $color_white;
     }
 
     &--title
@@ -104,6 +112,7 @@
       font-size: 1.25rem;
       text-transform: uppercase;
       margin: 1rem 0 .5rem 0;
+      color: $color_white;
     }
 
     &--desc

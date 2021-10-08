@@ -8,6 +8,8 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import dynamic from "next/dynamic";
+import Router from "next/router";
+import styles from "public/scss/components/Header.module.scss";
 // import PremiumFeatures from "../PremiumFeatures/PremiumFeatures";
 
 const SideMenu = dynamic(() => import("../SideMenu/SideMenu"));
@@ -15,6 +17,15 @@ const CartSideMenu = dynamic(() => import("../CartSideMenu/CartSideMenu"));
 const DropdownNav = dynamic(() => import("./DropdownNav"));
 
 const Search = dynamic(() => import("./Search"));
+
+const classesSearch = {
+  searchContainer: styles.search_container,
+  searchInputContainer: styles.search_inputContainer,
+  searchInput: `form-control ${styles.sirclo_form_input} ${styles.search_inputText}`,
+  searchClear: `btn ${styles.search_buttonClear}`,
+  searchButton: styles.search_buttonSearch,
+  searchForm: styles.search_form,
+};
 
 
 // const CurrencySelector = dynamic(() =>
@@ -45,7 +56,7 @@ const PrivateComponent = dynamic(() =>
 
 const ProfileMenu = ({
   lng,
-  actionLogout,searchProduct
+  actionLogout
 
 }) => {
   const router = useRouter();
@@ -53,12 +64,26 @@ const ProfileMenu = ({
   const [openCart, setOpenCart] = useState<boolean>(false);
   const [openSearch, setOpenSearch] = useState<boolean>(false);
 
+  const Popup = dynamic(() => import("../Popup/PopupUno"));
+  const Search = dynamic(() => import("./Search"));
+  
+
   const i18n: any = useI18n();
   const { data } = useCart();
 
   useEffect(() => {
     setOpenSearch(false);
   }, [router.query]);
+
+  const searchProduct = (val: any) => {
+    if (val !== "" && typeof val !== "undefined") {
+      Router.push(`/${lng}/products?q=${val}`);
+      setOpenSearch(false);
+    } else {
+      Router.push(`/${lng}/products`);
+      setOpenSearch(false);
+    }
+  };
 
   const toogleSearch = () => {
     setOpenSearch(!openSearch);
@@ -83,16 +108,17 @@ const ProfileMenu = ({
 
   return (
     <div className="navbar-profile-menu">
-      {/* <a
+      <a
         onClick={(e) => e.preventDefault()}
         href="#"
+        style={{marginRight : 30}}
       >
         <FontAwesomeIcon
           className="nav--icon ml-4"
           icon={faSearch}
           onClick={toogleSearch}
         />
-      </a> */}
+      </a>
 
       <div>
         <PrivateComponent
@@ -159,32 +185,21 @@ const ProfileMenu = ({
           {data?.totalItem}
         </span>
       </a>
-      {/* <DropdownNav
-        title={<span style={{ textTransform: "uppercase" }}>{lng}</span>}
-      >
-        <div className="menu">
-          <PremiumFeatures>
-            <label className="menu-title">{i18n.t("header.currency")}</label>
-            <div className="currency">
-              <CurrencySelector
-                classes={classesCurrencySelector}
-                type="list"
-                separator=""
+      {openSearch && (
+            <Popup
+              withHeader
+              setPopup={toogleSearch}
+              mobileFull
+              classPopopBody
+              popupTitle={i18n.t("header.searchProduct")}
+            >
+              <Search
+                classes={classesSearch}
+                searchProduct={searchProduct}
+                visibleState={openSearch}
               />
-            </div>
-          </PremiumFeatures>
-          <label className="menu-title">{i18n.t("header.language")}</label>
-          <div className="language">
-            <LanguageSelector
-              classes={classesLanguageSelector}
-              type="list"
-              lng={`${lng}`}
-              separator=""
-              withCurrency={false}
-            />
-          </div>
-        </div>
-      </DropdownNav> */}
+            </Popup>
+          )}
       <SideMenu
         title={i18n.t("header.shoppingCart")}
         openSide={openCart}
@@ -192,15 +207,7 @@ const ProfileMenu = ({
         positionSide="right"
       >
         <CartSideMenu />
-      </SideMenu>
-      <SideMenu
-        title={i18n.t("header.searchProduct")}
-        openSide={openSearch}
-        toogleSide={toogleSearch}
-        positionSide="right"
-      >
-        <Search searchProduct={searchProduct} />
-      </SideMenu>
+      </SideMenu>      
     </div>
   );
 };

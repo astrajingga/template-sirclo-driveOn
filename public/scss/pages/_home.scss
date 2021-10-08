@@ -21,9 +21,7 @@
 
   &__image {
     height: auto;
-    width: 90%;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    width: 100%;
     @media screen and (max-width: 767px) {
       height: auto;
       width: 100%;
@@ -51,16 +49,34 @@
           background: $color_white;
         }
       }
+
+      .BrainhubCarousel__dot--selected {
+        background: transparent;
+        padding: 5px;
+
+        &::before {
+          width: 10px;
+          height: 10px;
+          background: $color_base_red;
+        }
+      }
     }
   }
 }
 
-.widget-widgetClassName{
+.heading{
+  margin-top: 85px;
+  @media screen and (max-width: 767px) {
+    margin-top: 0;
+  }
+}
+
+.widget-contain{
   @media screen and (max-width: 767px) {
     img{
-      width: 100% !important;
+      max-width: 100% !important;
+      max-height: 100%;
       background-size: cover;
-      height: auto;
     }
   }
 }

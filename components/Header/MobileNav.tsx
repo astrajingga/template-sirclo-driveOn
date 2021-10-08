@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
 import { Logo, useI18n } from "@sirclo/nexus";
-import Search from "./Search";
 import SideMenu from "../SideMenu/SideMenu";
 import MobileShortcut from "./MobileShortcut";
 import Placeholder from "../Placeholder";
@@ -10,15 +9,24 @@ import {
   faBars,
   faSearch,
   faChevronDown,
-  faChevronUp
+  faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import dynamic from "next/dynamic";
+import Router from "next/router";
+import styles from "public/scss/components/Header.module.scss";
 
 // const CurrencySelector = dynamic(() => import("@sirclo/nexus").then((mod) => mod.CurrencySelector));
 // const LanguageSelector = dynamic(() => import("@sirclo/nexus").then((mod) => mod.LanguageSelector));
-const CollapsibleNav = dynamic(() => import("@sirclo/nexus").then((mod) => mod.CollapsibleNav));
-const PrivateComponent = dynamic(() => import("@sirclo/nexus").then((mod) => mod.PrivateComponent));
+const CollapsibleNav = dynamic(() =>
+  import("@sirclo/nexus").then((mod) => mod.CollapsibleNav)
+);
+const PrivateComponent = dynamic(() =>
+  import("@sirclo/nexus").then((mod) => mod.PrivateComponent)
+);
+
+const Popup = dynamic(() => import("../Popup/PopupUnoMobile"));
+const Search = dynamic(() => import("./Search"));
 
 const classesCollapsibleNav = {
   parentNavClassName: "menu-mobile",
@@ -27,6 +35,16 @@ const classesCollapsibleNav = {
   dropdownIconClassName: "icon-down-mobile",
   childNavClassName: "menu-mobile__sub",
   subChildNavClassName: "menu-mobile__sub",
+};
+
+
+const classesSearch = {
+  searchContainer: styles.search_container,
+  searchInputContainer: styles.search_inputContainer,
+  searchInput: `form-control ${styles.sirclo_form_input} ${styles.search_inputText}`,
+  searchClear: `btn ${styles.search_buttonClear}`,
+  searchButton: styles.search_buttonSearch,
+  searchForm: styles.search_form,
 };
 
 // const classesCurrencySelector = {
@@ -44,16 +62,28 @@ const classesCollapsibleNav = {
 // }
 
 const classesPlaceholderCollapsibleNav = {
-  placeholderList: "placeholder-item placeholder-item__header--nav-mobile"
-}
+  placeholderList: "placeholder-item placeholder-item__header--nav-mobile",
+};
 
-const MobileNavButton = ({ lng, actionLogout, searchProduct }) => {
+const MobileNavButton = ({ lng, actionLogout }) => {
   const i18n: any = useI18n();
   const router = useRouter();
 
+  const searchProduct = (val: any) => {
+    if (val !== "" && typeof val !== "undefined") {
+      Router.push(`/${lng}/products?q=${val}`);
+      setOpenSearch(false);
+    } else {
+      Router.push(`/${lng}/products`);
+      setOpenSearch(false);
+    }
+  };
+  
+  const toogleSearch = () => setOpenSearch(!openSearch);
+
   // const [openCurLang, setOpenCurLang] = useState<boolean>(false)
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const [openSearch, setOpenSearch] = useState<boolean>(false)
+  const [openSearch, setOpenSearch] = useState<boolean>(false);
 
   useEffect(() => {
     setOpenMenu(false);
@@ -61,12 +91,8 @@ const MobileNavButton = ({ lng, actionLogout, searchProduct }) => {
   }, [router.query]);
 
   const toogleMenu = () => {
-    setOpenMenu(!openMenu)
-  }
-
-  const toogleSearch = () => {
-    setOpenSearch(!openSearch)
-  }
+    setOpenMenu(!openMenu);
+  };
 
   return (
     <>
@@ -82,16 +108,14 @@ const MobileNavButton = ({ lng, actionLogout, searchProduct }) => {
             </div>
             <div className="navbar-mobile__logo">
               <LazyLoadComponent
-                placeholder={
-                  <div className="nav-logo__placeholder"></div>
-                }
+                placeholder={<div className="nav-logo__placeholder"></div>}
               >
                 <Logo
                   imageClassName="nav-logo"
                   thumborSetting={{
                     width: 400,
-                    format: 'webp',
-                    quality: 85
+                    format: "webp",
+                    quality: 85,
                   }}
                 />
               </LazyLoadComponent>
@@ -106,14 +130,21 @@ const MobileNavButton = ({ lng, actionLogout, searchProduct }) => {
           </div>
         </div>
       </div>
-      <SideMenu
-        title={i18n.t("header.searchProduct")}
-        openSide={openSearch}
-        toogleSide={toogleSearch}
-        positionSide="right"
-      >
-        <Search searchProduct={searchProduct} />
-      </SideMenu>
+      {openSearch &&
+          <Popup
+            withHeader
+            setPopup={toogleSearch}
+            mobileFull
+            classPopopBody
+            popupTitle={i18n.t("header.searchProduct")}
+          >
+            <Search
+              classes={classesSearch}
+              searchProduct={searchProduct}
+              visibleState={openSearch}
+            />
+          </Popup>
+      }
       <SideMenu
         title={i18n.t("header.menu")}
         openSide={openMenu}
@@ -148,8 +179,18 @@ const MobileNavButton = ({ lng, actionLogout, searchProduct }) => {
           }
         </div> */}
         <CollapsibleNav
-          dropdownIcon={<FontAwesomeIcon icon={faChevronDown} className="icon-down-mobile--svg" />}
-          dropdownOpenIcon={<FontAwesomeIcon icon={faChevronUp} className="icon-down-mobile--svg" />}
+          dropdownIcon={
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              className="icon-down-mobile--svg"
+            />
+          }
+          dropdownOpenIcon={
+            <FontAwesomeIcon
+              icon={faChevronUp}
+              className="icon-down-mobile--svg"
+            />
+          }
           classes={classesCollapsibleNav}
           loadingComponent={
             <>
@@ -173,7 +214,7 @@ const MobileNavButton = ({ lng, actionLogout, searchProduct }) => {
       </SideMenu>
       <MobileShortcut lng={lng} />
     </>
-  )
-}
+  );
+};
 
 export default MobileNavButton;

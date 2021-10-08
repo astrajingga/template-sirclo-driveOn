@@ -25,6 +25,10 @@
     &:hover {
       cursor: pointer;
     }
+
+    &svg{
+      color: $color_white;
+    }
   }
 }
 
@@ -39,7 +43,7 @@
     position: relative;
     width: 100px;
 
-    &:hover {
+    &:hover{
       background-color: $color_base_red;
     }
 
@@ -53,6 +57,8 @@
     color: white !important;
     text-transform: uppercase;
     font-size: small;
+    text-align: center;
+
   }
 
   .nav-item:hover .dropdown-container {
@@ -491,13 +497,13 @@
 
         a {
           position: relative;
-          color: $color_base_red;
+          color: $color_white;
           text-decoration: none;
         }
 
         .icon-item {
           height: 1rem;
-          color: $color_base_red;
+          color: $color_white;
         }
 
         .icon-title {
@@ -542,7 +548,7 @@
 
     a {
       text-decoration: none;
-      color: $color_black;
+      color: $color_white;
     }
 
     &__sub {
@@ -553,14 +559,24 @@
     &__itemActive {
       color: $color_red;
 
+      .icon-down-mobile {
+        float: right;
+        color: $color_base_red;
+    
+        &--svg {
+          height: 1.25em;
+        }
+      }
+
       a {
-        color: $color_red;
+        color: $color_base_red;
       }
     }
   }
 
   .icon-down-mobile {
     float: right;
+    color: $color_white;
 
     &--svg {
       height: 1.25em;

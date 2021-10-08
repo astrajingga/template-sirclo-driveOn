@@ -1,9 +1,7 @@
-.category
-{
-  background: $color_gray;
+.category {
+  background: $color_white;
 
-  &_order
-  {
+  &_order {
     display: flex;
     flex-wrap: nowrap;
     white-space: nowrap;
@@ -13,44 +11,53 @@
     padding: 0;
   }
 
-  &_list
-  {
+  &_list {
     list-style: none;
     padding: 1rem;
 
     @media screen and (max-width: 576px) {
-      padding: 1rem .5rem;
+      padding: 1rem 0.5rem;
     }
 
-    &:first-child
-    {
+    &:first-child {
       padding-left: 0;
     }
 
-    &:last-child
-    {
+    &:last-child {
       padding-right: 0;
     }
 
-    &_link
-    {
-      &:hover
-      {
+    &_link {
+      &:hover {
         text-decoration: none;
       }
     }
 
-    &_item
-    {
-      padding: .5rem 1rem;
+    &_item {
+      padding: 0.5rem 1rem;
       background: $color_white;
-      border: 1px solid $color_gray_low;
+      border: 1px solid $color_base_red;
       border-radius: 34px;
       font-size: 1rem;
       cursor: pointer;
+      color: $color_base_red;
 
       @media screen and (max-width: 576px) {
         font-size: 1rem;
+      }
+
+      &::placeholder {
+        padding: 0.5rem 1rem;
+        background: $color_base_red;
+        border: 1px solid $color_base_red;
+        border-radius: 34px;
+        font-size: 1rem;
+        cursor: pointer;
+        color: $color_white;
+
+        @media screen and (max-width: 576px) {
+          font-size: 1rem;
+        }
       }
     }
   }

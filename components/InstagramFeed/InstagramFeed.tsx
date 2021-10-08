@@ -43,10 +43,8 @@ const InstagramFeed: FC<{size: TSize}> = ({ size }) => {
   return (
     
     <div className="container">
-          <br></br>
         <div className="heading">
           <div className="heading__title">
-            <br></br>
             <h6>{i18n.t("instaFeed.titleDesc")}</h6>
             {/* <h1>{i18n.t("instaFeed.title")}</h1> */}
           </div>
