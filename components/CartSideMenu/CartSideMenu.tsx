@@ -11,8 +11,13 @@ import {
   faCrown,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+  ArrowLeft,
+  Info,
+  X as XIcon,
+} from "react-feather";
 import dynamic from "next/dynamic";
-import styles from "public/scss/pages/Placeorder.module.scss";
+import styles from "public/scss/pages/PaymentMethod.module.scss";
 
 const Quickdetail = dynamic(() => import("../Quickdetail/Quickdetail"));
 const Popup = dynamic(() => import("../Popup/PopupUno"));
@@ -46,20 +51,36 @@ const classesCartDetails = {
 };
 
 const classesOrderSummary = {
-  containerClassName: "order-summary-side-menu",
-  headerClassName: "row order-summary-side-menu__header",
-  voucherButtonClassName: styles.ordersummary_headerRow,
-  voucherIconClassName: styles.ordersummary_headerIcon,
-  voucherTextClassName: styles.ordersummary_headerLabel,
-  voucherButtonAppliedClassName: styles.ordersummary_voucherAppliedButton,
-  voucherAppliedIconClassName: styles.ordersummary_voucherAppliedIcon,
-  voucherAppliedTextClassName: styles.ordersummary_voucherAppliedText,
-  voucherButtonRemoveClassName: styles.ordersummary_voucherAppliedRemove,
-  voucherContainerClassName: `${styles.ordersummary_popupVoucherContainer} ${styles.ordersummary_popup}`,
-  voucherFormContainerClassName: `${styles.ordersummary_voucherFormContainer} ${styles.ordersummary_popupFormContainer}`,
+  containerClassName: styles.ordersummary_container,
+  headerClassName : styles.ordersummary_header,
+  voucherButtonClassName : styles.ordersummary_headerRow,
+  listPaymentDivClassName: "container",
+  paymentItemEnabledClassName: `row ${styles.payment_listItemEnabled}`,
+  paymentItemDisabledClassName: `row ${styles.payment_listItemDisabled}`,
+  paymentTypeClassName: `align-self-center ${styles.payment_listItemPayment}`,
+  radioButtonContainerClassName: styles.payment_listItemPayment__radio,
+  paymentImgClassName: `align-self-center ${styles.payment_listItemPayment__image}`,
+  paymentWarningTextClassName: styles.payment_listItemPayment__warning,
+  paymentMethodDetailsClassName: `col-12 ${styles.payment_listItemBody}`,
+  paymentMethodDetailBodyClassName: styles.payment_listItemDetail,
+  selectedPaymentMethodClassName: styles.payment_listItemTable,
+  paymentDetailsRowClassName: styles.payment_listItemTableRow,
+  paymentDetailsLabelClassName: styles.payment_listItemTableRow__label,
+  paymentDetailsValueClassName: styles.payment_listItemTableRow__value,
+  paymentDetailsDeductionClassName: styles.payment_pointsInsufficient,
+  // footer
+  paymentMethodDetailFooterClassName: styles.payment_footer,
+  promotionButtonGroupClassName: styles.payment_footer__promotion,
+  couponButtonClassName: `btn ${styles.btn_black} ${styles.btn_long} ${styles.payment_pointButton} mb-3 px-3`,
+  voucherAppliedTextClassName: styles.payment_voucherAppliedText,
+  voucherButtonRemoveClassName: styles.payment_voucherAppliedRemove,
+  popupClassName: styles.ordersummary_overlay,
+  voucherContainerClassName: styles.payment_listItemPopup,
+  closeButtonClassName: styles.payment_listItemPopup__close,
+  voucherFormContainerClassName: `${styles.payment_listItemPopupForm__body} ${styles.payment_listItemPopup__payment}`,
   voucherFormClassName: `${styles.ordersummary_voucherForm} ${styles.sirclo_form_row}`,
-  voucherInputClassName: `form-control ${styles.sirclo_form_input} ${styles.ordersummary_popupFormInput}`,
-  voucherSubmitButtonClassName: `btn ${styles.btn_primary} ${styles.ordersummary_popupFormButton}`,
+  voucherInputClassName: `form-control ${styles.sirclo_form_input} ${styles.payment_listItemPopupForm__input}`,
+  voucherSubmitButtonClassName: `btn ${styles.btn_primary} ${styles.payment_listItemPopupForm__button}`,
   voucherListClassName: styles.ordersummary_popupVoucher,
   voucherListHeaderClassName: styles.ordersummary_popupVoucherTitle,
   voucherClassName: styles.ordersummary_popupVoucherItem,
@@ -70,6 +91,32 @@ const classesOrderSummary = {
   voucherDetailDescClassName: styles.summarycart_popupVoucherDetailDesc,
   voucherDetailEstimateClassName: styles.summarycart_popupVoucherDetailEstimate,
   voucherDetailEstimateDescClassName: styles.summarycart_popupVoucherDetailEstimateDesc,
+  agreementContainerClassName: styles.payment_footer__agreement,
+  agreementCheckboxClassName: styles.payment_footer__check,
+  buttonContainerClassName: styles.payment_footer__button,
+  buttonClassName: `btn ${styles.btn_primary} ${styles.btn_long}`,
+  basePriceClassName: styles.payment_listItemTableRow__priceSale,
+  salePriceClassName: styles.payment_listItemTableRow__price,
+  shippingPriceClassName: styles.payment_listItemTableRow__priceSale,
+  shippingDiscountClassName: styles.payment_listItemTableRow__price,
+  //point
+  pointsContainerClassName: styles.payment_containerPointPopup,
+  numberOfPointsClassName: styles.payment_pointsPopup,
+  pointsFormContainerClassName: styles.payment_pointsFormContainer,
+  pointsFormClassName: styles.payment_pointsForm,
+  pointsLabelClassName: styles.payment_pointsPopupLabel,
+  pointsValueClassName: styles.payment_pointsPopupValue,
+  changePointsClassName: styles.payment_buttonChangePoint,
+  pointsInsufficientClassName: styles.payment_pointsInsufficient,
+  pointsSubmitButtonClassName: `btn ${styles.btn_primary} ${styles.btn_long} w-100 mt-4 mb-0`,
+  pointsWarningClassName: styles.payment_pointsWarning,
+  pointButtonClassName: `btn ${styles.btn_black} ${styles.btn_long} ${styles.payment_pointButton} mb-3 px-3`,
+  pointAppliedTextClassName: styles.payment_pointAppliedText,
+  pointButtonRemoveClassName: styles.payment_pointAppliedRemove,
+  voucherIconClassName: styles.ordersummary_headerIcon,
+  voucherTextClassName: styles.ordersummary_headerLabel,
+  voucherButtonAppliedClassName: styles.ordersummary_voucherAppliedButton,
+  voucherAppliedIconClassName: styles.ordersummary_voucherAppliedIcon,
   pointsButtonClassName: "col-6 order-summary-side-menu__header--features",
   pointsIconClassName: "d-none",
   pointsTextClassName: "order-summary-side-menu__header--features-label",
@@ -82,14 +129,11 @@ const classesOrderSummary = {
   continueShoppingClassName:
     "col-12 order-2 px-0 btn btn-orange-outer btn-long my-1",
   //Popup
-  popupClassName: "order-summary-side-menu__overlay",
-  numberOfPointsClassName: "order-summary-side-menu__popup--points",
   labelClassName: "order-summary-side-menu__popup--points-label",
   valueClassName: "order-summary-side-menu__popup--points-value",
-  closeButtonClassName: styles.ordersummary_popupClose,
   voucherFooterClassName: "order-summary-side-menu__popup--voucher-footer",
   voucherApplyButtonClassName: "btn btn-orange",
-  pointsContainerClassName: "order-summary-side-menu__popup",
+  
 };
 
 const classesEmptyComponent = {
@@ -100,8 +144,8 @@ const classesEmptyComponent = {
 
 const classesOrderSum = (auth) => {
   let classes = classesOrderSummary;
-  classes.voucherButtonClassName = `${auth ? "col-6" : "col-12"
-    } order-summary-side-menu__header--features`;
+  // classes.voucherButtonClassName = `${auth ? "col-6" : "col-12"
+  //   } order-summary-side-menu__header--features`;
   return classes;
 };
 
@@ -125,9 +169,9 @@ const OrderSummaryComponent = ({
     continueShoppingRoute="cart"
     onErrorMsg={() => setShowModalErrorAddToCart(true)}
     icons={{
-      voucher: <FontAwesomeIcon icon={faTicketAlt} height="1em" />,
+      voucher: <img src="/images/mdi_ticket-percent.svg" alt="icon" /> ,
       points: <FontAwesomeIcon icon={faCrown} height="1em" />,
-      close: <FontAwesomeIcon icon={faTimes} height="1em" />,
+      close: <XIcon />,
     }}
   />
 );
@@ -176,7 +220,7 @@ const CartSideMenu = () => {
           }}
           onErrorMsg={(msg) => toast.error(msg)}
           editIcon={<FontAwesomeIcon icon={faEdit} height="1em" />}
-          removeIcon={<FontAwesomeIcon icon={faTrash} height="1em" />}
+          removeIcon={<FontAwesomeIcon icon={faTrash} color="#fff" height="1em" />}
           emptyCartPlaceHolder={
             <EmptyComponent
               classes={classesEmptyComponent}
