@@ -42,7 +42,7 @@
       height: 14px;
       border-radius: 100%;
 
-      background-color: $color_orange_low;
+      background-color: #d8d8d8;
       border: 2px solid $color_white;
 
       top: 4px;
@@ -54,7 +54,7 @@
       width: 2px;
       height: 100%;
 
-      background-color: $color_orange_low;
+      background-color: #d8d8d8;
 
       left: 6px;
       top: 14px;
@@ -120,9 +120,9 @@
 
     button {
       @extend 
-        .btn,
-        .btn-orange;
+        .btn;
       display: flex;
+      background-color: #f3f2f2;
       align-items: center;
       position: relative !important;
       bottom: 0 !important;
@@ -133,7 +133,8 @@
       text-transform: uppercase;
 
       &:hover{
-        color: $color_black !important;
+        color: $color_white !important;
+        background-color: $color_base_red_light !important;
       }
 
       @media screen and (max-width: 767px) {

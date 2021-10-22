@@ -16,12 +16,14 @@ const TrackerPage = ({ order_token }) => {
 
   return (
     <ShipmentTracker
-      token={order_token}
+      // token={order_token}
+      awbNumber="IN-SB-2-C2VTGFMAA2XUME"
+      shippingProvider="GRAB"
       iconTracker={
         <img
           className="mr-2"
-          src={"/images/order_track.svg"}
-          alt="order_track"
+          src={"/images/motorcycle.svg"}
+          alt="motorcycle"
         />
       }
       classes={classesTrackerPage}
