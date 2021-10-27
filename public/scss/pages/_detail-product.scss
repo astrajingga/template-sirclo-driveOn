@@ -1,6 +1,5 @@
 .product-detail {
   &__container {
-    padding: 0 5rem;
     margin-bottom: 2rem;
 
     @media screen and (max-width: 767px) {
@@ -62,16 +61,14 @@
   }
 
   &__right {
-
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     flex-wrap: nowrap;
     position: relative;
-    
-    & > *
-    {
+
+    & > * {
       min-width: 100%;
     }
 
@@ -203,9 +200,8 @@
 
     &-share {
       margin-top: 2rem;
-      display: flex;
+      display: block;
       align-items: center;
-      flex-direction: row;
 
       p {
         font-size: 14px;
@@ -215,11 +211,10 @@
       }
 
       .social-share {
-        padding-left: 14px;
+        padding-left: 0px;
       }
 
-      @media (max-width: 768px)
-      {
+      @media (max-width: 768px) {
         padding-left: 0;
         display: flex;
         flex-direction: column;
@@ -300,22 +295,18 @@
   }
 
   &_notifyMeOptions {
-    & > span
-    {
+    & > span {
       display: flex;
     }
   }
 
   &_propertyFooterContainer {
-    button
-    {
-      &:disabled
-      {
+    button {
+      &:disabled {
         cursor: not-allowed;
       }
 
-      &:last-child
-      {
+      &:last-child {
         @extend .btn-orange;
         color: $color_white !important;
       }
@@ -331,10 +322,8 @@
     position: relative;
     margin: 0;
 
-    &[class*="checked"]
-    { 
-      label::after
-      {
+    &[class*="checked"] {
+      label::after {
         background-color: rgba($color_black, 1);
       }
     }
@@ -358,7 +347,7 @@
     padding: 0;
     opacity: 0;
     cursor: pointer;
-    
+
     &:checked {
       & + label {
         &::after {
@@ -380,7 +369,7 @@
     padding: 0 15px 0 calc(20px + 5px);
     height: 28px;
     flex-grow: 1;
-    
+
     &::before,
     &::after {
       content: "";
@@ -395,11 +384,11 @@
       width: 20px;
       height: 20px;
     }
-    
+
     &::before {
       border: solid 2px $color_black;
     }
-    
+
     &::after {
       background-color: rgba($color_black, 0);
       width: 10px;
@@ -434,8 +423,7 @@
     margin-right: 5px;
   }
 
-  &_errorAddCart
-  {
+  &_errorAddCart {
     width: 450px;
     background: $color_white;
     padding: 2rem;
@@ -447,15 +435,13 @@
     }
   }
 
-  &_errorAddCartTitle
-  {
+  &_errorAddCartTitle {
     font-family: "karla-bold";
     font-size: 18px;
     margin-bottom: 1rem;
   }
 
-  &_errorAddCartDesc
-  {
+  &_errorAddCartDesc {
     font-size: 13px;
     margin-bottom: 0;
   }
@@ -488,7 +474,7 @@
       width: 86px;
       height: 86px;
       min-width: 86px;
-      
+
       img {
         width: 86px;
         height: 86px;
@@ -507,7 +493,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: .25rem;
+      border-radius: 0.25rem;
       background-color: transparent;
       cursor: pointer;
 
@@ -520,12 +506,12 @@
     &FilterInput {
       appearance: none;
       cursor: pointer;
-            
+
       &:checked + label {
         background-color: #a0aec0;
         background-color: rgba(160, 174, 192, var(--bg-opacity));
         border-width: 0;
-        border-radius: .25rem;        
+        border-radius: 0.25rem;
       }
     }
 
@@ -535,7 +521,7 @@
 
     &FilterIcon {
       margin-left: 4px;
-      color: #F1B208;
+      color: #f1b208;
     }
 
     &FilterLabel {
@@ -579,8 +565,9 @@
       width: 86px;
       height: 86px;
       min-width: 86px;
-      
-      img, video {
+
+      img,
+      video {
         object-fit: cover;
         cursor: pointer;
         width: 86px;
@@ -591,7 +578,7 @@
     &ListFooter {
       display: flex;
       gap: 8;
-      margin-top: 21px
+      margin-top: 21px;
     }
 
     &ListAuthor {
@@ -603,7 +590,7 @@
     &ListDate {
       font-size: 11px;
       margin-left: 8px;
-      color: #A2A2A2;
+      color: #a2a2a2;
     }
 
     &PopupContainer {
@@ -614,12 +601,12 @@
       top: 0;
       left: 0;
       z-index: 50;
-      overflow-y: scroll ;
+      overflow-y: scroll;
       position: fixed;
       align-items: center;
       background: #00000047;
     }
-    
+
     &PopupImagePopup {
       position: relative;
 
@@ -657,7 +644,7 @@
       @media screen and (max-width: 767px) {
         padding: 3px 9px;
       }
-      
+
       &:disabled {
         color: #fff;
         background-color: rgba(226, 232, 240, var(--bg-opacity));
@@ -671,22 +658,21 @@
     &PopupRightButton {
       right: 0;
     }
-    
+
     &PopupButtonClose {
-     
-    margin: 12px;
-    color: gray;
-    height: 20px;
-    width: 20px; 
-    position: absolute;
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-    border-radius: 100%;
-    cursor: pointer;
-      
-    top: -10px;
-    right: -10px;
+      margin: 12px;
+      color: gray;
+      height: 20px;
+      width: 20px;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 100%;
+      cursor: pointer;
+
+      top: -10px;
+      right: -10px;
     }
 
     &PopupImagePreview {
@@ -695,8 +681,9 @@
       margin-right: 10px;
       margin-top: 10px;
       min-width: 64px;
-      
-      img, video {
+
+      img,
+      video {
         height: 64px;
         width: 64px;
         opacity: 0.5;
@@ -723,7 +710,7 @@
       align-items: center;
 
       select {
-        border-radius: .25rem;
+        border-radius: 0.25rem;
         cursor: pointer;
         border: 2px solid #f2f2f2;
         padding: 5px;
@@ -740,19 +727,19 @@
     }
 
     &SortOptions {
-        border-radius: .25rem;
-        cursor: pointer;
-        border: 2px solid #f2f2f2;
-        padding: 6px;
-        background: transparent;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      border: 2px solid #f2f2f2;
+      padding: 6px;
+      background: transparent;
     }
 
     &PopupContent {
       position: relative;
-      background-color: #fff; 
+      background-color: #fff;
       padding: 20px;
       display: flex;
-      flex-direction: column;      
+      flex-direction: column;
       max-width: 66.6666vw;
       border: 0.75rem;
       max-width: 40vw;
@@ -766,11 +753,11 @@
   }
 
   &_addToCartBtn,
-  &_buyNowBtn
-  {
+  &_buyNowBtn {
     height: 46px;
     width: 178px;
     margin-right: 12px;
+    margin-top: 12px;
 
     @media screen and (max-width: 767px) {
       display: block;
@@ -1034,15 +1021,13 @@
   }
 }
 
-.estimateShipping
-{
+.estimateShipping {
   display: block;
   position: relative;
   margin: 24px 0 0;
   padding: 0;
 
-  &_title
-  {
+  &_title {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1054,11 +1039,10 @@
     line-height: 18px;
     font-weight: 400;
     letter-spacing: calc(12 * 3.5%);
-    color: #A2A2A2;
+    color: #a2a2a2;
   }
 
-  &_showCourier
-  {
+  &_showCourier {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1073,11 +1057,10 @@
     height: 50px;
     border: none;
     background-color: rgba(0, 0, 0, 0);
-    color: rgba(0, 0, 0 , 0);
+    color: rgba(0, 0, 0, 0);
   }
 
-  &_detail
-  {
+  &_detail {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1087,14 +1070,13 @@
     margin: 0 0 16px;
     padding: 12px;
     background-color: white;
-    border: solid 1px #D8D8D8;
+    border: solid 1px #d8d8d8;
     border-radius: 4px;
     overflow: hidden;
 
     min-height: 50px;
 
-    &::after
-    {
+    &::after {
       content: "";
       display: flex;
       flex-direction: row;
@@ -1117,8 +1099,7 @@
       background-image: url("data:image/svg+xml,%3Csvg width='7' height='10' viewBox='0 0 7 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.625 8.75L5.375 5L1.625 1.25' stroke='%232A2A2A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
     }
 
-    &Logo
-    {
+    &Logo {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -1127,7 +1108,7 @@
       position: relative;
       margin: 0 48px 0 0;
       padding: 2px;
-      border: solid 1px #CCC;
+      border: solid 1px #ccc;
       border-radius: 2px;
       background-color: white;
       width: 34px;
@@ -1135,8 +1116,7 @@
       overflow: hidden;
       order: 2;
 
-      & > img
-      {
+      & > img {
         display: block;
         position: relative;
         margin: 0 auto;
@@ -1146,8 +1126,7 @@
       }
     }
 
-    &Cost
-    {
+    &Cost {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -1162,8 +1141,7 @@
     }
   }
 
-  &_popup
-  {
+  &_popup {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1177,8 +1155,7 @@
     background-color: rgba(0, 0, 0, 0.75);
     z-index: 1060;
 
-    &Content
-    {
+    &Content {
       display: block;
       position: relative;
       margin: 0;
@@ -1192,16 +1169,14 @@
       overflow-x: hidden;
       overflow-y: auto;
 
-      @media screen and (max-width: 575px)
-      {
+      @media screen and (max-width: 575px) {
         min-width: calc(100% - 30px);
         max-width: calc(100% - 30px);
         width: calc(100% - 30px);
       }
     }
 
-    &Header
-    {
+    &Header {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -1216,8 +1191,7 @@
       border-bottom: solid 1px #e1e1e1;
     }
 
-    &Title
-    {
+    &Title {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -1230,8 +1204,7 @@
       line-height: 16px;
     }
 
-    &Close
-    {
+    &Close {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -1254,20 +1227,18 @@
       background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 5L5 15' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5 5L15 15' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
     }
 
-    &Body
-    {
+    &Body {
       display: block;
       position: relative;
       margin: 0 16px 16px;
       padding: 12px;
 
-      background-color: #FFFFF1;
+      background-color: #fffff1;
       border: solid 1px $color_base_red;
       border-radius: 2px;
     }
 
-    &LineInfo
-    {
+    &LineInfo {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
@@ -1275,40 +1246,35 @@
       flex-wrap: nowrap;
       position: relative;
       border: none;
-      border-bottom: solid 1px #E1E1E1;
+      border-bottom: solid 1px #e1e1e1;
       margin: 0;
       padding: 12px 0;
 
       &:last-child,
-      &:last-of-type
-      {
+      &:last-of-type {
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
         border-bottom: none;
         padding-bottom: 0;
 
-        [class*="popupLabel"]
-        {
+        [class*="popupLabel"] {
           margin: 0 0 8px;
         }
 
-        [class*="popupValue"]
-        {
+        [class*="popupValue"] {
           flex-grow: 1;
           width: 100%;
         }
 
-        [class*="css-"][class$="-container"]
-        {
+        [class*="css-"][class$="-container"] {
           width: 100%;
         }
       }
     }
 
     &Label,
-    &Value
-    {
+    &Value {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -1320,8 +1286,7 @@
       border: none;
     }
 
-    &Label
-    {
+    &Label {
       margin: 0 12px 0 0;
       padding: 0;
       min-width: calc(25% - 12px);
@@ -1334,8 +1299,7 @@
       line-height: 16px;
     }
 
-    &Value
-    {
+    &Value {
       flex-grow: 1;
 
       font-weight: 400;
@@ -1343,15 +1307,13 @@
       line-height: 21px;
     }
 
-    &Provider
-    {
+    &Provider {
       display: block;
       position: relative;
       margin: 0 0 16px;
       padding: 16px;
-      
-      &Item
-      {
+
+      &Item {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -1363,9 +1325,8 @@
         width: 100%;
         min-height: 40px;
       }
-  
-      &Logo
-      {
+
+      &Logo {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -1374,15 +1335,14 @@
         position: relative;
         margin: 0 12px 0 0;
         padding: 2px;
-        border: solid 1px #CCC;
+        border: solid 1px #ccc;
         border-radius: 2px;
         background-color: white;
         width: 34px;
         height: 24px;
         overflow: hidden;
-  
-        & > img
-        {
+
+        & > img {
           display: block;
           position: relative;
           margin: 0 auto;
@@ -1391,10 +1351,9 @@
           border: none;
         }
       }
-  
+
       &Label,
-      &Value
-      {
+      &Value {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -1402,20 +1361,340 @@
         position: relative;
       }
 
-      &Label
-      {
+      &Label {
         font-weight: 400;
         font-size: 14px;
         line-height: 21px;
         flex-grow: 1;
       }
 
-      &Value
-      {
+      &Value {
         font-weight: 500;
         font-size: 11px;
         line-height: 16px;
         color: #666;
+      }
+    }
+  }
+}
+
+.ratingReview {
+  border-top: 7.5px solid $color_gray;
+  border-bottom: 7.5px solid $color_gray;
+  margin-bottom: 32px;
+  padding: 0 5rem;
+
+  &_titleSection {
+    font-family: "roboto-medium";
+    font-size: 16px;
+    margin-top: 20px;
+  }
+
+  &_filters {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin: 22px 0;
+    overflow-x: auto;
+  }
+
+  &_filter {
+    font-size: 14px;
+    border: 1px solid $color_gray;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin: 0 12px;
+    cursor: pointer;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &_filterActive {
+    border-color: $color_base_red;
+    background: $color_bg_red;
+  }
+
+  &_filterLabel {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  &_filterInput {
+    display: none;
+  }
+
+  &_filterIcon {
+    margin-left: 5px;
+    color: $color_base_red;
+  }
+
+  &_sort {
+    margin: 22px 0;
+  }
+
+  &_sortOptions {
+    width: max-content;
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+    -moz-appearance: radio-container;
+    appearance: none;
+    padding-right: 35px;
+    background: url("../../images/arrow-down.svg") no-repeat;
+    background-position: right 10px top 50%;
+
+    &:focus,
+    &:active {
+      outline: 0;
+      box-shadow: none;
+    }
+  }
+
+  &_container {
+    margin: 22px 0;
+    border-bottom: 1px solid #D8D8D8;
+  }
+
+  &_starContainer {
+    font-size: 14px !important;
+    margin-right: 5px;
+  }
+
+  &_desc {
+    margin: 22px 0;
+  }
+
+  &_imageContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &_image {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 4px;
+
+    img,
+    video {
+      width: 80px;
+      height: 80px;
+      max-width: 80px;
+      max-height: 80px;
+      border: 1px solid $color_gray;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+  }
+
+  &_footer {
+    margin: 22px 0;
+  }
+
+  &_author {
+    color: $color_base_red;
+  }
+
+  &_itemPerPage {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+
+  &_itemPerPageLabel {
+    margin-right: 15px;
+    p {
+      margin: 0;
+    }
+  }
+
+  &_itemPerPageOptions {
+    select {
+      padding: 6px 12px;
+      border: 1px solid $color_gray_semi_dark;
+      border-radius: 4px;
+    }
+  }
+
+  &_popupContainer {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &_popupContent {
+    position: relative;
+    width: 330px;
+    background: $color_gray;
+    border-radius: 5px;
+    padding: 0 10px;
+  }
+
+  &_popupPreview {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 10px 0 20px;
+  }
+
+  &_popupImage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 300px;
+
+    img,
+    video {
+      width: 330px;
+      height: 300px;
+      max-width: 330px;
+      max-height: 300px;
+      border: 1px solid $color_gray;
+      border-radius: 4px;
+      object-fit: cover;
+
+      &:focus,
+      &:active {
+        outline: 0;
+        box-shadow: none;
+      }
+    }
+
+    video {
+      width: 310px !important;
+    }
+  }
+
+  &_popupImagePreview {
+    width: 60px;
+    height: 60px;
+    margin: 0 5px;
+    cursor: pointer;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    img,
+    video {
+      width: 60px;
+      height: 60px;
+      max-width: 60px;
+      max-height: 60px;
+      border: 1px solid $color_gray_low;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+  }
+
+  &_popupLeftButton,
+  &_popupRightButton {
+    position: absolute;
+    top: 45%;
+    left: 0;
+    background: rgba($color_white, 0.3);
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+  }
+
+  &_popupRightButton {
+    left: unset;
+    right: 0;
+  }
+
+  &_popupButtonClose {
+    padding: 15px 0;
+    text-align: right;
+
+    svg {
+      cursor: pointer;
+    }
+  }
+}
+
+.pagination {
+  margin: 0;
+  margin-top: 2rem;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &_item {
+    padding: 0.5rem;
+    margin: 0.25rem;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  &_active {
+    color: $color_blue;
+    background: $color_blue_light;
+    border: 1px solid $color_blue;
+    border-radius: 4px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .ratingReview {
+    padding: 32px 0;
+
+    &_filters {
+      padding-bottom: 22px;
+    }
+
+    &_filter {
+      margin: 0 5px;
+    }
+
+    &_popupContainer {
+      width: 100vw;
+      height: 100vh;
+      padding: 0 20px;
+      -webkit-overflow-scrolling: auto;
+    }
+
+    &_popupContent {
+      margin: 0 1rem;
+      width: 100%;
+      height: auto;
+    }
+
+    &_popupPreview {
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    &_popupImage {
+      img,
+      video {
+        width: 100%;
+        max-width: 100%;
       }
     }
   }
