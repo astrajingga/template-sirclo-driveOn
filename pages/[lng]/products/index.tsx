@@ -1,40 +1,36 @@
-import { FC, useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+/* library Package */ 
+import { FC, useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import {
   Products,
   ProductFilter,
   ProductCategory,
   useI18n,
-} from "@sirclo/nexus";
-import useQuery from "lib/utils/useQuery";
-import useWindowSize from "lib/utils/useWindowSize";
-import convertToTextFromQuery from "lib/utils/convertToTextFromQuery";
-import SEO from "components/SEO/SEO";
-import Layout from "components/Layout/Layout";
-import EmptyComponent from "components/EmptyComponent/EmptyComponentUNO";
-import Placeholder from "components/Placeholder";
-import { useBrand } from "lib/utils/useBrand";
-import { Sliders, ArrowUp } from "react-feather";
-import styles from "public/scss/pages/Products.module.scss";
+} from '@sirclo/nexus'
+import { Sliders, ArrowUp } from 'react-feather'
 
-const Popup = dynamic(() => import("components/Popup/PopupUno"));
+/* library Template */
+import useQuery from 'lib/utils/useQuery'
+import useWindowSize from 'lib/utils/useWindowSize'
+import convertToTextFromQuery from 'lib/utils/convertToTextFromQuery'
+import { useBrand } from 'lib/utils/useBrand'
 
+/* component*/
+import SEO from 'components/SEO/SEO'
+import Layout from 'components/Layout/Layout'
+import EmptyComponent from 'components/EmptyComponent/EmptyComponentUNO'
+import Placeholder from 'components/Placeholder'
+import Popup from 'components/Popup/PopupUno'
 
-// const classessPagination = {
-//   pagingClassName: "paging",
-//   activeClassName: "active_paging",
-//   itemClassName: "item_paging",
-//   linkClassName: "link_paging",
-// };
+/* styles */
+import styles from 'public/scss/pages/Products.module.scss'
 
 const classesPagination = {
   pagingClassName: "col-12 products__pagination",
   itemClassName: "products__paginationItem",
   activeClassName: "products__paginationItemActive"
 }
-
 
 const classesProducts = {
   productContainerClassName: "col-6 col-md-4 products__item",
@@ -101,7 +97,7 @@ const classesPlaceholderProduct = {
   placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_product__card}`,
 };
 
-const ProductsPage: FC<any> = ({
+const ProductsPage: FC<object> = ({
   lng,
   lngDict,
   brand,
@@ -116,37 +112,7 @@ const ProductsPage: FC<any> = ({
   const [sort, setSort] = useState(null);
   const [filterProduct, setFilterProduct] = useState({});
 
-  const [currPage, setCurrPage] = useState(0);
-  const [pageInfo, setPageInfo] = useState({
-    pageNumber: 0,
-    itemPerPage: 8,
-    totalItems: 0,
-  });
-  const totalPage = Math.ceil(pageInfo.totalItems / pageInfo.itemPerPage);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  });
-
-  const handleScroll = () => {
-    const lastTestimonial = document.querySelector(
-      ".products_list:last-child"
-    ) as HTMLElement;
-
-    if (lastTestimonial) {
-      const lastTestimonialOffset =
-        lastTestimonial.offsetTop + lastTestimonial.clientHeight;
-      const pageOffset = window.pageYOffset + window.innerHeight;
-      if (pageOffset > lastTestimonialOffset) {
-        if (currPage < totalPage - 1) {
-          setCurrPage(currPage + 1);
-        }
-      }
-    }
-  };
+  const [currPage, setCurrPage] = useState<number>(0);
 
   useEffect(() => {
     setCurrPage(0);
@@ -232,7 +198,6 @@ const ProductsPage: FC<any> = ({
                   tagName={tagname}
                   pageNumber={i}
                   itemPerPage={6}
-                  getPageInfo={setPageInfo as any}
                   collectionSlug={categories}
                   sort={sort}
                   callPagination={true}
