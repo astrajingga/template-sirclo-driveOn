@@ -1,7 +1,8 @@
-import { FC, useState } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import dynamic from "next/dynamic";
-import Router from "next/router";
+/* library Package */ 
+import { FC, useState } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import dynamic from 'next/dynamic'
+import Router from 'next/router'
 import {
   getProductDetail,
   ProductDetail,
@@ -9,17 +10,10 @@ import {
   useI18n,
   isProductRecommendationAllowed,
   ProductReviews,
-} from "@sirclo/nexus";
-import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import Placeholder from "components/Placeholder";
-import EmptyComponent from "components/EmptyComponent/EmptyComponent";
-import SEO from "components/SEO/SEO";
-import { GRAPHQL_URI } from "lib/Constants";
-import useWindowSize from "lib/utils/useWindowSize";
-import { LazyLoadComponent } from "react-lazy-load-image-component";
-import { toast } from "react-toastify";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+} from '@sirclo/nexus'
+import { LazyLoadComponent } from 'react-lazy-load-image-component'
+import { toast } from 'react-toastify'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faBoxOpen,
   faClock,
@@ -29,12 +23,22 @@ import {
   faTimes,
   faCheckCircle,
   faBell,
-} from "@fortawesome/free-solid-svg-icons";
-import { useBrand } from "lib/utils/useBrand";
+} from '@fortawesome/free-solid-svg-icons'
 
-const Quickview = dynamic(() => import("components/Quickview/Quickview"));
-const Popup = dynamic(() => import("components/Popup/Popup"));
-const SocialShare = dynamic(() => import("components/SocialShare/SocialShare"));
+/* library Template */
+import { GRAPHQL_URI } from 'lib/Constants'
+import useWindowSize from 'lib/utils/useWindowSize'
+import { useBrand } from 'lib/utils/useBrand'
+
+/* component*/
+import Layout from 'components/Layout/Layout'
+import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
+import Placeholder from 'components/Placeholder'
+import EmptyComponent from 'components/EmptyComponent/EmptyComponent'
+import SEO from 'components/SEO/SEO'
+const Quickview = dynamic(() => import('components/Quickview/Quickview'))
+const Popup = dynamic(() => import('components/Popup/Popup'))
+const SocialShare = dynamic(() => import('components/SocialShare/SocialShare'))
 
 const classesRecomendation = {
   productContainerClassName: "col-6 col-md-3 products__item",
@@ -90,7 +94,7 @@ const classesProductDetail = {
   buyNowBtnClassName: "product-detail_buyNowBtn btn btn-orange",
   descriptionClassName: "product-detail__right--desc order-5",
   additionalInfoClassName: "d-none",
-  salePriceClassName: "products__item--content-detail-price--sale ",
+  salePriceClassName: "products__item--content-detail-priceSale ",
   notifyMeClassName: "product-detail_notifyMe",
   notifyMeLabelClassName: "product-detail_notifyMeLabel",
   notifyMeOptionsClassName: "product-detail_notifyMeOptions",
@@ -181,7 +185,7 @@ const classesEmptyComponent = {
   emptyDesc: "reviews__empty--desc",
 };
 
-const Product: FC<any> = ({
+const Product: FC<object> = ({
   lng,
   lngDict,
   slug,
@@ -193,8 +197,7 @@ const Product: FC<any> = ({
   const size = useWindowSize();
   const [isQuickview, setIsQuickview] = useState<boolean>(false);
   const [productsSlug, setProductsSlug] = useState<string>("");
-  const [showModalErrorAddToCart, setShowModalErrorAddToCart] =
-    useState<boolean>(false);
+  const [showModalErrorAddToCart, setShowModalErrorAddToCart] = useState<boolean>(false);
   const [showModalAddToCart, setShowModalAddToCart] = useState<boolean>(false);
   const [showModalNotifyMe, setShowModalNotifyMe] = useState<boolean>(false);
   const allowedProductRecommendation = isProductRecommendationAllowed();
@@ -291,7 +294,7 @@ const Product: FC<any> = ({
             </button>
             <button
               className="btn btn-orange-outer btn-long mt-3"
-              onClick={() => setShowModalAddToCart(false)}
+              onClick={() => Router.push("/[lng]/products", `/${lng}/products`)}
             >
               {i18n.t("global.continueShopping")}
             </button>
@@ -399,7 +402,7 @@ const Product: FC<any> = ({
           )}
         </div>
         {brand?.settings?.reviewsAndRatingEnabled && (
-          <div className={"ratingReview"}>
+          <div className="ratingReview">
             <div className="container">
                   <h2 className={"ratingReview_titleSection"}>
                     {i18n.t("product.ratingReviewTitle")} (
@@ -509,30 +512,14 @@ const Product: FC<any> = ({
                     }}
                     loadingComponent={
                       <>
-                        <div className="col-6 col-md-3 mb-4">
+                        {[0,1,2,3].map((_,i) => (
+                          <div key={i} className="col-6 col-md-3 mb-4">
                           <Placeholder
                             classes={classesPlaceholderProduct}
                             withImage
                           />
                         </div>
-                        <div className="col-6 col-md-3 mb-4">
-                          <Placeholder
-                            classes={classesPlaceholderProduct}
-                            withImage
-                          />
-                        </div>
-                        <div className="col-6 col-md-3 mb-4">
-                          <Placeholder
-                            classes={classesPlaceholderProduct}
-                            withImage
-                          />
-                        </div>
-                        <div className="col-6 col-md-3 mb-4">
-                          <Placeholder
-                            classes={classesPlaceholderProduct}
-                            withImage
-                          />
-                        </div>
+                        ))}
                       </>
                     }
                   />
