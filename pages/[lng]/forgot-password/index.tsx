@@ -1,13 +1,18 @@
-import { FC } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { ResetPassword, useI18n } from "@sirclo/nexus";
-import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import Loader from "components/Loader/Loader";
-import { toast } from "react-toastify";
-import { parseCookies } from "lib/parseCookies";
-import redirectIfAuthenticated from "lib/redirectIfAuthenticated";
-import { useBrand } from "lib/utils/useBrand";
+/* library Package */ 
+import { FC } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { ResetPassword, useI18n } from '@sirclo/nexus'
+import { toast } from 'react-toastify'
+
+/* library Template */
+import { parseCookies } from 'lib/parseCookies'
+import redirectIfAuthenticated from 'lib/redirectIfAuthenticated'
+import { useBrand } from 'lib/utils/useBrand'
+
+/* component */
+import Layout from 'components/Layout/Layout'
+import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
+import Loader from 'components/Loader/Loader'
 
 const classesResetPassword = {
   containerClassName: "forgot-password-page-form",
@@ -17,7 +22,7 @@ const classesResetPassword = {
   spinnerClassName: "spinner",
 }
 
-const ForgotPassword: FC<any> = ({
+const ForgotPassword: FC<object> = ({
   lng,
   lngDict,
   brand
@@ -34,9 +39,7 @@ const ForgotPassword: FC<any> = ({
       brand={brand}
     >
       <Breadcrumb 
-      // title={i18n.t("resetPassword.title")} 
       links={linksBreadcrumb} lng={lng} />
-      {/* <br> */}
       <div className="container">
         <div className="forgot-password-page-container">
           <div className="forgot-password-page-inner">
@@ -48,7 +51,8 @@ const ForgotPassword: FC<any> = ({
             </span>
             <ResetPassword
               classes={classesResetPassword}
-              onErrorMsg={(msg) => toast.error(msg)}
+              onErrorMsg={(msg: string) => toast.error(msg)}
+              onSuccessMsg={(msg: string) => toast.success(msg)}
               loadingComponent={<Loader color="text-light" />}
             />
           </div>

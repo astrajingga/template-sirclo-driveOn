@@ -1,17 +1,22 @@
-import { FC } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { SetNewPassword, useI18n } from "@sirclo/nexus";
-import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import Loader from "components/Loader/Loader";
-import { toast } from "react-toastify";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+/* library Package */ 
+import { FC } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { SetNewPassword, useI18n } from '@sirclo/nexus'
+import { toast } from 'react-toastify'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faEye,
   faEyeSlash,
   faCheckCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import { useBrand } from "lib/utils/useBrand";
+} from '@fortawesome/free-solid-svg-icons'
+
+/* library Template */
+import { useBrand } from 'lib/utils/useBrand'
+
+/* component */
+import Layout from 'components/Layout/Layout'
+import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
+import Loader from 'components/Loader/Loader'
 
 const classesSetNewPassword = {
   containerClassName: "forgot-password-page-form",
@@ -20,15 +25,14 @@ const classesSetNewPassword = {
   passwordViewButtonClassName: "sirclo-form-input-btn",
   buttonClassName: "btn col-12 btn-danger btn-long ",
   errorClassName: "error",
-  passwordStrengthBarContainerClassName:
-    "sirclo-form-password-strength-bar-container",
+  passwordStrengthBarContainerClassName: "sirclo-form-password-strength-bar-container",
   passwordStrengthBarClassName: "sirclo-form-password-strength-bar",
   passwordStrengthLabelClassName: "sirclo-form-password-strength-label",
   passwordCriteriaListClassName: "sirclo-form-password-criteria-list",
   passwordCriteriaClassName: "sirclo-form-password-criteria",
 };
 
-const ResetPasswordPage: FC<any> = ({
+const ResetPasswordPage: FC<object> = ({
   lng,
   lngDict,
   brand
@@ -48,7 +52,6 @@ const ResetPasswordPage: FC<any> = ({
       brand={brand}
     >
       <Breadcrumb
-        // title={i18n.t("resetPassword.setNewPassword")}
         links={linksBreadcrumb}
         lng={lng}
       />
