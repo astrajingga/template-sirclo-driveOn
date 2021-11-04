@@ -17,13 +17,13 @@ const TestimonialForm = dynamic(() => import('@sirclo/nexus').then((mod) => mod.
 
 /* library Template */
 import { useBrand } from 'lib/utils/useBrand'
-const Popup = dynamic(() => import('components/Popup/Popup'));
 
 /* component */
 import Layout from 'components/Layout/Layout'
 import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
 import Placeholder from 'components/Placeholder'
 import PremiumFeatures from 'components/PremiumFeatures/PremiumFeatures'
+const Popup = dynamic(() => import('components/Popup/Popup'));
 
 const classesTestimonials = {
   containerClassName: "testimonial__body",
