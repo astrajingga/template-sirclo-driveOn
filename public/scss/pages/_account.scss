@@ -14,7 +14,7 @@
     margin-bottom: 2rem;
 
     &--title {
-      font-family: "karla-bold";
+      font-family: 'Poppins';
       font-size: 25px;
     }
 
@@ -60,7 +60,7 @@
           }
 
           &--active {
-            font-family: "karla-bold";
+            font-family: 'Poppins';
 
             &::after {
               content: "";
@@ -211,7 +211,7 @@
 
       .forgot-link
       {
-        font-family: "karla-bold";
+        font-family: 'Poppins';
       }
     }
 
@@ -222,7 +222,7 @@
 
       a
       {
-        font-family: "karla-bold";
+        font-family: 'Poppins';
       }
     }
   }
@@ -230,7 +230,7 @@
 
   &-title
   {
-    font-family: "karla-bold";
+    font-family: 'Poppins';
     font-size: 16px;
   }
 
@@ -306,7 +306,7 @@
   &_mapPopupClose {
     border: none;
     background-color: transparent;
-    font-family: "karla-bold";
+    font-family: 'Poppins';
     font-size: 16px;
     color: $color_black;
     margin: 0 !important;
@@ -387,7 +387,7 @@
     margin-bottom: 7px;
 
     & > p {
-      font-family: "karla-bold";
+      font-family: 'Poppins';
       font-size: 14px;
       margin-bottom: 0;
       color: $color_black_light;
@@ -405,7 +405,7 @@
   }
 
   &_membershipTotalPoints {
-    font-family: "karla-bold";
+    font-family: 'Poppins';
     position: absolute;
     top: 0;
     right: 0;
@@ -491,7 +491,8 @@
 
     & > p,
     > span {
-      font-family: "karla-italic";
+      font-family: 'Poppins';
+      font-style: italic;
     }
   }
 
@@ -508,7 +509,7 @@
 
     & > a {
       color: $color_blue;
-      font-family: "karla-bold";
+      font-family: 'Poppins';
     }
   }
 
@@ -1047,7 +1048,7 @@
 
         &-itemTitle {
           margin-bottom: 0;
-          font-family: "karla-bold";
+          font-family: 'Poppins';
         }
 
         &-button {
@@ -1059,7 +1060,7 @@
           &-needReview {
             background-color: $color_gray_light;
             color: $color_blue;
-            font-family: "karla-bold";
+            font-family: 'Poppins';
 
             &:hover {
               background-color: $color_gray;

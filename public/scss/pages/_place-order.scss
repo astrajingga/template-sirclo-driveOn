@@ -4,7 +4,7 @@
 
     &--login-label {
       span {
-        font-family: "karla-bold";
+        font-family: 'Poppins';
         color: $color_black !important;
         margin-left: 5px;
 
@@ -65,7 +65,7 @@
 
   &_errorAddCartTitle
   {
-    font-family: "karla-bold";
+    font-family: 'Poppins';
     font-size: 18px;
     margin-bottom: 1rem;
   }
@@ -151,7 +151,7 @@
   {
     border: none;
     background-color: transparent;
-    font-family: "karla-bold";
+    font-family: 'Poppins';
     font-size: 16px;
 
     &:focus,

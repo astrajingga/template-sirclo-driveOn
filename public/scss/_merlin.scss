@@ -1,33 +1,31 @@
 @import "./base/all.scss";
 @import "./base/_scrollbar.scss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap'); 
 
 @font-face {
-  font-family: "karla-bold";
-  src: local("Karla Bold"), local("karla-bold"), url("/webfonts/Karla-Bold.ttf");
+  font-family: 'Poppins';
+  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFd2JQEl8qw.woff2) format('woff2');
   font-weight: bold;
   font-style: normal;
   font-display: fallback;
 }
 @font-face {
-  font-family: "karla-bold-italic";
-  src: local("Karla Bold Italic"), local("karla-bold-italic"),
-    url("/webfonts/Karla-BoldItalic.ttf");
+  font-family: 'Poppins';
+  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFd2JQEl8qw.woff2) format('woff2');
   font-weight: bold;
   font-style: italic;
   font-display: fallback;
 }
 @font-face {
-  font-family: "karla-italic";
-  src: local("Karla Italic"), local("karla-italic"),
-    url("/webfonts/Karla-Italic.ttf");
+  font-family: 'Poppins';
+  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFd2JQEl8qw.woff2) format('woff2');
   font-weight: normal;
   font-style: italic;
   font-display: fallback;
 }
 @font-face {
-  font-family: "karla-regular";
-  src: local("Karla Regular"), local("karla-regular"),
-    url("/webfonts/Karla-Regular.ttf");
+  font-family: 'Poppins';
+  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFd2JQEl8qw.woff2) format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: fallback;
@@ -166,7 +164,7 @@
 }
 
 body {
-  font-family: "karla-regular";
+  font-family: 'Poppins';
   font-size: 13px;
   font-weight: normal;
   background: #fff;
@@ -739,7 +737,7 @@ section {
   margin-bottom: 2rem;
 
   &__title {
-    font-family: "karla-bold";
+    font-family: 'Poppins';
     h2 {
       border-collapse: separate;
       border-spacing: 1rem 0;
@@ -804,7 +802,7 @@ section {
   }
 
   &__titlecart {
-    font-family: "karla-bold";
+    font-family: 'Poppins';
     margin-top: 2rem;
     margin-bottom: 2rem;
     h2 {
@@ -939,7 +937,7 @@ section {
   }
 
   &__titleOrder {
-    font-family: "karla-bold";
+    font-family: 'Poppins';
     margin-top: 2rem;
     margin-bottom: 2rem;
     h2 {
@@ -1115,7 +1113,7 @@ section {
       text-align: center;
 
       span {
-        font-family: "karla-bold";
+        font-family: 'Poppins';
         display: table-cell;
         vertical-align: middle;
         width: 45px;
@@ -1213,7 +1211,7 @@ section {
       }
 
       &-title {
-        font-family: "karla-bold";
+        font-family: 'Poppins';
         font-size: 16px;
         -ms-word-break: break-all;
         word-break: break-all;
@@ -1278,7 +1276,7 @@ section {
 
       &-title {
         padding-left: 10px;
-        font-family: "karla-bold";
+        font-family: 'Poppins';
         font-size: 14px;
         margin-bottom: 0.5rem;
 
@@ -1323,7 +1321,7 @@ section {
 
     &--buttonQuickview {
       display: none;
-      font-family: "karla-bold";
+      font-family: 'Poppins';
       position: absolute;
       top: 65%;
       left: 50%;
@@ -1356,7 +1354,7 @@ section {
     }
 
     &--title {
-      font-family: "karla-bold";
+      font-family: 'Poppins';
       font-size: 27.5px;
       text-transform: uppercase;
       margin: 1rem 0 0.5rem 0;
@@ -1434,7 +1432,7 @@ section {
 
     .close {
       &-button {
-        font-family: "karla-bold";
+        font-family: 'Poppins';
         font-size: 1rem;
         position: absolute;
         top: 0;
@@ -1536,7 +1534,7 @@ section {
     &-right {
       &--detailTitle {
         &-title {
-          font-family: "karla-bold";
+          font-family: 'Poppins';
           font-size: 14px;
           margin-bottom: 0.25rem;
         }
@@ -1665,7 +1663,7 @@ section {
 
     .close {
       &-button {
-        font-family: "karla-bold";
+        font-family: 'Poppins';
         font-size: 1rem;
         position: absolute;
         top: 0;
@@ -1745,7 +1743,7 @@ section {
 
     &--right {
       &-title {
-        font-family: "karla-bold";
+        font-family: 'Poppins';
         font-size: 16px;
       }
 
@@ -1829,7 +1827,7 @@ section {
       &-update {
         width: 46.5%;
         padding: 0.75rem;
-        font-family: "karla-bold";
+        font-family: 'Poppins';
       }
 
       &-detail {

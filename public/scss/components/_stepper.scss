@@ -36,7 +36,7 @@
 
       &-active
       {
-        font-family: "karla-bold";
+        font-family: 'Poppins';
         color: $color_black;
       }
     }
@@ -68,7 +68,7 @@
     {
       &-title
       {
-        font-family: "karla-bold";
+        font-family: 'Poppins';
         font-size: 1rem;
       }
 
@@ -165,7 +165,7 @@ $howManySteps: 10;
     font-weight: 300;
 
     span {
-      font-family: "karla-bold";
+      font-family: 'Poppins';
       font-size: 13px;
       text-transform: uppercase;
     }
