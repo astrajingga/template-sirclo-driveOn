@@ -1131,7 +1131,7 @@ section {
 
       &--sale {
         color: $color_white;
-        background: $color_orange;
+        background: $color_sticker_discount;
         font-size: 10px;
         line-height: 15px;
       }
@@ -1145,7 +1145,7 @@ section {
 
       &--new {
         color: $color_white;
-        background: $color_blue_dark;
+        background: $color_sticker_new;
         font-size: 10px;
         line-height: 15px;
       }
@@ -1970,8 +1970,30 @@ section {
 }
 
 .widget {
-  @media screen and (max-width: 575px) {
+  @media screen and (max-width: 1279px) {
     bottom: 82px !important;
     right: 16px !important;
+    &-contain{
+      margin-top: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+  
+      img{
+        padding: 2px;
+      }
+    }
+
+  }
+
+  &-contain{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: row wrap;
+    justify-content: center;
+
+    img{
+      padding: 5px;
+    }
   }
 }

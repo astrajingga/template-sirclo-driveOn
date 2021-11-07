@@ -1,52 +1,42 @@
-import { useState } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import dynamic from "next/dynamic";
-import Link from "next/link";
-import Router from "next/router"
-import Carousel from "@brainhubeu/react-carousel";
-import { LazyLoadComponent } from "react-lazy-load-image-component";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faBoxOpen } from "@fortawesome/free-solid-svg-icons";
+/* library Package */
+import { useState } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
+import Router from 'next/router'
+import Carousel from '@brainhubeu/react-carousel'
+import { LazyLoadComponent } from 'react-lazy-load-image-component'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import {
   Banner,
   getBanner,
   Products,
-  ProductCategory,
   useI18n,
-} from "@sirclo/nexus";
-import useWindowSize from "lib/utils/useWindowSize";
-import { useSizeBanner } from "lib/useSizeBanner";
-import { parseCookies } from "lib/parseCookies";
-import { useBrand } from "lib/utils/useBrand";
-import { GRAPHQL_URI } from "lib/Constants";
-import Layout from "components/Layout/Layout";
-import InstagramFeed from "components/InstagramFeed/InstagramFeed"
-
-const Quickview = dynamic(() => import("components/Quickview/Quickview"));
-const Popup = dynamic(() => import("components/Popup/Popup"));
-const Placeholder = dynamic(() => import("components/Placeholder"));
-const EmptyComponent = dynamic(() => import("components/EmptyComponent/EmptyComponent"));
-
-
+} from '@sirclo/nexus'
 const Widget = dynamic(
-  () => import("@sirclo/nexus").then((mod) => mod.Widget),
+  () => import('@sirclo/nexus').then((mod) => mod.Widget),
   { ssr: false }
 );
+
+/* library Template */
+import useWindowSize from 'lib/utils/useWindowSize'
+import { useSizeBanner } from 'lib/useSizeBanner'
+import { parseCookies } from 'lib/parseCookies'
+import { useBrand } from 'lib/utils/useBrand'
+import { GRAPHQL_URI } from 'lib/Constants'
+
+/* component */
+import Layout from 'components/Layout/Layout'
+import InstagramFeed from 'components/InstagramFeed/InstagramFeed'
+import Popup from 'components/Popup/Popup'
+import Placeholder from 'components/Placeholder'
+import Quickview from 'components/Quickview/Quickview'
 
 const bannerClasses = {
   imageContainerClassName: "banner-carousel__header",
   linkClassName: "banner-carousel__link",
   imageClassName: "banner-carousel__image"
-};
-
-const classesProductCategory = {
-  parentCategoryClassName: "row product-category",
-  categoryItemClassName: "col-3 col-md-3 product-category__items",
-  categoryValueClassName: "product-category__items--value",
-  dropdownIconClassName: "d-none",
-  imgContainerClassName: "product-category__items--images",
-  imgClassName: "product-category__items--images-image",
-  categoryNameClassName: "product-category__items--images-name",
 };
 
 const classesProducts = {
@@ -67,28 +57,13 @@ const classesProducts = {
   salePriceClassName: "products__item--content-price--sale",
 };
 
-const classesEmptyComponent = {
-  emptyContainer: "product-home__empty",
-  emptyTitle: "product-home__empty--title",
-};
-
 const classesPlaceholderBanner = {
   placeholderImage: "placeholder-item placeholder-item__banner",
-};
-
-const classesPlaceholderCatProduct = {
-  placeholderImage: "placeholder-item placeholder-item__product-cat--card",
 };
 
 const classesPlaceholderProduct = {
   placeholderImage: "placeholder-item placeholder-item__product--card",
 };
-
-const classesPlaceholderWidget = {
-  placeholderImage: "placeholder-item placeholder-item__widget--banner",
-};
-
-const tabMenu = ["featured", "new-arrivals", "preorder"];
 
 const Home: React.FC<any> = ({
   lng,
@@ -102,7 +77,6 @@ const Home: React.FC<any> = ({
 
   const [isQuickview, setIsQuickview] = useState<boolean>(false);
   const [slug, setSlug] = useState<string>("");
-  const [tabActive, setTabActive] = useState<string>("new-arrivals");
   const [showModalErrorAddToCart, setShowModalErrorAddToCart] = useState<boolean>(false);
   const [showModalAddToCart, setShowModalAddToCart] = useState<boolean>(false);
   const [showModalNotifyMe, setShowModalNotifyMe] = useState<boolean>(false);
@@ -121,8 +95,6 @@ const Home: React.FC<any> = ({
     setIsQuickview(false);
     setShowModalNotifyMe(true);
   }
-
-  const toogleTab = (menus) => setTabActive(menus);
 
   return (
     <Layout
@@ -233,9 +205,6 @@ const Home: React.FC<any> = ({
             <div className="heading__title">
               <h2>{i18n.t("home.ourProducts")}</h2>
             </div>
-            {/* <div className="heading__desc">
-              <p>{i18n.t("home.ourProductsDesc")}</p>
-            </div> */}
           </div>
           <div className="row best-seller">
             <LazyLoadComponent>
@@ -254,30 +223,14 @@ const Home: React.FC<any> = ({
                 }}
                 loadingComponent={
                   <>
-                    <div className="col-6 col-md-3 mb-4">
-                      <Placeholder
-                        classes={classesPlaceholderProduct}
-                        withImage
-                      />
-                    </div>
-                    <div className="col-6 col-md-3 mb-4">
-                      <Placeholder
-                        classes={classesPlaceholderProduct}
-                        withImage
-                      />
-                    </div>
-                    <div className="col-6 col-md-3 mb-4">
-                      <Placeholder
-                        classes={classesPlaceholderProduct}
-                        withImage
-                      />
-                    </div>
-                    <div className="col-6 col-md-3 mb-4">
-                      <Placeholder
-                        classes={classesPlaceholderProduct}
-                        withImage
-                      />
-                    </div>
+                    {[0,1,2,3].map((_,i) => (
+                      <div key={i} className="col-6 col-md-3 mb-4">
+                        <Placeholder
+                            classes={classesPlaceholderProduct}
+                            withImage
+                        />
+                      </div>
+                    ))}
                   </>
                 }
               />
@@ -293,8 +246,6 @@ const Home: React.FC<any> = ({
           
         </div>
       </section>
-      <br></br>
-      <br></br>
       <section>
         <div className="container">
           <LazyLoadComponent>
@@ -312,79 +263,6 @@ const Home: React.FC<any> = ({
         </div>
       </section>
       <section>
-        <div className="container">
-          <div className="heading">
-            <div className="heading__title">
-              <h2>{i18n.t("home.newProduct")}</h2>
-            </div>
-          </div>
-          <div className="featured-products">
-            <div className="featured-products__container">
-              <div className="row products-page">
-                <LazyLoadComponent>
-                  <Products
-                    filter={{ openOrderScheduled: false, published: true }}
-                    itemPerPage={4}
-                    isQuickView={setIsQuickview}
-                    getQuickViewSlug={setSlug}
-                    quickViewFeature={true}
-                    tagName={tabActive}
-                    classes={classesProducts}
-                    lazyLoadedImage={false}
-                    thumborSetting={{
-                      width: size.width < 768 ? 375 : 512,
-                      format: "webp",
-                      quality: 85,
-                    }}
-                    emptyStateComponent={
-                      <div className="col-12">
-                        <EmptyComponent
-                          classes={classesEmptyComponent}
-                          logo={
-                            <FontAwesomeIcon
-                              icon={faBoxOpen}
-                              color="#D1D1D1"
-                              size="2x"
-                            />
-                          }
-                          title={i18n.t("product.isEmptyDesc")}
-                        />
-                      </div>
-                    }
-                    loadingComponent={
-                      <>
-                        <div className="col-6 col-md-3 mb-4">
-                          <Placeholder
-                            classes={classesPlaceholderProduct}
-                            withImage
-                          />
-                        </div>
-                        <div className="col-6 col-md-3 mb-4">
-                          <Placeholder
-                            classes={classesPlaceholderProduct}
-                            withImage
-                          />
-                        </div>
-                        <div className="col-6 col-md-3 mb-4">
-                          <Placeholder
-                            classes={classesPlaceholderProduct}
-                            withImage
-                          />
-                        </div>
-                        <div className="col-6 col-md-3 mb-4">
-                          <Placeholder
-                            classes={classesPlaceholderProduct}
-                            withImage
-                          />
-                        </div>
-                      </>
-                    }
-                  />
-                </LazyLoadComponent>
-              </div>
-            </div>
-          </div>
-        </div>
         {brand?.socmedSetting?.instagramToken &&
           <LazyLoadComponent threshold={300}>
             <InstagramFeed size={size} />
@@ -421,7 +299,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   const brand = await useBrand(req);
   const urlSite = `https://${req.headers.host}/${params.lng}/product/${params.slug}`;
   const dataBanners = await getBanner(GRAPHQL_URI(req));
-  // console.log(JSON.stringify(dataBanners?.data?.brands));
 
   return {
     props: {
