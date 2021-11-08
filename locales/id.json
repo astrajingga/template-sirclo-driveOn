@@ -553,7 +553,9 @@
     "successConfPassword": "Berhasil menyimpan kata sandi!",
     "title": "Daftar",
     "toLogin": "Masuk",
-    "verificationFailed": "Gagal verifikasi"
+    "verificationFailed": "Gagal verifikasi",
+    "sso": "{SSO_PROVIDER}",
+    "whatsapp": "Whatsapp"
   },
   "resetPassword": {
     "inputEmail": "Masukan email anda",
@@ -684,12 +686,12 @@
     "noWhatsApp": "Tidak memiliki whatsapp?",
     "notReceivedMessage": "Belum terima pesan?",
     "otpSent": "Kami telah mengirimkan kode verifikasi melalui nomor Whatsapp ",
-    "privacyPolicy": "Kebijakan Privasi",
+    "privacyPolicy": " Kebijakan Privasi ",
     "resend": "Kirim ulang kode OTP",
     "requestOTPTimeOut": "Kode OTP sudah dikirim, harap tunggu 1 menit untuk kirim ulang kode OTP",
     "seconds": "detik",
     "sendOTP": "Kirim Kode OTP",
-    "termsAndCondition": "Syarat & Ketentuan",
+    "termsAndCondition": " Syarat & Ketentuan ",
     "verifyYourNumber": "Verifikasi Nomor Anda",
     "welcome": "Selamat datang",
     "whatsappNumber": "Nomor Whatsapp",

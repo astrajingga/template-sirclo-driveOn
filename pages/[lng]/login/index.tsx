@@ -1,7 +1,7 @@
+/* library package */
 import { FC, useState } from 'react'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { toast } from 'react-toastify'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faEye,
   faEyeSlash,
@@ -18,14 +18,18 @@ import {
   SingleSignOn,
   useI18n
 } from '@sirclo/nexus'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+/* library template */
 import { parseCookies } from 'lib/parseCookies'
 import redirectIfAuthenticated from 'lib/redirectIfAuthenticated'
 import { useBrand } from 'lib/utils/useBrand'
 import { useGoogleAuth } from 'lib/utils/useGoogleAuth'
 import { useFacebookAuth } from 'lib/utils/useFacebookAuth'
 import { useWhatsAppOTPSetting } from 'lib/utils/useSingleSignOn'
+
+/* component */
 import Layout from 'components/Layout/Layout'
-// import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
 import Loader from 'components/Loader/Loader'
 import LoaderPages from 'components/Loader/LoaderPages'
 
@@ -81,7 +85,7 @@ const classesWhatsAppOTP = {
   accountContainerClassName: "login-page-accountContainer",
   accountNameClassName: "login-page-accountName",
   accountEmailClassName: "login-page-accountEmail",
-  btnChooseAccountClassName: "btn btn-orange btn-long btn-center"
+  btnChooseAccountClassName: "btn btn-orange btn-long btn-center",
 }
 
 const LoginPage: FC<any> = ({
@@ -94,7 +98,6 @@ const LoginPage: FC<any> = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n()
   const [step, setStep] = useState<string>("whatsapp-input");
-  // const linksBreadcrumb = [`${i18n.t("home.title")}`, `${i18n.t("login.title")}`]
 
   const brandName = (brand: string): string => {
     const lower = brand?.toLowerCase();
@@ -108,7 +111,6 @@ const LoginPage: FC<any> = ({
       lngDict={lngDict}
       brand={brand}
     >
-      {/* <Breadcrumb title={i18n.t("login.title")} links={linksBreadcrumb} lng={lng} /> */}
       <section>
         <div className="container">
           <div className="login-page-container">
@@ -147,6 +149,9 @@ const LoginPage: FC<any> = ({
                       back: <FontAwesomeIcon className="icon-password" icon={faArrowLeft} />
                     }}
                   />
+                  <div className="text-center footer">
+                  {i18n.t("login.dontHaveAccount")}<a href="/en/register"> {i18n.t("login.toRegister")}</a>
+                  </div>
                 </>
               }
               {(step === 'email' || step === 'whatsapp-input') &&
