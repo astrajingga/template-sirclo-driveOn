@@ -1,11 +1,16 @@
-import { FC, useState } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { Article, useI18n } from "@sirclo/nexus";
-import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import { useBrand } from "lib/utils/useBrand";
+/* library Package */
+import { FC, useState } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { Article, useI18n } from '@sirclo/nexus'
 
-const Information: FC<any> = ({
+/* library Template */
+import { useBrand } from 'lib/utils/useBrand'
+
+/* component*/
+import Layout from 'components/Layout/Layout'
+import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
+
+const Information: FC<object> = ({
 	lng,
 	lngDict,
 	slug,
@@ -23,7 +28,6 @@ const Information: FC<any> = ({
 			brand={brand}
 		>
 			<Breadcrumb 
-			// title={title}
 			 links={linksBreadcrumb} lng={lng} />
 			<section>
 				<div className="container">
