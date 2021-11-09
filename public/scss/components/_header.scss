@@ -500,18 +500,18 @@
 
         a {
           position: relative;
-          color: $color_white;
+          color: $color_base_red;
           text-decoration: none;
         }
 
         .icon-item {
           height: 1rem;
-          color: $color_white;
+          color: $color_base_red;
         }
 
         .icon-title {
           display: block;
-          font-size: 11px;
+          font-size: 14px;
         }
 
         .icon-badge {
@@ -552,6 +552,7 @@
     a {
       text-decoration: none;
       color: $color_white;
+      font-size: 14px;
     }
 
     &__sub {
@@ -573,6 +574,7 @@
 
       a {
         color: $color_base_red;
+        font-size: 14px;
       }
     }
   }
