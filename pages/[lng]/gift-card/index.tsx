@@ -1,9 +1,14 @@
-import { FC } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import { GiftCard, useI18n } from "@sirclo/nexus";
-import { useBrand } from "lib/utils/useBrand";
+/* library Package */
+import { FC } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { GiftCard, useI18n } from '@sirclo/nexus'
+
+/* library Template */
+import { useBrand } from 'lib/utils/useBrand'
+
+/* component*/
+import Layout from 'components/Layout/Layout'
+import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
 
 const classesGiftCard = {
   containerClassName: "giftcard-page-form",
@@ -13,7 +18,7 @@ const classesGiftCard = {
   buttonClassName: "btn btn-orange btn-long float-right"
 };
 
-const GiftCardPage: FC<any> = ({
+const GiftCardPage: FC<object> = ({
   lng,
   lngDict,
   brand
