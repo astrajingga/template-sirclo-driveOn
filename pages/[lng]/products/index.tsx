@@ -16,7 +16,7 @@ import useWindowSize from 'lib/utils/useWindowSize'
 import convertToTextFromQuery from 'lib/utils/convertToTextFromQuery'
 import { useBrand } from 'lib/utils/useBrand'
 
-/* component*/
+/* component */
 import SEO from 'components/SEO/SEO'
 import Layout from 'components/Layout/Layout'
 import EmptyComponent from 'components/EmptyComponent/EmptyComponentUNO'

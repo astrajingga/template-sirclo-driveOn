@@ -30,7 +30,7 @@ import { GRAPHQL_URI } from 'lib/Constants'
 import useWindowSize from 'lib/utils/useWindowSize'
 import { useBrand } from 'lib/utils/useBrand'
 
-/* component*/
+/* component */
 import Layout from 'components/Layout/Layout'
 import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
 import Placeholder from 'components/Placeholder'
