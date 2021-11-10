@@ -1,17 +1,20 @@
-import { FC, useState } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import dynamic from "next/dynamic";
+ 
+import { FC } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import {
   BlogSingle,
   BlogCategories,
   useI18n,
   BlogRecent
-} from "@sirclo/nexus";
-import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import { useBrand } from "lib/utils/useBrand";
+} from '@sirclo/nexus'
 
-const Placeholder = dynamic(() => import("components/Placeholder"));
+ 
+import { useBrand } from 'lib/utils/useBrand'
+
+/* component */
+import Layout from 'components/Layout/Layout'
+import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
+import Placeholder from 'components/Placeholder'
 
 const classesBlogSingle = {
   blogContainerClassName: "blog-detail",
@@ -52,14 +55,13 @@ const classesBlogRecent = {
   dateClassName: "recent-post__items--label-date",
 }
 
-const BlogSlug: FC<any> = ({
+const BlogSlug: FC<object> = ({
   lng,
   lngDict,
   slug,
   brand,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n();
-  const [title, setTitle] = useState<string>("")
 
   const linksBreadcrumb = [`${i18n.t("home.title")}`, `${i18n.t("blog.title")}`]
 
@@ -72,7 +74,6 @@ const BlogSlug: FC<any> = ({
     >
       <div className="blog-detail__breadcrumb">
         <Breadcrumb
-          // title={title}
           links={linksBreadcrumb}
           lng={lng}
         />
@@ -84,7 +85,6 @@ const BlogSlug: FC<any> = ({
               <BlogSingle
                 classes={classesBlogSingle}
                 ID={slug.toString()}
-                getTitle={setTitle}
                 timeIcon={
                   <div className="blog-detail__icon blog-detail__icon--time"></div>
                 }
@@ -100,11 +100,9 @@ const BlogSlug: FC<any> = ({
                       <Placeholder classes={classesPlaceholderBlogs} withImage />
                     </div>
                     <div className="col-12 py-4">
-                      <Placeholder classes={classesPlaceholderBlogs} withImage />
-                      <Placeholder classes={classesPlaceholderBlogs} withImage />
-                      <Placeholder classes={classesPlaceholderBlogs} withImage />
-                      <Placeholder classes={classesPlaceholderBlogs} withImage />
-                      <Placeholder classes={classesPlaceholderBlogs} withImage />
+                      {[0,1,2,3].map((_,i) => (
+                        <Placeholder key={i} classes={classesPlaceholderBlogs} withImage />
+                      ))}
                     </div>
                   </div>
                 }

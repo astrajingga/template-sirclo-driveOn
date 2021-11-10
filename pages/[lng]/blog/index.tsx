@@ -1,6 +1,6 @@
-import { FC, useState } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import dynamic from "next/dynamic";
+/* library Package */
+import { FC, useState } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import {
   useI18n,
   Blogs,
@@ -8,18 +8,23 @@ import {
   getBlogHeaderImage,
   BlogRecent,
   isBlogAllowed
-} from "@sirclo/nexus";
-import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import useWindowSize from "lib/utils/useWindowSize";
-import { GRAPHQL_URI } from "lib/Constants";
-import { useBrand } from "lib/utils/useBrand";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faNewspaper } from "@fortawesome/free-solid-svg-icons";
-import styles from "public/scss/pages/Blog.module.scss";
+} from '@sirclo/nexus'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons' 
 
-const EmptyComponent = dynamic(() => import("components/EmptyComponent/EmptyComponent"));
-const Placeholder = dynamic(() => import("components/Placeholder"));
+/* library Template */
+import useWindowSize from 'lib/utils/useWindowSize'
+import { GRAPHQL_URI } from 'lib/Constants'
+import { useBrand } from 'lib/utils/useBrand'
+
+/* component */
+import Layout from 'components/Layout/Layout'
+import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
+import EmptyComponent from 'components/EmptyComponent/EmptyComponent'
+import Placeholder from 'components/Placeholder'
+
+/* styles */
+import styles from 'public/scss/pages/Blog.module.scss'
 
 const classesBlogs = {
   blogsContainerClassName: "row blogs-page",
@@ -68,7 +73,7 @@ const classesBlogRecent = {
   dateClassName: "recent-post__items--label-date",
 }
 
-const Blog: FC<any> = ({
+const Blog: FC<object> = ({
   lng,
   lngDict,
   headerImage,
@@ -93,7 +98,6 @@ const Blog: FC<any> = ({
       {allowedBlog &&
         <>
           <Breadcrumb
-            // title={i18n.t("blog.title")}
             links={linksBreadcrumb}
             lng={lng}
           />
