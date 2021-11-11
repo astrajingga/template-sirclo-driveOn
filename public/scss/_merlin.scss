@@ -1,31 +1,33 @@
 @import "./base/all.scss";
 @import "./base/_scrollbar.scss";
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap'); 
 
 @font-face {
-  font-family: 'Poppins';
-  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFd2JQEl8qw.woff2) format('woff2');
+  font-family: "Poppins-bold";
+  src: local("Poppins Bold"), local("Poppins-bold"), url("/webfonts/Poppins-Bold.ttf");
   font-weight: bold;
   font-style: normal;
   font-display: fallback;
 }
 @font-face {
-  font-family: 'Poppins';
-  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFd2JQEl8qw.woff2) format('woff2');
+  font-family: "Poppins-bold-italic";
+  src: local("Poppins Bold Italic"), local("Poppins-bold-italic"),
+    url("/webfonts/Poppins-BoldItalic.ttf");
   font-weight: bold;
   font-style: italic;
   font-display: fallback;
 }
 @font-face {
-  font-family: 'Poppins';
-  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFd2JQEl8qw.woff2) format('woff2');
+  font-family: "Poppins-italic";
+  src: local("Poppins Italic"), local("Poppins-italic"),
+    url("/webfonts/Poppins-Italic.ttf");
   font-weight: normal;
   font-style: italic;
   font-display: fallback;
 }
 @font-face {
-  font-family: 'Poppins';
-  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFd2JQEl8qw.woff2) format('woff2');
+  font-family: "Poppins-regular";
+  src: local("Poppins Regular"), local("Poppins-regular"),
+    url("/webfonts/Poppins-Regular.ttf");
   font-weight: normal;
   font-style: normal;
   font-display: fallback;

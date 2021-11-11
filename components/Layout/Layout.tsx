@@ -92,7 +92,7 @@ const Layout: React.FC<LayoutPropType> = ({
 
         <link 
           rel="preload" 
-          href="/webfonts/Karla-Bold.ttf"
+          href="/webfonts/Poppins-Bold.ttf"
           as="font" 
           crossOrigin="anonymous"
           type="font/ttf" 
@@ -100,7 +100,7 @@ const Layout: React.FC<LayoutPropType> = ({
 
         <link 
           rel="preload" 
-          href="/webfonts/Karla-BoldItalic.ttf"
+          href="/webfonts/Poppins-BoldItalic.ttf"
           as="font" 
           crossOrigin="anonymous"
           type="font/ttf" 
@@ -108,7 +108,7 @@ const Layout: React.FC<LayoutPropType> = ({
 
         <link 
           rel="preload" 
-          href="/webfonts/Karla-Italic.ttf"
+          href="/webfonts/Poppins-Italic.ttf"
           as="font" 
           crossOrigin="anonymous"
           type="font/ttf" 
@@ -116,7 +116,7 @@ const Layout: React.FC<LayoutPropType> = ({
 
         <link 
           rel="preload" 
-          href="/webfonts/Karla-Regular.ttf"
+          href="/webfonts/Poppins-Regular.ttf"
           as="font" 
           crossOrigin="anonymous"
           type="font/ttf" 
