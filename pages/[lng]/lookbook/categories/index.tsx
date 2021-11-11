@@ -1,14 +1,20 @@
-import { FC } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+/* library Package */
+import { FC } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import {
   Lookbook,
   isLookbookAllowed,
   useI18n
-} from "@sirclo/nexus";
-import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import useWindowSize from "lib/utils/useWindowSize";
-import { useBrand } from "lib/utils/useBrand";
+} from '@sirclo/nexus'
+
+/* library Template */
+import useWindowSize from 'lib/utils/useWindowSize'
+import { useBrand } from 'lib/utils/useBrand'
+
+/* component */
+import Layout from 'components/Layout/Layout'
+import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
+
 
 const classesLookbook = {
   containerClassName: "lookbook",
@@ -20,7 +26,7 @@ const classesLookbook = {
   linkClassName: "lookbook__items--details-links",
 };
 
-const LookbookCategory: FC<any> = ({
+const LookbookCategory: FC<object> = ({
   lng,
   lngDict,
   brand
@@ -39,7 +45,6 @@ const LookbookCategory: FC<any> = ({
       brand={brand}
     >
       <Breadcrumb 
-      // title={i18n.t("lookbook.title")} 
       links={linksBreadcrumb} lng={lng} />
       {LookbookAllowed &&
         <section>
@@ -67,8 +72,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req }) =>
   );
   
   const brand = await useBrand(req);
-  
-  // console.log("masuk");
   return {
     props: {
       lng: params.lng,

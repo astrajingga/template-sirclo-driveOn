@@ -1,10 +1,15 @@
-import { FC, useState } from "react"
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { LookbookSingle, useI18n } from "@sirclo/nexus"
-import Layout from "components/Layout/Layout"
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import useWindowSize from "lib/utils/useWindowSize";
-import { useBrand } from "lib/utils/useBrand";
+/* library Package */
+import { FC, useState } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { LookbookSingle, useI18n } from '@sirclo/nexus'
+
+/* library Template */
+import useWindowSize from 'lib/utils/useWindowSize'
+import { useBrand } from 'lib/utils/useBrand'
+
+/* component */
+import Layout from 'components/Layout/Layout'
+import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
 
 const classesLookbookSingle = {
   containerClassName: "lookbook-detail",
@@ -12,7 +17,7 @@ const classesLookbookSingle = {
   imageClassName: "card lookbook-detail__items",
 }
 
-const LookbookSinglePage: FC<any> = ({
+const LookbookSinglePage: FC<object> = ({
   lng,
   lngDict,
   slug,
@@ -32,7 +37,6 @@ const LookbookSinglePage: FC<any> = ({
       brand={brand}
     >
       <Breadcrumb 
-      // title={title} 
       links={linksBreadcrumb} lng={lng} />
       <section>
         <div className="container">
