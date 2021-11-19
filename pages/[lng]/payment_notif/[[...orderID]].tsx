@@ -4,13 +4,17 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
 import { PaymentConfirmation, CheckPaymentOrder, useI18n } from '@sirclo/nexus'
 import { toast } from 'react-toastify'
-import { ChevronUp, ChevronDown, X } from 'react-feather'
+import {
+  ChevronUp,
+  ChevronDown,
+  X,
+} from 'react-feather'
 
 /* library Template */
-import { useBrand } from 'lib/utils/useBrand'
+import { useBrand } from 'lib/useBrand'
 
 /* component */
-import SEO from 'components/SEO/SEO'
+import SEO from 'components/SEO'
 import Layout from 'components/Layout/Layout'
 import Loader from 'components/Loader/Loader'
 import BankAccount from 'components/BankAccount/BankAccount'
@@ -19,6 +23,7 @@ import BankAccount from 'components/BankAccount/BankAccount'
 import styles from 'public/scss/pages/PaymentNotif.module.scss'
 import stylesPopup from 'public/scss/components/CheckPaymentOrder.module.scss'
 import stylesBanks from 'public/scss/components/BanksAccount.module.scss'
+
 
 const classesPaymentConfirmation = {
   paymentConfirmationDivClassName: styles.paymentNotif_form,
@@ -33,22 +38,18 @@ const classesPaymentConfirmation = {
   detailHeaderClassName: styles.paymentConfirmation_detailHeader,
   detailTitleClassName: styles.paymentConfirmation_detailTitle,
   detailStatusClassName: styles.paymentConfirmation_detailStatus,
-  paymentStatusCancelledClassName:
-    styles.paymentConfirmation_detailStatusCancelled,
-  paymentStatusReturnedClassName:
-    styles.paymentConfirmation_detailStatusReturned,
+  paymentStatusCancelledClassName: styles.paymentConfirmation_detailStatusCancelled,
+  paymentStatusReturnedClassName: styles.paymentConfirmation_detailStatusReturned,
   detailTotalAmountClassName: styles.paymentConfirmation_detailTotalAmount,
   detailDropdownClassName: styles.paymentConfirmation_detailDropdown,
   detailItemClassName: `d-flex`,
   detailItemImgClassName: styles.paymentConfirmation_detailItemImg,
   detailItemLabelClassName: styles.paymentConfirmation_detailItemLabel,
   detailItemPriceClassName: styles.paymentConfirmation_detailItemPrice,
-  detailPriceBreakdownClassName:
-    styles.paymentConfirmation_detailPriceBreakdown,
+  detailPriceBreakdownClassName: styles.paymentConfirmation_detailPriceBreakdown,
   detailFieldClassName: styles.paymentConfirmation_detailField,
   detailTotalFieldClassName: styles.paymentConfirmation_detailTotalField,
-  detailHeaderDropdownClassName:
-    styles.paymentConfirmation_detailHeaderDropdown,
+  detailHeaderDropdownClassName: styles.paymentConfirmation_detailHeaderDropdown,
   detailBodyDropdownClassName: styles.paymentConfirmation_detailBodyDropdown,
   labelClassName: styles.paymentConfirmation_label,
 
@@ -62,8 +63,9 @@ const classesPaymentConfirmation = {
   bankAccountNumberSectionClassname: stylesBanks.bank_numberSection,
   bankAccountCopyButtonClassName: stylesBanks.bank_buttonIcon,
   bankAccountIconCollapseClassName: stylesBanks.bank_buttonIcon,
-  bankAccountLabelAccountNameClassName: stylesBanks.bank_name,
-};
+  bankAccountLabelAccountNameClassName: stylesBanks.bank_name
+}
+
 
 const classesCheckPaymentOrder = {
   checkPaymentOrderHeaderClassName: `d-none`,
@@ -74,24 +76,30 @@ const classesCheckPaymentOrder = {
   checkPaymentOrderInputTitleClassName: stylesPopup.checkOrder_inputTitle,
   checkPaymentOrderInputClassName: stylesPopup.checkOrder_input,
   checkPaymentOrderCloseButtonClassName: stylesPopup.checkOrder_closeButton,
-  checkPaymentOrderSubmitButtonClassName: stylesPopup.checkOrder_submitButton,
-};
+  checkPaymentOrderSubmitButtonClassName: stylesPopup.checkOrder_submitButton
+}
 
-const PaymentConfirmationPage: FC<object> = ({
+
+const PaymentConfirmationPage: FC<any> = ({
   lng,
   lngDict,
-  brand,
+  brand
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n();
   const router = useRouter();
-  let orderID = ""
+  let orderID = "";
 
   if (router.query.orderID) {
     orderID = router.query.orderID.toString();
   }
 
   return (
-    <Layout i18n={i18n} lng={lng} lngDict={lngDict} brand={brand}>
+    <Layout
+      i18n={i18n}
+      lng={lng}
+      lngDict={lngDict}
+      brand={brand}
+    >
       <SEO title={i18n.t("paymentConfirm.heading")} />
       <section>
         <div className="container">
@@ -100,39 +108,39 @@ const PaymentConfirmationPage: FC<object> = ({
               <div className={styles.paymentNotif_inner_title}>
                 <h3>{i18n.t("paymentConfirm.heading")}</h3>
               </div>
-
-              {orderID ? (
+              <BankAccount />
+              {orderID ?
+              <div>
                 <PaymentConfirmation
                   orderIDProps={orderID}
                   classes={classesPaymentConfirmation}
                   orderDetailIcon={{
                     chevronUp: <ChevronUp />,
-                    chevronDown: <ChevronDown />,
+                    chevronDown: <ChevronDown />
                   }}
                   onErrorMsg={(msg) => toast.error(msg)}
                   onSuccessMsg={(msg) => toast.success(msg)}
                   loadingComponent={<Loader color="text-light" />}
                   withOrderDetails
-                  children={<BankAccount />}
                   thumborSetting={{
                     width: 40,
                     format: "webp",
-                    quality: 85,
+                    quality: 85
                   }}
                 />
-              ) : (
+                </div>
+                :
                 <>
-                  <BankAccount />
                   <CheckPaymentOrder
                     classes={classesCheckPaymentOrder}
                     icon={{
                       loading: <Loader color="text-light" />,
-                      close: <X />,
+                      close: <X />
                     }}
                     onErrorMsg={(msg) => toast.error(msg)}
                   />
                 </>
-              )}
+              }
             </div>
           </div>
         </div>
@@ -141,24 +149,18 @@ const PaymentConfirmationPage: FC<object> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  params,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const brand = await useBrand(req);
-  const defaultLanguage =
-    brand?.settings?.defaultLanguage || params.lng || "id"
-  const { default: lngDict = {} } = await import(
-    `locales/${defaultLanguage}.json`
-  );
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
+  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
 
   return {
     props: {
       lng: defaultLanguage,
       lngDict,
-      brand: brand || "",
-    },
+      brand: brand || ""
+    }
   };
-};
+}
 
 export default PaymentConfirmationPage;

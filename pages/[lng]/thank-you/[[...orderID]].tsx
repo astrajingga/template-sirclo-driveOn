@@ -1,21 +1,26 @@
-import { FC } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { ThankYou, useI18n } from "@sirclo/nexus";
-import { toast } from "react-toastify";
-
-
-import SEO from "components/SEO/SEO";
-import Layout from "components/Layout/Layout";
-import { useBrand } from "lib/utils/useBrand";
+/* library Package */
+import { FC } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { ThankYou, useI18n } from '@sirclo/nexus'
+import { toast } from 'react-toastify'
 import {
   Check,
   ChevronUp,
   ChevronDown,
   Copy
-} from "react-feather";
-import styles from "public/scss/pages/ThankYou.module.scss";
-import stylesBanks from "public/scss/components/BanksAccount.module.scss";
-import stylesOrder from "public/scss/pages/PaymentNotif.module.scss";
+} from 'react-feather'
+
+/* library Template */
+import { useBrand } from 'lib/useBrand'
+
+/* component */
+import SEO from 'components/SEO'
+import Layout from 'components/Layout/Layout'
+
+/* styles */
+import styles from 'public/scss/pages/ThankYou.module.scss'
+import stylesBanks from 'public/scss/components/BanksAccount.module.scss'
+import stylesOrder from 'public/scss/pages/PaymentNotifThankYou.module.scss'
 
 const classesThankYouPage = {
   thankYouClassName: styles.thankyou_inner,
@@ -26,13 +31,12 @@ const classesThankYouPage = {
 
   buttonConfirmClassName: stylesOrder.paymentConfirmation_buttonConfirm,
   detailContainerClassName: stylesOrder.paymentConfirmation_detailContainer,
-  detailContentClassName: stylesOrder.paymentConfirmation_detailContent,
+  detailContentClassName: 'd-none',
   detailHeaderClassName: stylesOrder.paymentConfirmation_detailHeader,
   detailTitleClassName: stylesOrder.paymentConfirmation_detailTitle,
   detailStatusClassName: stylesOrder.paymentConfirmation_detailStatus,
   paymentStatusCancelledClassName: stylesOrder.paymentConfirmation_detailStatusCancelled,
   paymentStatusReturnedClassName: styles.paymentConfirmation_detailStatusReturned,
-  paymentStatusUnpaidClassName: styles.paymentConfirmation_detailStatusUnpaid,
   detailTotalAmountClassName: stylesOrder.paymentConfirmation_detailTotalAmount,
   detailDropdownClassName: stylesOrder.paymentConfirmation_detailDropdown,
   detailItemClassName: `d-flex`,
@@ -46,8 +50,8 @@ const classesThankYouPage = {
   detailBodyDropdownClassName: stylesOrder.paymentConfirmation_detailBodyDropdown,
   labelClassName: stylesOrder.paymentConfirmation_label,
 
-  bankAccountInformationClassName: stylesBanks.bank_information,
-  bankAccountContainerClassName: stylesBanks.bank_container,
+  bankAccountInformationClassName: 'd-none',
+  bankAccountContainerClassName: 'd-none',
   bankAccountHeaderClassName: stylesBanks.bank_header,
   bankAccountSectionClassName: stylesBanks.bank_section,
   bankAccountLogoClassName: stylesBanks.bank_logoBank,
@@ -72,6 +76,7 @@ const ThankYouPage: FC<any> = ({
       lng={lng}
       lngDict={lngDict}
       brand={brand}
+      withFooter={false}
     >
       <SEO title={i18n.t("thankYou.thanks")} />
       <section>

@@ -1,14 +1,29 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { useRouter } from "next/router";
-import { useI18n, usePaymentLink } from "@sirclo/nexus";
-import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { useBrand } from "lib/utils/useBrand";
+/* library Package */
+import { FC } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { useRouter } from 'next/router'
+import { useI18n, usePaymentLink } from '@sirclo/nexus'
+import {
+  AlertCircle,
+  XCircle
+} from 'react-feather'
 
-const PaymentStatus: React.FC<any> = ({ 
-  lng, 
+/* library Template */
+import { useBrand } from 'lib/useBrand'
+
+/* component */
+import Layout from 'components/Layout/Layout'
+
+/* styles */
+import styles from 'public/scss/pages/PaymentStatus.module.scss'
+
+type TypePaymentStatus = {
+  title?: string,
+  contentDesc?: string
+}
+
+const PaymentStatus: FC<any> = ({
+  lng,
   lngDict,
   brand,
   orderID,
@@ -17,113 +32,106 @@ const PaymentStatus: React.FC<any> = ({
   const i18n: any = useI18n();
   const router = useRouter();
   const { data } = usePaymentLink(orderID);
-  let paymentStatus: any;
 
-  if (data === undefined || status === null) status = "orderNotFound";
+  let paymentStatus: TypePaymentStatus;
+
+  if (data === undefined || status === null) status = "orderNotFound"
 
   switch (status) {
     case 'failed':
       paymentStatus = {
         title: i18n.t("paymentStatus.titleFailed"),
-        iconClass: "paymentStatus_innerIconFailed",
-        contentTitle: i18n.t("paymentStatus.failed"),
         contentDesc: i18n.t("paymentStatus.failedDesc")
       }
       break
     case 'unfinish':
       paymentStatus = {
         title: i18n.t("paymentStatus.titleUnfinish"),
-        iconClass: "paymentStatus_innerIconWarning",
-        contentTitle: i18n.t("paymentStatus.unfinish"),
         contentDesc: i18n.t("paymentStatus.unfinishDesc")
       }
       break
     default:
       paymentStatus = {
-        title: i18n.t("paymentStatus.orderNotFound"),
-        iconClass: "paymentStatus_innerIconWarning",
+        title: i18n.t("paymentStatus.orderNotFound")
       }
   }
 
-  const linksBreadcrumb = [
-    `${i18n.t("home.title")}`,
-    `${i18n.t("placeOrder.title")}`,
-  ];
-
   return (
-    <Layout 
-      lngDict={lngDict} 
-      i18n={i18n} 
+    <Layout
+      lngDict={lngDict}
+      i18n={i18n}
       lng={lng}
       brand={brand}
     >
-      <Breadcrumb
-        title={i18n.t("placeOrder.title")}
-        links={linksBreadcrumb}
-        lng={lng}
-      />
-      <div className="container">
-        <div className="paymentStatus">
-          <div className="paymentStatus_inner">
-            <h6 className="paymentStatus_title">
-              {paymentStatus?.title}
-            </h6>
-            <FontAwesomeIcon
-              icon={faExclamationTriangle}
-              className={paymentStatus?.iconClass}
-            />
-            {!["orderNotFound", ""].includes(status) &&
-              <div className="paymentStatus_content">
-                <h6 className="paymentStatus_contentTitle">
-                  {paymentStatus?.contentTitle}
+      <section>
+        <div className="container">
+          <div className={styles.paymentStatus}>
+            <div className={styles.paymentStatus_inner}>
+              <div className={styles.paymentStatus_heading}>
+                <h6 className={styles.paymentStatus_title}>
+                  {paymentStatus?.title}
                 </h6>
-                <p className="paymentStatus_contentDesc">
-                  {paymentStatus?.contentDesc}
-                </p>
+                {status === 'failed' ?
+                  <XCircle className="ml-2" color="#F44444" /> :
+                  <AlertCircle className="ml-2" color="#FBC02D" />
+                }
               </div>
-            }
-            <div className="paymentStatus_action">
-              {status !== 'unfinish' &&
-                <div className="paymentStatus_actionButton">
-                  <button
-                    className="btn btn-black-outer btn-long text-uppercase"
-                    onClick={() => router.push("/[lng]/products", `/${lng}/products`)}
-                  >
-                    {i18n.t("paymentStatus.continueShopping")}
-                  </button>
+              {!["orderNotFound", ""].includes(status) &&
+                <div className={styles.paymentStatus_content}>
+                  <p className={styles.paymentStatus_contentDesc}>
+                    {paymentStatus?.contentDesc}
+                  </p>
                 </div>
               }
-              {status !== 'orderNotFound' &&
-                <div className="paymentStatus_actionButton">
-                  <button
-                    className="btn btn-black btn-long text-uppercase"
-                    onClick={() => {
-                      window.location.href = data.orders[0].paymentLinks[0];
-                    }}
-                  >
-                    {i18n.t("paymentStatus.tryAgain")}
-                  </button>
-                </div>
-              }
+              <div className={styles.paymentStatus_action}>
+                {status !== 'unfinish' &&
+                  <div className="paymentStatus_actionButton">
+                    <button
+                      className={`
+                        ${styles.btn} ${status !== 'orderNotFound' ? styles.btn_paymentNotif : styles.btn_primary} 
+                        ${styles.btn_long} ${styles.btn_full_width} 
+                        text-uppercase
+                      `}
+                      onClick={() => router.push("/[lng]/products", `/${lng}/products`)}
+                    >
+                      {i18n.t("paymentStatus.continueShopping")}
+                    </button>
+                  </div>
+                }
+                {status !== 'orderNotFound' &&
+                  <div className={styles.paymentStatus_actionButton}>
+                    <button
+                      className={`
+                        ${styles.btn} ${styles.btn_primary} 
+                        ${styles.btn_long} ${styles.btn_full_width} 
+                        text-uppercase
+                      `}
+                      onClick={() => {
+                        window.location.href = data.orders[0].paymentLinks[0];
+                      }}
+                    >
+                      {i18n.t("paymentStatus.tryAgain")}
+                    </button>
+                  </div>
+                }
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </Layout>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
-  const { default: lngDict = {} } = await import(
-    `locales/${params.lng}.json`
-  );
-
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const brand = await useBrand(req);
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
+  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
   const [orderID, status] = params?.orderID as string[];
 
   return {
-    props: { 
-      lng: params.lng, 
+    props: {
+      lng: defaultLanguage,
       lngDict,
       brand: brand || "",
       orderID: orderID || "",

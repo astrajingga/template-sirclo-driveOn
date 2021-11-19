@@ -1,56 +1,37 @@
-import { FC, useState } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import Link from "next/link";
-import dynamic from "next/dynamic";
-import Router from "next/router";
+/* library Package */
+import { FC, useState } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { useRouter } from 'next/router'
 import {
-  CustomerDetail,
   ShippingMethods,
   CartSummary,
   useI18n,
   PrivateRoute,
-  useBuyerNotes
-} from "@sirclo/nexus";
-import SEO from "components/SEO/SEO";
-import Layout from "components/Layout/Layout";
-import Footer from "components/Footer/Footer";
-import Breadcrumb from "components/Breadcrumb/BreadcrumbUNO";
-import EmptyComponent from "components/EmptyComponent/EmptyComponent";
-import useWindowSize from "lib/utils/useWindowSize";
-import { useBrand } from "lib/utils/useBrand";
+} from '@sirclo/nexus'
 import {
   ArrowLeft,
-  ShoppingCart,
   X as XIcon,
   ChevronDown,
   ChevronUp,
-  Info,
-  Crosshair
-} from "react-feather";
-import { toast } from "react-toastify";
-import styles from "public/scss/pages/ShippingMethod.module.scss";
+  Crosshair,
+} from 'react-feather'
+import { toast } from 'react-toastify'
 
-const Popup = dynamic(() => import("components/Popup/PopupUno"));
-const Placeholder = dynamic(() => import("components/Placeholder"));
-const LoaderPages = dynamic(() => import("components/Loader/LoaderPages"));
+/* library Template */
+import useWindowSize from 'lib/useWindowSize'
+import { useBrand } from 'lib/useBrand'
 
-const classesCustomerDetail = {
-  customerDetailBoxClass: styles.customer,
-  addressContainerClassName: styles.customer_info,
-  addressDetailClassName: styles.customer_infoPerson,
-  addressValueClassName: styles.customer_infoPersonValue,
-  changePinClassName: styles.customer_changePin,
-  mapPopupClassName: styles.customer_mapPopup,
-  mapPopupBackgroundClassName: styles.customer_mapPopupContainer,
-  mapClassName: styles.customer_mapPopupMaps,
-  mapHeaderWrapperClassName: styles.customer_mapPopupHeader,
-  mapHeaderTitleClassName: styles.customer_mapPopupHeaderTitle,
-  mapHeaderCloseButtonClassName: styles.customer_mapPopupClose,
-  mapHeaderNoteClassName: styles.customer_mapPopupNote,
-  mapLabelAddressClassName: styles.customer_mapPopupLabelAddress,
-  mapButtonFooterClassName: `btn ${styles.btn_primary} ${styles.btn_long} d-block mx-auto my-3`,
-  mapCenterButtonClassName: styles.customer_mapPopupCenterButton
-};
+/* component */
+import SEO from 'components/SEO'
+import Layout from 'components/Layout/Layout'
+import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
+import EmptyComponent from 'components/EmptyComponent/EmptyComponent'
+import Placeholder from 'components/Placeholder'
+import Popup from 'components/Popup/Popup'
+import LoaderPages from 'components/Loader/LoaderPages'
+
+/* styles */
+import styles from 'public/scss/pages/ShippingMethod.module.scss'
 
 const classesShippingMethod = {
   containerClass: styles.shippingMethod_container,
@@ -59,6 +40,7 @@ const classesShippingMethod = {
   shippingNameDivClass: styles.shippingMethodItem_label,
   shippingNameClass: styles.shippingMethodItem_title,
   shippingPriceDivClass: styles.shippingMethodItem_price,
+  shippingErrorMsgClass: styles.shippingMethodItem_err,
   pinPointLocationClassName: `${styles.shippingMethodItem_pinButton} btn ${styles.btn_primary} ${styles.btn_long} ${styles.btn_full_width}`,
   warningPinPointClassName: styles.shippingmethod__itemWarning,
   mapPopupClassName: styles.customer_mapPopup,
@@ -70,8 +52,8 @@ const classesShippingMethod = {
   mapHeaderNoteClassName: styles.customer_mapPopupNote,
   mapLabelAddressClassName: styles.customer_mapPopupLabelAddress,
   mapButtonFooterClassName: `btn ${styles.btn_primary} ${styles.btn_long} d-block mx-auto my-3`,
-  mapCenterButtonClassName: styles.customer_mapPopupCenterButton
-}
+  mapCenterButtonClassName: styles.customer_mapPopupCenterButton,
+};
 
 const classesOrderSummary = {
   containerClassName: styles.ordersummary_container,
@@ -82,7 +64,7 @@ const classesOrderSummary = {
   expandedDivClassName: styles.ordersummary_expanded,
   expandedLabelClassName: styles.ordersummary_expandedLabel,
   expandedPriceClassName: styles.ordersummary_expandedPrice,
-  expandButtonClassName: styles.ordersummary_expandedButton,
+  expandButtonClassName: 'd-none',
   subTotalClassName: styles.ordersummary_subTotal,
   subTotalTextClassName: styles.ordersummary_subTotalLabel,
   subTotalPriceClassName: styles.ordersummary_subTotalPrice,
@@ -116,7 +98,8 @@ const classesOrderSummary = {
   voucherDetailTitleClassName: styles.summarycart_popupVoucherDetailTitle,
   voucherDetailDescClassName: styles.summarycart_popupVoucherDetailDesc,
   voucherDetailEstimateClassName: styles.summarycart_popupVoucherDetailEstimate,
-  voucherDetailEstimateDescClassName: styles.summarycart_popupVoucherDetailEstimateDesc,
+  voucherDetailEstimateDescClassName:
+    styles.summarycart_popupVoucherDetailEstimateDesc,
   //point
   pointsContainerClassName: styles.ordersummary_popup,
   pointsButtonAppliedClassName: styles.ordersummary_pointsButtonApplied,
@@ -129,7 +112,7 @@ const classesOrderSummary = {
   changePointsClassName: styles.ordersummary_buttonChangePoint,
   pointsInsufficientClassName: styles.ordersummary_pointsInsufficient,
   pointsSubmitButtonClassName: `btn ${styles.btn_primary} ${styles.btn_long} w-100 mt-4 mb-0`,
-  pointsWarningClassName: styles.ordersummary_pointsWarning
+  pointsWarningClassName: styles.ordersummary_pointsWarning,
 };
 
 const classesCartDetails = {
@@ -149,25 +132,21 @@ const classesCartDetails = {
   itemDiscountNoteClassName: styles.cartItem_discountNoteSummary,
   itemRemoveClassName: styles.cartsummary_itemRemove,
   removeButtonClassName: "d-none",
-}
+};
 
 const classesEmptyComponent = {
   emptyContainer: styles.cart__empty,
-  emptyTitle: styles.cart__empty__title
-}
+  emptyTitle: styles.cart__empty__title,
+};
 
 const classesPlaceholderCartPlaceorder = {
   placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_cartPlaceorder}`,
-  placeholderTitle: `${styles.placeholderItem} ${styles.placeholderItem_cartPlaceorderTitle}`
-}
-
-const classesPlaceholderCustomerDetail = {
-  placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_customerDetail}`,
-}
+  placeholderTitle: `${styles.placeholderItem} ${styles.placeholderItem_cartPlaceorderTitle}`,
+};
 
 const classesPlaceholderShipping = {
   placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_shippingMethod}`,
-}
+};
 
 type PrivateComponentPropsType = {
   children: any;
@@ -181,16 +160,16 @@ const PrivateRouteWrapper = ({ children }: PrivateComponentPropsType) => (
   >
     {children}
   </PrivateRoute>
-)
+);
 
 const ShippingMethodPage: FC<any> = ({
   lng,
   lngDict,
-  brand
+  brand,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n();
   const size = useWindowSize();
-  const { data: databuyerNotes} = useBuyerNotes();
+  const router = useRouter();
 
   const [openOrderSummary, setOpenOrderSummary] = useState<boolean>(true);
   const [showModalErrorAddToCart, setShowModalErrorAddToCart] = useState<boolean>(false);
@@ -198,17 +177,6 @@ const ShippingMethodPage: FC<any> = ({
   const toogleOrderSummary = () => setOpenOrderSummary(!openOrderSummary);
   const toogleErrorAddToCart = () => setShowModalErrorAddToCart(!showModalErrorAddToCart);
 
-  const CustomerDetailHeader = ({ title }) => (
-    <div className={styles.customer_infoHeader}>
-      <div className={styles.customer_infoHeaderContainer}>
-        <h3 className={styles.customer_infoHeaderTitle}>{title}</h3>
-        <Info color="#767676" size="18" />
-      </div>
-      <Link href="/[lng]/place_order" as={`/${lng}/place_order`}>
-        <a className={styles.customer_infoHeaderLink}>{i18n.t("shipping.change")}</a>
-      </Link>
-    </div>
-  )
 
   return (
     <PrivateRouteWrapper>
@@ -221,7 +189,7 @@ const ShippingMethodPage: FC<any> = ({
         withFooter={false}
       >
         <SEO title="Shipping Method" />
-        {showModalErrorAddToCart &&
+        {showModalErrorAddToCart && (
           <Popup
             withHeader
             setPopup={toogleErrorAddToCart}
@@ -229,66 +197,76 @@ const ShippingMethodPage: FC<any> = ({
             classPopopBody
           >
             <div className={styles.shipping_popupError}>
-              <h3 className={styles.shipping_popupErrorTitle}>{i18n.t("cart.errorSKUTitle")}</h3>
-              <p className={styles.shipping_popupErrorDesc}>{i18n.t("cart.errorSKUDesc")} </p>
+              <h3 className={styles.shipping_popupErrorTitle}>
+                {i18n.t("cart.errorSKUTitle")}
+              </h3>
+              <p className={styles.shipping_popupErrorDesc}>
+                {i18n.t("cart.errorSKUDesc")}{" "}
+              </p>
             </div>
           </Popup>
-        }
+        )}
         <div id="summaryCart" className={styles.shipping}>
           <div className="row mx-0">
             <div className="col-12 col-md-6 col-lg-7 p-0">
               <div className={styles.shipping_container}>
                 <div className="container">
+                  <div className={styles.shipping_heading}>
+                    <div
+                      className={styles.shipping_headingIcon}
+                      onClick={() => router.push("/[lng]/products", `/${lng}/products`)}
+                    >
+                      <ArrowLeft color="black" />
+                    </div>
+                    <h6>{i18n.t("placeOrder.checkOrder")}</h6>
+                  </div>
                   <div className="row">
-                    <div className="col-12 col-md-12 col-lg-10 offset-lg-2 p-0">
-                      <div className={styles.shipping_heading}>
-                        <div
-                          className={styles.shipping_headingIcon}
-                          onClick={() => Router.push("/[lng]/products", `/${lng}/products`)}
-                        >
-                          <ArrowLeft color="black" />
-                        </div>
-                        <h6>{i18n.t("placeOrder.checkOrder")}</h6>
-                      </div>
-                      <hr className={styles.shipping_line} />
+                    <div className="col-12 col-md-12 col-lg-10 offset-lg-1">
                       <div className={styles.shipping_steps}>
                         <Breadcrumb currentStep={2} />
                       </div>
-                      <hr className={`${styles.shipping_lineSecond}`} />
                     </div>
-                    {size.width < 576 &&
+                    {size.width < 576 && (
                       <div className={styles.ordersummary_collapse}>
                         <div
                           className={styles.ordersummary_collapseHeading}
                           onClick={toogleOrderSummary}
                         >
                           <div className={styles.ordersummary_collapseTitle}>
-                            <ShoppingCart color="white" />
                             <h6>{i18n.t("placeOrder.orderSummary")}</h6>
                           </div>
-                          {openOrderSummary ?
-                            <ChevronUp color="white" /> :
+                          {openOrderSummary ? (
+                            <ChevronUp color="white" />
+                          ) : (
                             <ChevronDown color="white" />
-                          }
+                          )}
                         </div>
                         <div
-                          className={openOrderSummary ?
-                            styles.ordersummary_collapseBody :
-                            styles.ordersummary_collapseBodyClose
+                          className={
+                            openOrderSummary
+                              ? styles.ordersummary_collapseBody
+                              : styles.ordersummary_collapseBodyClose
                           }
                         >
                           <CartSummary
                             cartProps={{
                               classes: classesCartDetails,
                               withoutQtyInput: false,
-                              onErrorMsg: () => setShowModalErrorAddToCart(true),
+                              onErrorMsg: () =>
+                                setShowModalErrorAddToCart(true),
                               loadingComponent: (
                                 <div className="row">
                                   <div className="col-4 pr-0">
-                                    <Placeholder classes={classesPlaceholderCartPlaceorder} withImage />
+                                    <Placeholder
+                                      classes={classesPlaceholderCartPlaceorder}
+                                      withImage
+                                    />
                                   </div>
                                   <div className="col-8">
-                                    <Placeholder classes={classesPlaceholderCartPlaceorder} withImage />
+                                    <Placeholder
+                                      classes={classesPlaceholderCartPlaceorder}
+                                      withImage
+                                    />
                                   </div>
                                 </div>
                               ),
@@ -304,71 +282,65 @@ const ShippingMethodPage: FC<any> = ({
                               isAccordion: true,
                               page: "shipping_method",
                               currency: "IDR",
-                              submitButtonLabel: i18n.t("orderSummary.placeOrder"),
-                              onErrorMsg: () => setShowModalErrorAddToCart(true),
+                              submitButtonLabel: i18n.t(
+                                "orderSummary.toPayment"
+                              ),
+                              onErrorMsg: () =>
+                                setShowModalErrorAddToCart(true),
                               onErrorMsgCoupon: (msg) => toast.error(msg),
                               loadingComponent: (
-                                <Placeholder classes={classesPlaceholderCartPlaceorder} withTitle />
+                                <Placeholder
+                                  classes={classesPlaceholderCartPlaceorder}
+                                  withTitle
+                                />
                               ),
                               icons: {
-                                voucher: <img src="/images/mdi_ticket-percent.svg" alt="icon" />,
-                                voucherApplied: <img src="/images/mdi_ticket-percent.svg" alt="icon" />,
-                                points: <img src="/images/mdi_star-circle.svg" alt="icon" />,
-                                pointsApplied: <img src="/images/mdi_star-circle.svg" alt="icon" />,
+                                voucher: (
+                                  <img
+                                    src="/images/mdi_ticket-percent.svg"
+                                    alt="icon"
+                                  />
+                                ),
+                                voucherApplied: (
+                                  <img
+                                    src="/images/mdi_ticket-percent.svg"
+                                    alt="icon"
+                                  />
+                                ),
+                                points: (
+                                  <img
+                                    src="/images/mdi_star-circle.svg"
+                                    alt="icon"
+                                  />
+                                ),
+                                pointsApplied: (
+                                  <img
+                                    src="/images/mdi_star-circle.svg"
+                                    alt="icon"
+                                  />
+                                ),
                                 close: <XIcon />,
                                 collapse: <ChevronUp />,
                                 expand: <ChevronDown />,
-                                voucherRemoved: <XIcon />
-                              }
+                                voucherRemoved: <XIcon />,
+                              },
                             }}
                           />
                         </div>
                       </div>
-                    }
-                    <div className="col-12 col-md-12 col-lg-8 offset-lg-2">
-                      <CustomerDetail
-                        classes={classesCustomerDetail}
-                        isBilling={true}
-                        contactInfoHeader={
-                          <CustomerDetailHeader
-                            title={i18n.t("shipping.contactInfo")}
-                          />
-                        }
-                        loadingComponent={
-                          <Placeholder classes={classesPlaceholderCustomerDetail} withImage />
-                        }
-                      />
-                      <CustomerDetail
-                        classes={classesCustomerDetail}
-                        isBilling={false}
-                        shippingInfoHeader={
-                          <CustomerDetailHeader
-                            title={i18n.t("shipping.shipTo")}
-                          />
-                        }
-                        loadingComponent={
-                          <Placeholder classes={classesPlaceholderCustomerDetail} withImage />
-                        }
-                      />
-                      <div className={`${styles.notes}`}>
-                        <h3>{i18n.t("placeOrder.notes")}</h3>
-                        <Link href="/[lng]/cart" as={`/${lng}/cart`}>
-                            <a className={styles.notes_change}>
-                              {i18n.t("shipping.change")}
-                            </a>
-                          </Link>
-                        <div className={`${styles.notes_box}`}>
-                          {databuyerNotes?.buyerNotes?.buyerNotes || i18n.t("global.notesEmpty")}
-                        </div>
-                      </div>
+                    )}
+                    <div className="col-12 col-md-12 col-lg-8 offset-lg-2 mt-4">
                       <div className={styles.shippingmethod}>
-                        <h3 className={styles.shippingmethod_title}>{i18n.t("account.shippingMethod")}</h3>
                         <ShippingMethods
                           classes={classesShippingMethod}
                           onErrorMsg={(msg) => toast.error(msg)}
                           mapCenterIcon={<Crosshair />}
                           loadingComponent={
-                            <Placeholder classes={classesPlaceholderShipping} withList listMany={5} />
+                            <Placeholder
+                              classes={classesPlaceholderShipping}
+                              withList
+                              listMany={5}
+                            />
                           }
                         />
                       </div>
@@ -376,16 +348,13 @@ const ShippingMethodPage: FC<any> = ({
                   </div>
                 </div>
               </div>
-              <div style={{marginBottom : 20}}/>
             </div>
-            {size.width > 575 &&
+            {size.width > 575 && (
               <div className="col-12 col-md-6 col-lg-5 p-0">
                 <div className={styles.ordersummary}>
                   <div className={styles.ordersummary_heading}>
-                    <ShoppingCart color="white" />
                     <h6>{i18n.t("placeOrder.orderSummary")}</h6>
                   </div>
-                  <hr className={styles.ordersummary_line} />
                   <div className="container">
                     <div className="row">
                       <div className="col-12 col-md-12 col-lg-8">
@@ -398,10 +367,16 @@ const ShippingMethodPage: FC<any> = ({
                               <div className="p-3">
                                 <div className="row">
                                   <div className="col-4 pr-0">
-                                    <Placeholder classes={classesPlaceholderCartPlaceorder} withImage />
+                                    <Placeholder
+                                      classes={classesPlaceholderCartPlaceorder}
+                                      withImage
+                                    />
                                   </div>
                                   <div className="col-8">
-                                    <Placeholder classes={classesPlaceholderCartPlaceorder} withImage />
+                                    <Placeholder
+                                      classes={classesPlaceholderCartPlaceorder}
+                                      withImage
+                                    />
                                   </div>
                                 </div>
                               </div>
@@ -416,29 +391,54 @@ const ShippingMethodPage: FC<any> = ({
                           orderSummaryProps={{
                             classes: {
                               ...classesOrderSummary,
-                              submitButtonClassName: `btn ${styles.btn_white} ${styles.btn_long} ${styles.btn_full_width} mt-3`
+                              submitButtonClassName: `btn ${styles.btn_white} ${styles.btn_long} ${styles.btn_full_width} mt-3`,
                             },
                             isAccordion: true,
                             page: "shipping_method",
                             currency: "IDR",
-                            submitButtonLabel: i18n.t("orderSummary.placeOrder"),
+                            submitButtonLabel: i18n.t(
+                              "orderSummary.placeOrder"
+                            ),
                             onErrorMsg: (msg) => toast.error(msg),
                             onErrorMsgCoupon: (msg) => toast.error(msg),
                             loadingComponent: (
                               <div className="px-3">
-                                <Placeholder classes={classesPlaceholderCartPlaceorder} withTitle />
+                                <Placeholder
+                                  classes={classesPlaceholderCartPlaceorder}
+                                  withTitle
+                                />
                               </div>
                             ),
                             icons: {
-                              voucher: <img src="/images/mdi_ticket-percent.svg" alt="icon" />,
-                              voucherApplied: <img src="/images/mdi_ticket-percent.svg" alt="icon" />,
-                              points: <img src="/images/mdi_star-circle.svg" alt="icon" />,
-                              pointsApplied: <img src="/images/mdi_star-circle.svg" alt="icon" />,
+                              voucher: (
+                                <img
+                                  src="/images/mdi_ticket-percent.svg"
+                                  alt="icon"
+                                />
+                              ),
+                              voucherApplied: (
+                                <img
+                                  src="/images/mdi_ticket-percent.svg"
+                                  alt="icon"
+                                />
+                              ),
+                              points: (
+                                <img
+                                  src="/images/mdi_star-circle.svg"
+                                  alt="icon"
+                                />
+                              ),
+                              pointsApplied: (
+                                <img
+                                  src="/images/mdi_star-circle.svg"
+                                  alt="icon"
+                                />
+                              ),
                               close: <XIcon />,
                               collapse: <ChevronUp />,
                               expand: <ChevronDown />,
-                              voucherRemoved: <XIcon />
-                            }
+                              voucherRemoved: <XIcon />,
+                            },
                           }}
                         />
                       </div>
@@ -446,7 +446,7 @@ const ShippingMethodPage: FC<any> = ({
                   </div>
                 </div>
               </div>
-            }
+            )}
           </div>
         </div>
       </Layout>
@@ -454,18 +454,24 @@ const ShippingMethodPage: FC<any> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  params,
+}) => {
   const brand = await useBrand(req);
-  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
-  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
+  const defaultLanguage =
+    brand?.settings?.defaultLanguage || params.lng || "id";
+  const { default: lngDict = {} } = await import(
+    `locales/${defaultLanguage}.json`
+  );
 
   return {
     props: {
       lng: defaultLanguage,
       lngDict,
-      brand: brand || ""
-    }
+      brand: brand || "",
+    },
   };
-}
+};
 
 export default ShippingMethodPage;

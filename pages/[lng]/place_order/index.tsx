@@ -1,27 +1,15 @@
-import {
-  FC,
-  useState,
-  useEffect
-} from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import dynamic from "next/dynamic";
-import Router from "next/router";
+/* library Package */
+import { FC, useState, useEffect } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import Router from 'next/router'
 import {
   PlaceOrderForm,
   CartSummary,
   useI18n,
-  PrivateRoute
-} from "@sirclo/nexus";
-import SEO from "components/SEO/SEO";
-import Layout from "components/Layout/Layout";
-// import Footer from "components/Footer/Footer";
-import Breadcrumb from "components/Breadcrumb/BreadcrumbUNO";
-import EmptyComponent from "components/EmptyComponent/EmptyComponent";
-import useWindowSize from "lib/utils/useWindowSize";
-import { useBrand } from "lib/utils/useBrand";
+  PrivateRoute,
+} from '@sirclo/nexus'
 import {
   ArrowLeft,
-  ShoppingCart,
   X as XIcon,
   Calendar,
   ChevronDown,
@@ -29,14 +17,25 @@ import {
   CheckCircle,
   Eye,
   EyeOff,
-  Crosshair
-} from "react-feather";
-import { toast } from "react-toastify";
-import styles from "public/scss/pages/Placeorder.module.scss";
+  Crosshair,
+} from 'react-feather'
+import { toast } from 'react-toastify'
 
-const Popup = dynamic(() => import("components/Popup/PopupUno"));
-const Placeholder = dynamic(() => import("components/Placeholder"));
-const LoaderPages = dynamic(() => import("components/Loader/LoaderPages"));
+/* library Template */
+import useWindowSize from 'lib/useWindowSize'
+import { useBrand } from 'lib/useBrand'
+
+/* component */
+import SEO from 'components/SEO'
+import Layout from 'components/Layout/Layout'
+import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
+import EmptyComponent from 'components/EmptyComponent/EmptyComponent'
+import Popup from 'components/Popup/Popup'
+import Placeholder from 'components/Placeholder'
+import LoaderPages from 'components/Loader/LoaderPages'
+
+/* styles */
+import styles from 'public/scss/pages/Placeorder.module.scss'
 
 const placeOrderClasses = {
   placeOrderClassName: styles.placeorder,
@@ -71,7 +70,7 @@ const placeOrderClasses = {
   mapHeaderNoteClassName: styles.placeorder_mapPopupNote,
   mapLabelAddressClassName: styles.placeorder_mapPopupLabelAddress,
   mapCenterButtonClassName: styles.placeorder_mapPopupCenterButton,
-  mapButtonFooterClassName: `btn ${styles.btn_primary} ${styles.btn_long} d-block mx-auto my-3`
+  mapButtonFooterClassName: `btn ${styles.btn_primary} ${styles.btn_long} d-block mx-auto my-3`,
 };
 
 const classesOrderSummary = {
@@ -83,7 +82,7 @@ const classesOrderSummary = {
   expandedDivClassName: styles.ordersummary_expanded,
   expandedLabelClassName: styles.ordersummary_expandedLabel,
   expandedPriceClassName: styles.ordersummary_expandedPrice,
-  expandButtonClassName: styles.ordersummary_expandedButton,
+  expandButtonClassName: 'd-none',
   subTotalClassName: styles.ordersummary_subTotal,
   subTotalTextClassName: styles.ordersummary_subTotalLabel,
   subTotalPriceClassName: styles.ordersummary_subTotalPrice,
@@ -117,7 +116,8 @@ const classesOrderSummary = {
   voucherDetailTitleClassName: styles.summarycart_popupVoucherDetailTitle,
   voucherDetailDescClassName: styles.summarycart_popupVoucherDetailDesc,
   voucherDetailEstimateClassName: styles.summarycart_popupVoucherDetailEstimate,
-  voucherDetailEstimateDescClassName: styles.summarycart_popupVoucherDetailEstimateDesc,
+  voucherDetailEstimateDescClassName:
+    styles.summarycart_popupVoucherDetailEstimateDesc,
   //point
   pointsContainerClassName: styles.ordersummary_popup,
   pointsButtonAppliedClassName: styles.ordersummary_pointsButtonApplied,
@@ -130,7 +130,7 @@ const classesOrderSummary = {
   changePointsClassName: styles.ordersummary_buttonChangePoint,
   pointsInsufficientClassName: styles.ordersummary_pointsInsufficient,
   pointsSubmitButtonClassName: `btn ${styles.btn_primary} ${styles.btn_long} w-100 mt-4 mb-0`,
-  pointsWarningClassName: styles.ordersummary_pointsWarning
+  pointsWarningClassName: styles.ordersummary_pointsWarning,
 };
 
 const classesCartDetails = {
@@ -150,21 +150,21 @@ const classesCartDetails = {
   itemDiscountNoteClassName: styles.cartItem_discountNoteSummary,
   itemRemoveClassName: styles.cartsummary_itemRemove,
   removeButtonClassName: "d-none",
-}
+};
 
 const classesEmptyComponent = {
   emptyContainer: styles.cart_empty,
-  emptyTitle: styles.cart_emptyTitle
-}
+  emptyTitle: styles.cart_emptyTitle,
+};
 
 const classesPlaceholderCartPlaceorder = {
   placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_cartPlaceorder}`,
-  placeholderTitle: `${styles.placeholderItem} ${styles.placeholderItem_cartPlaceorderTitle}`
-}
+  placeholderTitle: `${styles.placeholderItem} ${styles.placeholderItem_cartPlaceorderTitle}`,
+};
 
 const classesPlaceholderForm = {
-  placeholderList: `${styles.placeholderItem} ${styles.placeholderItem_placeorderForm}`
-}
+  placeholderList: `${styles.placeholderItem} ${styles.placeholderItem_placeorderForm}`,
+};
 
 type PrivateComponentPropsType = {
   children: any;
@@ -178,25 +178,27 @@ const PrivateRouteWrapper = ({ children }: PrivateComponentPropsType) => (
   >
     {children}
   </PrivateRoute>
-)
+);
 
 const PlaceOrderPage: FC<any> = ({
   lng,
   lngDict,
-  brand
+  brand,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n();
   const size = useWindowSize();
 
   const [openOrderSummary, setOpenOrderSummary] = useState<boolean>(true);
-  const [showModalErrorAddToCart, setShowModalErrorAddToCart] = useState<boolean>(false);
+  const [showModalErrorAddToCart, setShowModalErrorAddToCart] =
+    useState<boolean>(false);
 
   useEffect(() => {
-    document.body.style.overflow = 'unset';
-  }, [])
+    document.body.style.overflow = "unset";
+  }, []);
 
   const toogleOrderSummary = () => setOpenOrderSummary(!openOrderSummary);
-  const toogleErrorAddToCart = () => setShowModalErrorAddToCart(!showModalErrorAddToCart);
+  const toogleErrorAddToCart = () =>
+    setShowModalErrorAddToCart(!showModalErrorAddToCart);
 
   return (
     <PrivateRouteWrapper>
@@ -209,7 +211,7 @@ const PlaceOrderPage: FC<any> = ({
         withFooter={false}
       >
         <SEO title="Place Order" />
-        {showModalErrorAddToCart &&
+        {showModalErrorAddToCart && (
           <Popup
             withHeader
             setPopup={toogleErrorAddToCart}
@@ -217,59 +219,65 @@ const PlaceOrderPage: FC<any> = ({
             classPopopBody
           >
             <div className={styles.placeorder_popupError}>
-              <h3 className={styles.placeorder_popupErrorTitle}>{i18n.t("cart.errorSKUTitle")}</h3>
-              <p className={styles.placeorder_popupErrorDesc}>{i18n.t("cart.errorSKUDesc")} </p>
+              <h3 className={styles.placeorder_popupErrorTitle}>
+                {i18n.t("cart.errorSKUTitle")}
+              </h3>
+              <p className={styles.placeorder_popupErrorDesc}>
+                {i18n.t("cart.errorSKUDesc")}{" "}
+              </p>
             </div>
           </Popup>
-        }
+        )}
         <div id="summaryCart" className={styles.placeorder}>
           <div className="row mx-0">
             <div className="col-12 col-md-6 col-lg-7 p-0">
               <div className={styles.placeorder_container}>
                 <div className="container">
+                  <div className={styles.placeorder_heading}>
+                    <div
+                      className={styles.placeorder_headingIcon}
+                      onClick={() =>
+                        Router.push("/[lng]/products", `/${lng}/products`)
+                      }
+                    >
+                      <ArrowLeft color="black" />
+                    </div>
+                    <h6>{i18n.t("placeOrder.checkOrder")}</h6>
+                  </div>
                   <div className="row">
-                    <div className="col-12 col-md-12 col-lg-10 offset-lg-2 p-0">
-                      <div className={styles.placeorder_heading}>
-                        <div
-                          className={styles.placeorder_headingIcon}
-                          onClick={() => Router.push("/[lng]/products", `/${lng}/products`)}
-                        >
-                          <ArrowLeft color="black" />
-                        </div>
-                        <h6>{i18n.t("placeOrder.checkOrder")}</h6>
-                      </div>
-                      <hr className={styles.placeorder_line} />
+                    <div className="col-12 col-md-12 col-lg-10 offset-lg-1">
                       <div className={styles.placeorder_steps}>
                         <Breadcrumb currentStep={1} />
                       </div>
-                      <hr className={`${styles.placeorder_lineSecond}`} />
                     </div>
-                    {size.width < 576 &&
+                    {size.width < 576 && (
                       <div className={styles.ordersummary_collapse}>
                         <div
                           className={styles.ordersummary_collapseHeading}
                           onClick={toogleOrderSummary}
                         >
                           <div className={styles.ordersummary_collapseTitle}>
-                            <ShoppingCart color="white" />
                             <h6>{i18n.t("placeOrder.orderSummary")}</h6>
                           </div>
-                          {openOrderSummary ?
-                            <ChevronUp color="white" /> :
+                          {openOrderSummary ? (
+                            <ChevronUp color="white" />
+                          ) : (
                             <ChevronDown color="white" />
-                          }
+                          )}
                         </div>
                         <div
-                          className={openOrderSummary ?
-                            styles.ordersummary_collapseBody :
-                            styles.ordersummary_collapseBodyClose
+                          className={
+                            openOrderSummary
+                              ? styles.ordersummary_collapseBody
+                              : styles.ordersummary_collapseBodyClose
                           }
                         >
                           <CartSummary
                             cartProps={{
                               classes: classesCartDetails,
                               withoutQtyInput: false,
-                              onErrorMsg: () => setShowModalErrorAddToCart(true),
+                              onErrorMsg: () =>
+                                setShowModalErrorAddToCart(true),
                               thumborSetting: {
                                 width: 200,
                                 format: "webp",
@@ -278,10 +286,16 @@ const PlaceOrderPage: FC<any> = ({
                               loadingComponent: (
                                 <div className="row">
                                   <div className="col-4 pr-0">
-                                    <Placeholder classes={classesPlaceholderCartPlaceorder} withImage />
+                                    <Placeholder
+                                      classes={classesPlaceholderCartPlaceorder}
+                                      withImage
+                                    />
                                   </div>
                                   <div className="col-8">
-                                    <Placeholder classes={classesPlaceholderCartPlaceorder} withImage />
+                                    <Placeholder
+                                      classes={classesPlaceholderCartPlaceorder}
+                                      withImage
+                                    />
                                   </div>
                                 </div>
                               ),
@@ -290,63 +304,95 @@ const PlaceOrderPage: FC<any> = ({
                                   classes={classesEmptyComponent}
                                   title={i18n.t("cart.isEmpty")}
                                 />
-                              )
+                              ),
                             }}
                             orderSummaryProps={{
                               classes: classesOrderSummary,
                               isAccordion: true,
                               page: "place_order",
                               currency: "IDR",
-                              submitButtonLabel: i18n.t("orderSummary.placeOrder"),
-                              onErrorMsg: () => setShowModalErrorAddToCart(true),
+                              submitButtonLabel: i18n.t(
+                                "orderSummary.toShipping"
+                              ),
+                              onErrorMsg: () =>
+                                setShowModalErrorAddToCart(true),
                               onErrorMsgCoupon: (msg) => toast.error(msg),
                               loadingComponent: (
-                                <Placeholder classes={classesPlaceholderCartPlaceorder} withTitle />
+                                <Placeholder
+                                  classes={classesPlaceholderCartPlaceorder}
+                                  withTitle
+                                />
                               ),
                               icons: {
-                                voucher: <img src="/images/mdi_ticket-percent.svg" alt="icon" />,
-                                voucherApplied: <img src="/images/mdi_ticket-percent.svg" alt="icon" />,
-                                points: <img src="/images/mdi_star-circle.svg" alt="icon" />,
-                                pointsApplied: <img src="/images/mdi_star-circle.svg" alt="icon" />,
+                                voucher: (
+                                  <img
+                                    src="/images/mdi_ticket-percent.svg"
+                                    alt="icon"
+                                  />
+                                ),
+                                voucherApplied: (
+                                  <img
+                                    src="/images/mdi_ticket-percent.svg"
+                                    alt="icon"
+                                  />
+                                ),
+                                points: (
+                                  <img
+                                    src="/images/mdi_star-circle.svg"
+                                    alt="icon"
+                                  />
+                                ),
+                                pointsApplied: (
+                                  <img
+                                    src="/images/mdi_star-circle.svg"
+                                    alt="icon"
+                                  />
+                                ),
                                 close: <XIcon />,
                                 collapse: <ChevronUp />,
                                 expand: <ChevronDown />,
-                                voucherRemoved: <XIcon />
-                              }
+                                voucherRemoved: <XIcon />,
+                              },
                             }}
                           />
                         </div>
                       </div>
-                    }
+                    )}
                     <div className="col-12 col-md-12 col-lg-8 offset-lg-2 mt-4">
                       <PlaceOrderForm
                         classes={placeOrderClasses}
                         onErrorMsg={(msg) => toast.error(msg)}
                         passwordViewIcon={<Eye />}
                         passwordHideIcon={<EyeOff />}
-                        passwordFulfilledCriteriaIcon={<CheckCircle color="green" size={16} />}
-                        passwordUnfulfilledCriteriaIcon={<CheckCircle color="gray" size={16} />}
+                        passwordFulfilledCriteriaIcon={
+                          <CheckCircle color="green" size={16} />
+                        }
+                        passwordUnfulfilledCriteriaIcon={
+                          <CheckCircle color="gray" size={16} />
+                        }
                         datePickerCalendarIcon={<Calendar />}
                         mapButtonCloseIcon={<XIcon />}
                         mapCenterIcon={<Crosshair />}
                         loadingComponent={
-                          <Placeholder classes={classesPlaceholderForm} withList listMany={5} />
+                          <Placeholder
+                            classes={classesPlaceholderForm}
+                            withList
+                            listMany={5}
+                          />
                         }
                       />
                     </div>
                   </div>
                 </div>
               </div>
-              <div style={{marginBottom: 20}} />
             </div>
-            {size.width > 575 &&
+            {size.width > 575 && (
               <div className="col-12 col-md-6 col-lg-5 p-0">
                 <div className={styles.ordersummary}>
                   <div className={styles.ordersummary_heading}>
-                    <ShoppingCart color="white" />
+                    {/* <ShoppingCart color="white" /> */}
                     <h6>{i18n.t("placeOrder.orderSummary")}</h6>
                   </div>
-                  <hr className={styles.ordersummary_line} />
                   <div className="container">
                     <div className="row">
                       <div className="col-12 col-md-12 col-lg-8">
@@ -361,10 +407,16 @@ const PlaceOrderPage: FC<any> = ({
                               <div className="p-3">
                                 <div className="row">
                                   <div className="col-4 pr-0">
-                                    <Placeholder classes={classesPlaceholderCartPlaceorder} withImage />
+                                    <Placeholder
+                                      classes={classesPlaceholderCartPlaceorder}
+                                      withImage
+                                    />
                                   </div>
                                   <div className="col-8">
-                                    <Placeholder classes={classesPlaceholderCartPlaceorder} withImage />
+                                    <Placeholder
+                                      classes={classesPlaceholderCartPlaceorder}
+                                      withImage
+                                    />
                                   </div>
                                 </div>
                               </div>
@@ -384,29 +436,54 @@ const PlaceOrderPage: FC<any> = ({
                           orderSummaryProps={{
                             classes: {
                               ...classesOrderSummary,
-                              submitButtonClassName: `btn ${styles.btn_white} ${styles.btn_long} ${styles.btn_full_width} mt-3`
+                              submitButtonClassName: `btn ${styles.btn_white} ${styles.btn_long} ${styles.btn_full_width} mt-3`,
                             },
                             isAccordion: true,
                             page: "place_order",
                             currency: "IDR",
-                            submitButtonLabel: i18n.t("orderSummary.placeOrder"),
+                            submitButtonLabel: i18n.t(
+                              "orderSummary.toShipping"
+                            ),
                             continueShoppingRoute: "products",
                             onErrorMsg: (msg) => toast.error(msg),
                             onErrorMsgCoupon: (msg) => toast.error(msg),
                             loadingComponent: (
                               <div className="px-3">
-                                <Placeholder classes={classesPlaceholderCartPlaceorder} withTitle />
+                                <Placeholder
+                                  classes={classesPlaceholderCartPlaceorder}
+                                  withTitle
+                                />
                               </div>
                             ),
                             icons: {
-                              voucher: <img src="/images/mdi_ticket-percent.svg" alt="icon" />,
-                              voucherApplied: <img src="/images/mdi_ticket-percent.svg" alt="icon" />,
-                              points: <img src="/images/mdi_star-circle.svg" alt="icon" />,
-                              pointsApplied: <img src="/images/mdi_star-circle.svg" alt="icon" />,
+                              voucher: (
+                                <img
+                                  src="/images/mdi_ticket-percent.svg"
+                                  alt="icon"
+                                />
+                              ),
+                              voucherApplied: (
+                                <img
+                                  src="/images/mdi_ticket-percent.svg"
+                                  alt="icon"
+                                />
+                              ),
+                              points: (
+                                <img
+                                  src="/images/mdi_star-circle.svg"
+                                  alt="icon"
+                                />
+                              ),
+                              pointsApplied: (
+                                <img
+                                  src="/images/mdi_star-circle.svg"
+                                  alt="icon"
+                                />
+                              ),
                               close: <XIcon />,
                               collapse: <ChevronUp />,
                               expand: <ChevronDown />,
-                              voucherRemoved: <XIcon />
+                              voucherRemoved: <XIcon />,
                             },
                           }}
                         />
@@ -415,7 +492,7 @@ const PlaceOrderPage: FC<any> = ({
                   </div>
                 </div>
               </div>
-            }
+            )}
           </div>
         </div>
       </Layout>
@@ -423,18 +500,23 @@ const PlaceOrderPage: FC<any> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  params,
+}) => {
   const brand = await useBrand(req);
-  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
-  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || "id";
+  const { default: lngDict = {} } = await import(
+    `locales/${defaultLanguage}.json`
+  );
 
   return {
     props: {
       lng: defaultLanguage,
       lngDict,
-      brand: brand || ""
-    }
+      brand: brand || "",
+    },
   };
-}
+};
 
 export default PlaceOrderPage;
