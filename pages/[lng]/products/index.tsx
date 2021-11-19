@@ -1,4 +1,4 @@
-/* library Package */ 
+/* library Package */
 import { FC, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
@@ -10,49 +10,46 @@ import {
 } from '@sirclo/nexus'
 import { Sliders, ArrowUp } from 'react-feather'
 
+
 /* library Template */
-import useQuery from 'lib/utils/useQuery'
-import useWindowSize from 'lib/utils/useWindowSize'
-import convertToTextFromQuery from 'lib/utils/convertToTextFromQuery'
-import { useBrand } from 'lib/utils/useBrand'
+import useQuery from 'lib/useQuery'
+import useWindowSize from 'lib/useWindowSize'
+import convertToTextFromQuery from 'lib/convertToTextFromQuery'
+import { useBrand } from 'lib/useBrand'
 
 /* component */
-import SEO from 'components/SEO/SEO'
+import SEO from 'components/SEO'
 import Layout from 'components/Layout/Layout'
-import EmptyComponent from 'components/EmptyComponent/EmptyComponentUNO'
+import EmptyComponent from 'components/EmptyComponent/EmptyComponent'
 import Placeholder from 'components/Placeholder'
-import Popup from 'components/Popup/PopupUno'
+import Popup from 'components/Popup/Popup'
 
 /* styles */
 import styles from 'public/scss/pages/Products.module.scss'
+import stylesPagination from 'public/scss/components/Pagination.module.scss'
 
-const classesPagination = {
-  pagingClassName: "col-12 products__pagination",
-  itemClassName: "products__paginationItem",
-  activeClassName: "products__paginationItemActive"
-}
 
 const classesProducts = {
-  productContainerClassName: "col-6 col-md-4 products__item",
-  productImageClassName: "products__item--image",
-  productImageContainerClassName: "image-container",
-  productLabelContainerClassName: "products__item--content",
-  productTitleClassName: "products__item--content-title",
-  productPriceClassName: "products__item--content-price",
-  stickerContainerClassName: "products__item-sticker",
-  outOfStockLabelClassName: "products__item-sticker--outofstock",
-  saleLabelClassName: "products__item-sticker--sale",
-  preOrderLabelClassName: "products__item-sticker--preorder",
-  newLabelClassName: "products__item-sticker--new",
-  buttonClassName: "products__item--buttonQuickview",
-  salePriceClassName: "products__item--content-price--sale",
+  productContainerClassName: `col-6 col-md-4 products_list ${styles.product}`,
+  stickerContainerClassName: styles.product_sticker,
+  outOfStockLabelClassName: `${styles.product_stickerLabel} ${styles.product_stickerLabel__outofstock}`,
+  saleLabelClassName: `${styles.product_stickerLabel} ${styles.product_stickerLabel__sale}`,
+  comingSoonLabelClassName: `${styles.product_stickerLabel} ${styles.product_stickerLabel__comingsoon}`,
+  openOrderLabelClassName: `${styles.product_stickerLabel} ${styles.product_stickerLabel__openorder}`,
+  preOrderLabelClassName: `${styles.product_stickerLabel} ${styles.product_stickerLabel__preorder}`,
+  newLabelClassName: `${styles.product_stickerLabel} ${styles.product_stickerLabel__new}`,
+  productImageContainerClassName: styles.product_link,
+  productImageClassName: styles.product_link__image,
+  productLabelContainerClassName: styles.product_label,
+  productTitleClassName: styles.product_label__title,
+  productPriceClassName: styles.product_labelPrice,
+  salePriceClassName: styles.product_labelPrice__sale,
+  priceClassName: styles.product_labelPrice__price,
 };
 
 const classesProductSort = {
   sortClassName: `form-group ${styles.sirclo_form_select}`,
   sortOptionsClassName: `form-control ${styles.sirclo_form_input}`,
-  sortOptionClassName: 'opsi',
-  sortActiveClassName: 'opsi-selected',
 };
 
 const classesProductFilterSort = {
@@ -79,6 +76,7 @@ const classesProductCategory = {
   categoryItemClassName: styles.category_list,
   categoryValueClassName: styles.category_list_link,
   categoryNameClassName: styles.category_list_item,
+  selectedCategoryClassName : styles.category_list_selected,
   categoryNumberClassName: "ml-1",
   dropdownIconClassName: "d-none",
 };
@@ -97,7 +95,14 @@ const classesPlaceholderProduct = {
   placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_product__card}`,
 };
 
-const ProductsPage: FC<object> = ({
+const productsPaginationClasses = {
+  pagingClassName: `col-12 ${stylesPagination.pagination}`,
+  activeClassName: stylesPagination.pagination_active,
+  itemClassName: stylesPagination.pagination_item,
+};
+
+
+const ProductsPage: FC<any> = ({
   lng,
   lngDict,
   brand,
@@ -112,7 +117,37 @@ const ProductsPage: FC<object> = ({
   const [sort, setSort] = useState(null);
   const [filterProduct, setFilterProduct] = useState({});
 
-  const [currPage, setCurrPage] = useState<number>(0);
+  const [currPage, setCurrPage] = useState(0);
+  const [pageInfo, setPageInfo] = useState({
+    pageNumber: 0,
+    itemPerPage: 8,
+    totalItems: 0,
+  });
+  const totalPage = Math.ceil(pageInfo.totalItems / pageInfo.itemPerPage);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
+
+  const handleScroll = () => {
+    const lastTestimonial = document.querySelector(
+      ".products_list:last-child"
+    ) as HTMLElement;
+
+    if (lastTestimonial) {
+      const lastTestimonialOffset =
+        lastTestimonial.offsetTop + lastTestimonial.clientHeight;
+      const pageOffset = window.pageYOffset + window.innerHeight;
+      if (pageOffset > lastTestimonialOffset) {
+        if (currPage < totalPage - 1) {
+          setCurrPage(currPage + 1);
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     setCurrPage(0);
@@ -120,9 +155,8 @@ const ProductsPage: FC<object> = ({
 
   const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
   const toogleSort = () => setOpenSort(!openSort);
-  const handleFilter = (selectedFilter: any) => {
+  const handleFilter = (selectedFilter: any) =>
     setFilterProduct(selectedFilter);
-  }
 
   return (
     <Layout i18n={i18n} lng={lng} lngDict={lngDict} brand={brand}>
@@ -130,7 +164,7 @@ const ProductsPage: FC<object> = ({
       <div className={styles.category}>
         <div className="container">
           <div className="row">
-            <div className="col-12 col-lg-8 offset-lg-2">
+            <div className="col-12 col-lg-10 offset-lg-1">
               <ProductCategory
                 classes={classesProductCategory}
                 showCategoryNumber={false}
@@ -183,7 +217,7 @@ const ProductsPage: FC<object> = ({
       </div>
       <div className={`container ${styles.products}`}>
         <div className="row">
-          <div className="col-12 col-lg-8 offset-lg-2">
+          <div className="col-12 col-lg-10 offset-lg-1">
             <div className={styles.products_header}>
               <h3 className="text-capitalize">
                 {categories
@@ -198,12 +232,13 @@ const ProductsPage: FC<object> = ({
                   tagName={tagname}
                   pageNumber={i}
                   itemPerPage={6}
+                  getPageInfo={setPageInfo as any}
                   collectionSlug={categories}
                   sort={sort}
-                  callPagination={true}
-                  paginationClasses={classesPagination}
                   filter={filterProduct}
                   withSeparatedVariant={true}
+                  callPagination={true}
+                  paginationClasses={productsPaginationClasses}
                   classes={classesProducts}
                   fullPath={`product/{id}`}
                   pathPrefix={`product`}
@@ -240,18 +275,6 @@ const ProductsPage: FC<object> = ({
                         />
                       </div>
                       <div className="col-6 col-md-4 mb-4">
-                        <Placeholder
-                          classes={classesPlaceholderProduct}
-                          withImage={true}
-                        />
-                      </div>
-                      <div className="d-none d-md-block col-md-4 mb-4">
-                        <Placeholder
-                          classes={classesPlaceholderProduct}
-                          withImage={true}
-                        />
-                      </div>
-                      <div className="d-none d-md-block col-md-4 mb-4">
                         <Placeholder
                           classes={classesPlaceholderProduct}
                           withImage={true}
