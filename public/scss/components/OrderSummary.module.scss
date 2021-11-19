@@ -6,7 +6,7 @@
 {
   position: fixed;
   width: 50%;
-  background: $color_black_light;
+  background: $color_place_order;
   min-height: 93vh;
   height: 100%;
   overflow-y: scroll;
@@ -20,7 +20,7 @@
   {
     display: flex;
     align-items: center;
-    padding: 0 2rem;
+    padding: 0 1rem;
 
     h6
     {
@@ -32,7 +32,7 @@
 
   &_line
   {
-    border-color: $color_base_red;
+    border-color: $color_blue_low;
   }
 
   &_container
@@ -47,15 +47,14 @@
   &_header
   {
     margin-bottom: 1rem;
+    border-bottom: .5px solid rgba(255, 255, 255, 0.7);
   }
 
   &_headerRow
   {
     display: flex;
     align-items: center;
-    padding: .5rem 1rem;
-    background: $color_base_red;
-    border: 1px solid $color_white;
+    padding: .5rem 0rem;
     border-radius: 3px;
     margin-bottom: 1rem;
     cursor: pointer;
@@ -87,7 +86,8 @@
   &_subTotalLabel,
   &_subTotalPrice
   {
-    font-family: "roboto-medium";
+    margin-top: 1rem;
+    font-family: "Poppins-medium";
     font-size: 14px;
     color: $color_white;
   }
@@ -101,7 +101,7 @@
       right: 0;
       z-index: 1;
       padding: 1rem;
-      background: $color_white;
+      background: $color_place_order;
       box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.04);
     }
   }
@@ -116,7 +116,7 @@
     padding: 1rem;
     display: flex;
     justify-content: space-between;
-    background: $color_base_red;
+    background: $color_place_order;
     cursor: pointer;
   }
 
@@ -128,7 +128,6 @@
     h6
     {
       margin: 0;
-      margin-left: 1rem;
       color: $color_white;
     }
   }
@@ -139,7 +138,7 @@
     height: 400px;
     overflow-y: auto;
     transition: height .5s ease;
-    background: $color_base_red;
+    background: $color_place_order;
     padding: 1rem;
   }
 
@@ -184,14 +183,14 @@
     span:nth-child(2)
     {
       margin-right: 5px;
-      font-family: "roboto-black";
+      font-family: "Poppins-black";
       font-size: 1rem;
       text-transform: uppercase;
     }
 
     svg
     {
-      color: $color_base_red;
+      color: $color_blue;
       height: 1rem;
       margin-top: -5px;
     }
@@ -336,7 +335,7 @@
 
       &:hover
       {
-        background: $color_bg_red;
+        background: $color_blue_light;
       }
     }
 
@@ -487,7 +486,7 @@
 
       svg
       {
-        background-color: $color_base_red;
+        background-color: $color_blue;
         border: none;
         border-radius: 100%;
         position: absolute;
@@ -532,9 +531,7 @@
         justify-content: flex-start;
         flex-wrap: nowrap;
         margin: 0 0 1rem;
-        padding: .5rem 1rem;
-        background: $color_base_red;
-        border: 1px solid $color_white;
+        padding: .5rem 0rem;
         border-radius: 3px;
         color: $color_white;
         cursor: pointer;
@@ -558,7 +555,6 @@
         background-position: center center;
         background-size: 100% auto;
         background-repeat: no-repeat;
-        background-image: url('../../images/mdi_ticket-percent.svg');
       }
 
       &Remove
@@ -645,9 +641,7 @@
     justify-content: flex-start;
     flex-wrap: nowrap;
     margin: 0 0 1rem;
-    padding: 0.5rem 1rem;
-    background: $color_base_red;
-    border: 1px solid $color_white;
+    padding: 0.5rem 0rem;
     border-radius: 3px;
     color: $color_white;
     cursor: pointer;
@@ -699,7 +693,7 @@
   &_pointValue
   {
     font-size: 12px !important;
-    font-family: "roboto-regular" !important;
+    font-family: "Poppins-regular" !important;
   }
 
   &_pointsFormContainer
@@ -717,8 +711,8 @@
 
       &:focus
       {
-        background: $color_white;
-        border: 1px solid $color_base_red;
+        background: $color_blue_light;
+        border: 1px solid $color_blue;
       }
     }
   }
@@ -727,7 +721,7 @@
   {
     width: 45px;
     background: transparent;
-    border: 1px solid $color_base_red;
+    border: 1px solid $color_blue;
     border-radius: 3px;
     margin-left: 5px;
     transition: 0.3s all ease;
@@ -736,7 +730,7 @@
     &:hover,
     &:active
     {
-      background: $color_base_red;
+      background: $color_blue;
       color: $color_white;
     }
   }
@@ -770,7 +764,7 @@
 
 .cartsummary
 {
-  padding: 0 1rem;
+  padding: 2rem 1rem 0rem;
 
   @media screen and (max-width: 575px) {
     padding: 0;

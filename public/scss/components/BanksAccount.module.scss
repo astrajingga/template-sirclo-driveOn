@@ -5,16 +5,15 @@
 {
   &_information
   {
-    background: $color_blue_light;
     border-radius: 3px;
     padding: 10px;
-    text-align: center;
+    text-align: justify;
     margin: 24px 0px 24px 0px;
   }
   &_container
   {
-    border: 1px solid $color_blue_light;
     margin-bottom: 24px;
+    border-radius: 5px;
   }
   &_header
   {
@@ -34,11 +33,11 @@
   }
   &_body
   {
-    background: $color_blue_light;
     padding: 12px;
   }
   &_name {
-    color: $color_blue;
+    color: $color_base_dark_blue;
+    font-weight: bold;
   }
   &_infoAccount
   {

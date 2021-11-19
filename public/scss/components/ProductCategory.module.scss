@@ -1,5 +1,10 @@
 .category {
   background: $color_white;
+  margin-top: 3rem;
+
+  @media screen and (max-width: 576px) {
+    margin-top: 1.5rem;
+  }
 
   &_order {
     display: flex;
@@ -13,11 +18,7 @@
 
   &_list {
     list-style: none;
-    padding: 1rem;
-
-    @media screen and (max-width: 576px) {
-      padding: 1rem 0.5rem;
-    }
+    padding: 1rem 0.5rem;
 
     &:first-child {
       padding-left: 0;
@@ -25,6 +26,22 @@
 
     &:last-child {
       padding-right: 0;
+    }
+
+    &_selected {
+      & > div {
+        & > a {
+          div {
+            padding: 0.5rem 1rem;
+            background: $color_base_red;
+            border: 1px solid $color_base_red;
+            color: $color_white;
+            border-radius: 34px;
+            font-size: 1rem;
+            cursor: pointer;
+          }
+        }
+      }
     }
 
     &_link {
@@ -37,40 +54,14 @@
       padding: 0.5rem 1rem;
       background: $color_white;
       border: 1px solid $color_base_red;
+      color: $color_base_red;
       border-radius: 34px;
       font-size: 1rem;
       cursor: pointer;
-      color: $color_base_red;
 
       @media screen and (max-width: 576px) {
         font-size: 1rem;
       }
-
-      &::placeholder {
-        padding: 0.5rem 1rem;
-        background: $color_base_red;
-        border: 1px solid $color_base_red;
-        border-radius: 34px;
-        font-size: 1rem;
-        cursor: pointer;
-        color: $color_white;
-
-        @media screen and (max-width: 576px) {
-          font-size: 1rem;
-        }
-      }
     }
   }
-  ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #888; 
-    border-radius: 5px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
-  
 }

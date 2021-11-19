@@ -11,12 +11,8 @@
    box-sizing: border-box;
  }
  .react-date-picker--disabled {
-    background-color: #f0f0f0;
-    color: #6d6d6d;
-
-    input {
-      background-color: #f0f0f0 !important;
-    }
+   background-color: #f0f0f0;
+   color: #6d6d6d;
  }
  .react-date-picker__wrapper {
    display: flex;

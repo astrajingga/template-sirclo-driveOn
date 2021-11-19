@@ -34,12 +34,12 @@
 
   &_buttonSearch {
     @extend 
-      .btn;
+      .btn,
+      .btn_primary;
 
     border-radius: 0 0.25rem 0.25rem 0;
     font-size: 14px;
     padding: 1rem;
-    background-color: $color_base_red;
 
     &:disabled{
       background-color: $color_gray_semi_dark !important;

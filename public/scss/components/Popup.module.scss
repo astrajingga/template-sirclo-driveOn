@@ -85,8 +85,8 @@
   {
     padding: 1rem;
     height: auto;
-    min-height: 550px;
-    max-height: 550px;
+    // min-height: 550px;
+    // max-height: 550px;
     overflow-y: auto;
 
     @media screen and (max-width: 575px) {
@@ -131,7 +131,7 @@
 
   &_popupErrorTitle
   {
-    font-family: "roboto-bold";
+    font-family: "Poppins-bold";
     font-size: 18px;
     margin-bottom: 1rem;
   }
@@ -147,7 +147,7 @@
 {
   &_button
   {
-    font-family: "roboto-black";
+    font-family: "Poppins-black";
     font-size: 1rem;
     background-color: transparent;
 
@@ -210,7 +210,7 @@
 
   &_crossSellTitle
   {
-    font-family: "roboto-medium";
+    font-family: "Poppins-medium";
     font-size: 16px;
     line-height: 16px;
   }
@@ -242,7 +242,7 @@
 
   &_emptyTitle
   {
-    font-family: "roboto-black";
+    font-family: "Poppins-black";
     font-size: .75rem;
     text-transform: uppercase;
     margin: 1rem 0 .5rem 0;
@@ -255,7 +255,7 @@
 
   &_title
   {
-    font-family: "roboto-medium";
+    font-family: "Poppins-medium";
     font-size: 13px;
   }
 
@@ -316,7 +316,7 @@
 
     & > a
     {
-      font-family: "roboto-medium";
+      font-family: "Poppins-medium";
       font-size: 18px;
       cursor: pointer;
     }
@@ -363,7 +363,7 @@
 
     & > a
     {
-      font-family: "roboto-medium";
+      font-family: "Poppins-medium";
       font-size: 14px;
       color: $color_white !important;
     }
@@ -561,7 +561,7 @@
 
     &__price
     {
-      font-family: "roboto-medium";
+      font-family: "Poppins-medium";
       font-size: 18px;
 
       @media screen and (max-width: 576px) {
@@ -641,14 +641,14 @@
     span:nth-child(2)
     {
       margin-right: 5px;
-      font-family: "roboto-black";
+      font-family: "Poppins-black";
       font-size: 1rem;
       text-transform: uppercase;
     }
 
     svg
     {
-      color: $color_base_red;
+      color: $color_orange;
       height: 1rem;
       margin-top: -5px;
     }

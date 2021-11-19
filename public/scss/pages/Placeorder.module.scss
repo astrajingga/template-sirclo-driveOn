@@ -9,7 +9,7 @@
 .placeorder
 {
   background: $color_white;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 
   &_container
   {
@@ -25,8 +25,10 @@
     h6
     {
       margin: 0;
-      margin-left: 1rem;
+      margin-left: 3rem;
       color: $color_black;
+      font-weight: 600;
+      font-size: 20px;
     }
   }
 
@@ -48,9 +50,9 @@
 
   &_steps
   {
-    padding: 0 1rem;
-    display: flex;
+    // padding: 0 1rem;
     justify-content: center;
+    margin-top: 3rem;
   }
 
   &_header
@@ -128,7 +130,7 @@
 
   &_popupErrorTitle
   {
-    font-family: "roboto-bold";
+    font-family: "Poppins-bold";
     font-size: 18px;
     margin-bottom: 1rem;
   }
@@ -215,7 +217,7 @@
   {
     border: none;
     background-color: transparent;
-    font-family: "roboto-black";
+    font-family: "Poppins-black";
     font-size: 16px;
     color: $color_blue;
 

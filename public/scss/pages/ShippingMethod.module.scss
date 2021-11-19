@@ -6,103 +6,89 @@
 @import "../components/Popup.module.scss";
 @import "../components/Placeholder.module.scss";
 
-.shipping
-{
+.shipping {
   background: $color_white;
+  margin-bottom: 15px;
 
-  &_container
-  {
+  &_container {
     padding: 2rem 0;
 
-    @media screen and (max-width: 991px){
+    @media screen and (max-width: 991px) {
       min-height: 95vh;
     }
   }
 
-  &_heading
-  {
+  &_heading {
     display: flex;
     align-items: center;
     padding: 0 1rem;
 
-    h6
-    {
+    h6 {
       margin: 0;
-      margin-left: 1rem;
+      margin-left: 3rem;
       color: $color_black;
+      font-weight: 600;
+      font-size: 20px;
     }
   }
 
-  &_headingIcon
-  {
+  &_headingIcon {
     cursor: pointer;
   }
 
-  &_line
-  {
+  &_line {
     border-color: $color_gray_low;
   }
 
-  &_lineSecond
-  {
+  &_lineSecond {
     border-color: $color_gray_low;
     margin: 0;
   }
 
-  &_steps
-  {
-    padding: 0 1rem;
-    display: flex;
+  &_steps {
+    // padding: 0 1rem;
     justify-content: center;
+    margin-top: 3rem;
   }
 
-  &_popupError
-  {
+  &_popupError {
     text-align: center;
     padding: 1rem 0;
   }
 
-  &_popupErrorTitle
-  {
-    font-family: "roboto-bold";
+  &_popupErrorTitle {
+    font-family: "Poppins-bold";
     font-size: 18px;
     margin-bottom: 1rem;
   }
 
-  &_popupErrorDesc
-  {
+  &_popupErrorDesc {
     font-size: 14px;
     margin: 0;
   }
 }
 
-.shippingmethod
-{
+.shippingmethod {
   margin: 2rem 0 3rem 0;
 
-  &_title
-  {
+  &_title {
     font-size: 14px;
     margin-bottom: 1rem;
   }
 }
 
-.shippingMethod
-{
-  &_container
-  {
+.shippingMethod {
+  &_container {
     position: relative;
   }
 
-  &Item
-  {
+  &Item {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap;
+    justify-content: center;
     position: relative;
-    border: 1px solid $color_gray_primary;
+    flex-wrap: wrap;
     background-color: white;
     border-radius: 3px;
     margin: 0 0 16px;
@@ -111,32 +97,48 @@
     cursor: pointer;
 
     &[class*="disabled"] {
-      opacity: .5;
+      opacity: 0.5;
       pointer-events: none;
     }
 
-    &:hover
-    {
-      background-color: $color_bg_red;
-      border-color: $color_base_red;
+    &_title {
+      color: $color_black;
+      font-size: 14px;
+      font-weight: bold;
+      // &:hover{
+      //   color: $color_base_red;
+      //   font-size: 14px;
+      //   font-weight: bold;
+      // }
+    }
+    
+    &_err{
+      display: none;
+    }
 
-      [class*="_pinButton"]
-      {
+    &:hover {
+      background-color: $color_white;
+      box-shadow: 0px 0px 8px rgba(235, 87, 87, 0.61);
+
+      .shippingMethodItem_title {
+        color: $color_base_red;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      [class*="_pinButton"] {
         background-color: transparent !important;
         border: solid 1px $color_base_red !important;
         color: $color_base_red !important;
 
-        &:hover
-        {
+        &:hover {
           background-color: $color_base_red !important;
           color: $color_white !important;
         }
       }
-
     }
-    
-    & > div:not([class])
-    {
+
+    & > div:not([class]) {
       border: none;
       display: flex;
       flex-direction: row;
@@ -149,8 +151,7 @@
 
       order: 3;
 
-      p
-      {
+      p {
         margin: 0;
         padding: 0;
         color: $color_text;
@@ -158,24 +159,21 @@
         list-style: 16px;
       }
 
-      & ~ div[class*="shippingMethodItem_price"]
-      {
+      & ~ div[class*="shippingMethodItem_price"] {
         display: none;
         opacity: 0;
         visibility: hidden;
       }
     }
 
-    &_pinButton
-    {
+    &_pinButton {
       order: 4;
       margin: calc(22px - 16px) 16px 22px;
     }
 
     &_radio,
     &_label,
-    &_price
-    {
+    &_price {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -185,43 +183,38 @@
       margin: 22px 0;
       padding: 0;
 
-      label
-      {
+      label {
         display: none;
       }
 
-      p
-      {
+      p {
         margin: 0;
         padding: 0;
       }
     }
 
-    &_radio
-    {
+    &_radio {
       padding: 0 16px;
       order: 1;
     }
 
-    &_label
-    {
+    &_label {
       order: 2;
       flex-grow: 1;
       padding: 0;
+      display: flex;
+      flex-direction: column;
 
-      p
-      {
+      p {
         width: 100%;
       }
     }
 
-    &_price
-    {
+    &_price {
       order: 3;
       padding: 0 16px;
 
-      p
-      {
+      p {
         color: $color_text;
         font-size: 11px;
         list-style: 16px;

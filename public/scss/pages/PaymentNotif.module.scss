@@ -2,17 +2,14 @@
 @import "../components/Button.module.scss";
 @import "../components/Form.module.scss";
 
-.paymentNotif
-{
-  &_container
-  {
+.paymentNotif {
+  &_container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  &_inner
-  {
+  &_inner {
     width: 500px;
     align-content: center;
     display: flex;
@@ -23,18 +20,15 @@
       padding: 0 1rem;
     }
 
-    &_title
-    { 
-      & > span
-      {
+    &_title {
+      & > span {
         font-size: 14px;
         color: $color_gray_semi_dark;
       }
     }
   }
 
-  &_form
-  {
+  &_form {
     margin-top: 3rem;
     order: 3;
   }
@@ -45,23 +39,16 @@
   }
 }
 
-.paymentConfirmation
-{
+.paymentConfirmation {
   &_buttonConfirm {
-    @extend 
-      .btn;
+    @extend .btn, .btn_primary;
 
     width: 100%;
     margin-top: 17px;
     height: 40px;
-    background: $color_base_red;
-    
-    &:disabled{
-      background-color: $color_gray_semi_dark !important;
-    }
 
-    &:hover{
-      background-color: $color_base_red_dark;
+    &:disabled {
+      background-color: $color_gray_semi_dark !important;
     }
   }
 
@@ -73,18 +60,19 @@
   }
 
   &_detailContainer {
-    background: rgba(251, 192, 45, 0.1);
     margin-top: 24px;
     border-radius: 5px;
   }
   &_detailHeader {
     padding: 16px;
-    background-color: $color_base_red;
+    background: #e89f71;
     display: flex;
-    color: $color_white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     justify-content: space-between;
   }
   &_detailTitle {
+    color: $color_white;
     span {
       display: flex;
       font-size: 15px;
@@ -94,13 +82,26 @@
     margin: auto 0px;
     height: auto;
     color: $color_white;
-    background: $color_base_red_dark;
+    background: none !important;
     padding: 5px 10px;
     border-radius: 20px;
     font-weight: inherit;
+    text-align: center;
+
+    @media screen and (max-width: 576px) {
+      margin-left: 16px;
+    }
+
+    &Cancelled,
+    &Returned {
+      color: $color_cancelled;
+    }
   }
   &_detailContent {
     padding: 16px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 0.5px solid #F2994A;
 
     section {
       background: $color_white;
@@ -113,14 +114,16 @@
 
   &_detailHeaderDropdown {
     display: flex;
+    cursor: pointer;
     justify-content: space-between;
   }
 
   &_detailTotalAmount {
     span {
       display: flex;
-      color: $color_red_error;
+      color: $color_black;
       font-size: 15px;
+      font-weight: 600;
     }
   }
 
@@ -146,17 +149,19 @@
   }
 
   &_detailDropdown {
-    color: $color_base_red_dark;
+    color: #585353;
   }
 
-  &_detailPriceBreakdown, &_detailTotalField {
+  &_detailPriceBreakdown,
+  &_detailTotalField {
     border-top: 1px solid $color_gray_semi_dark;
     margin: 10px 0px 0px 0px;
     padding: 10px 0px 0px 0px;
     line-height: 26px;
   }
 
-  &_detailField, &_detailTotalField {
+  &_detailField,
+  &_detailTotalField {
     display: flex;
     justify-content: space-between;
   }
@@ -165,35 +170,24 @@
     font-size: 15px;
   }
 
-  &_summaryTotalContainer
-  {
+  &_summaryTotalContainer {
     padding-top: 12px;
     padding-bottom: 12px;
   }
 
-  &_summaryItemTitle
-  {
+  &_summaryItemTitle {
     display: block;
     color: $color_secondary;
-    font-family: "roboto-medium";
+    font-family: "Poppins-medium";
     font-size: 11px;
     line-height: 150%;
   }
 
-  &_summaryItemPrice
-  {
-    font-family: "roboto-medium";
+  &_summaryItemPrice {
+    font-family: "Poppins-medium";
     font-size: 14px;
     line-height: 16px;
     color: $color_error;
     margin-top: 6px;
-  }
-
-  &_detailStatusUnpaid{
-    background: $color_base_red_dark;
-  }
-
-  &-paymentStatusUnpaidClassName{
-    background: $color_base_red_dark;
   }
 }

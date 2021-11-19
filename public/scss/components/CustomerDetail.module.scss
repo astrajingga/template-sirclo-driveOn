@@ -61,7 +61,7 @@
   &_infoHeaderTitle,
   &_infoHeaderLink
   {
-    font-family: "roboto-medium";
+    font-family: "Poppins-medium";
     font-size: 14px;
     margin: 0;
   }
@@ -74,7 +74,7 @@
 
   &_infoHeaderLink
   {
-    color: $color_blue !important;
+    color: $color_base_dark_blue !important;
     position: absolute;
     right: 20px;
     top: 65px;
@@ -88,7 +88,7 @@
 
     & > a
     {
-      font-family: "roboto-medium";
+      font-family: "Poppins-medium";
       font-size: 14px;
       padding: 7px 12px;
       border: 1px solid $color_blue;
@@ -149,7 +149,7 @@
   {
     border: none;
     background-color: transparent;
-    font-family: "roboto-black";
+    font-family: "Poppins-black";
     font-size: 16px;
     color: $color_blue;
 
@@ -236,11 +236,11 @@
 
   &_change
   {
-    color: $color_blue !important;
+    color: $color_base_dark_blue !important;
     position: absolute;
     right: 20px;
     top: 50px;
     font-size: 11px;
-    font-family: "roboto-medium";
+    font-family: "Poppins-medium";
   }
 }

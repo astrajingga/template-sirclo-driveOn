@@ -5,85 +5,77 @@
 @import "../components/OrderSummary.module.scss";
 @import "../components/Popup.module.scss";
 
-.payment
-{
+.payment {
   background: $color_white;
 
-  &_container
-  {
+  &_list{
+    margin-top: 3rem;
+  }
+
+  &_container {
     padding: 2rem 0;
 
-    @media screen and (max-width: 991px){
+    @media screen and (max-width: 991px) {
       min-height: 95vh;
     }
   }
 
-  &_heading
-  {
+  &_heading {
     display: flex;
     align-items: center;
     padding: 0 1rem;
 
-    h6
-    {
+    h6 {
       margin: 0;
-      margin-left: 1rem;
+      margin-left: 3rem;
       color: $color_black;
+      font-weight: 600;
+      font-size: 20px;
     }
   }
 
-  &_headingIcon
-  {
+  &_headingIcon {
     cursor: pointer;
   }
 
-  &_line
-  {
+  &_line {
     border-color: $color_gray_low;
   }
 
-  &_lineSecond
-  {
+  &_lineSecond {
     border-color: $color_gray_low;
     margin: 0;
   }
 
-  &_steps
-  {
-    padding: 0 1rem;
-    display: flex;
+  &_steps {
     justify-content: center;
+    margin-top: 3rem;
   }
 
-  &_shipping
-  {
+  &_shipping {
     padding: 1rem;
     margin-bottom: 2rem;
     border: 1px solid $color_gray_primary;
     border-radius: 5px;
   }
 
-  &_shippingTitle
-  {
+  &_shippingTitle {
     font-size: 14px;
     font-weight: 900;
   }
 
-  &_shippingCost
-  {
+  &_shippingCost {
     font-size: 13px;
     font-weight: 900;
   }
 
-  &_listTitle
-  {
+  &_listTitle {
     font-size: 14px;
     font-weight: 900;
     color: $color_gray_dark;
   }
 
-  &_listItemDisabled
-  {
+  &_listItemDisabled {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -95,20 +87,23 @@
     cursor: pointer;
   }
 
-  &_listItemEnabled
-  {
+  &_listItemEnabled {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid $color_base_red;
+    border: 1px solid #c4c4c4;
     border-radius: 5px;
     margin-bottom: 1rem;
     font-size: 1rem;
     cursor: pointer;
+
+    &:hover {
+      box-shadow: 0px 0px 8px rgba(235, 87, 87, 0.61);
+      border: 0;
+    }
   }
 
-  &_listItemOverlay
-  {
+  &_listItemOverlay {
     position: fixed;
     z-index: 10;
     top: 0;
@@ -122,8 +117,7 @@
     align-items: center;
   }
 
-  &_listItemPopup
-  {
+  &_listItemPopup {
     position: relative;
     z-index: 10;
     display: flex;
@@ -140,8 +134,7 @@
     width: 100vw;
     height: 100vh;
 
-    @media (min-width: 768px)
-    {
+    @media (min-width: 768px) {
       width: 330px;
       height: auto;
       max-height: 482px;
@@ -149,41 +142,35 @@
       overflow-x: hidden;
     }
 
-    &__close
-    {
+    &__close {
       position: absolute;
       right: 0;
       top: 0;
       background: transparent;
       border: none;
-      padding: .25rem;
+      padding: 0.25rem;
       cursor: pointer;
 
       &:focus,
-      &:active
-      {
+      &:active {
         outline: 0;
-        border: none; 
+        border: none;
       }
     }
 
-    &__payment
-    {
+    &__payment {
       margin: calc(45px + 27px) 0 0;
     }
   }
 
-  &_listItemPopupForm
-  {
-    &__body
-    {
+  &_listItemPopupForm {
+    &__body {
       width: 100%;
       margin-top: 40px;
       padding: 0 16px;
     }
 
-    &__input
-    {
+    &__input {
       width: 300px !important;
       border-radius: 0 !important;
 
@@ -192,16 +179,14 @@
       }
     }
 
-    &__button
-    {
+    &__button {
       background: $color_blue;
       color: $color_white;
       height: calc(2em + 12px);
     }
   }
 
-  &_listItemPayment
-  {
+  &_listItemPayment {
     display: flex;
     flex: 1;
     padding: 1rem;
@@ -210,20 +195,17 @@
       padding: 1rem;
     }
 
-    &__radio
-    {
+    &__radio {
       margin-top: 2px;
       margin-right: 1rem;
       padding-right: 0;
     }
 
-    & > p
-    {
+    & > p {
       margin-bottom: 0;
     }
 
-    &__image
-    {
+    &__image {
       text-align: right;
       padding: 1rem;
 
@@ -232,14 +214,12 @@
         padding: 0 1rem;
       }
 
-      img
-      {
+      img {
         height: 25px;
       }
     }
 
-    &__warning
-    {
+    &__warning {
       display: block;
       width: 100%;
       padding: 0 1rem;
@@ -247,64 +227,53 @@
       font-size: 14px;
     }
   }
-  
-  &_listItemBody
-  {
+
+  &_listItemBody {
     flex-grow: 1;
     padding: 1rem;
     border-radius: 5px;
-    background: $color_bg_red;
-    
+
     @media screen and (max-width: 575px) {
       padding: 1rem;
     }
   }
-  
-  &_listItemDetail
-  {
+
+  &_listItemDetail {
     margin-bottom: 2rem;
   }
 
-  &_listItemTable
-  {
+  &_listItemTable {
     position: relative;
     width: 100%;
     border-collapse: collapse;
   }
 
-  &_listItemTableRow
-  {
+  &_listItemTableRow {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: .25rem 0;
+    padding: 0.25rem 0;
 
-    &:last-child
-    {
+    &:last-child {
       margin-top: 1rem;
       padding-top: 1rem;
-      border-top: 1px solid $color_black;
-      font-family: "roboto-black";
-      font-size: 1.2rem;
+      font-family: "Poppins-black";
+      font-size: 16px;
       text-transform: uppercase;
     }
 
-    &__label
-    {
+    &__label {
       text-align: left;
       display: flex;
       align-items: center;
     }
 
-    &__value
-    {
+    &__value {
       text-align: right;
     }
 
-    &__priceSale
-    {
-      &:first-of-type:not(:only-of-type)
-      {
+    &__priceSale {
+      &:first-of-type:not(:only-of-type) {
         text-decoration: line-through;
         color: $color_gray_dark;
 
@@ -314,23 +283,19 @@
       }
     }
 
-    &__price
-    {
-      margin-left: .5rem;
+    &__price {
+      margin-left: 0.5rem;
     }
   }
 
-  &_footer
-  {
+  &_footer {
     margin-top: 1.5rem;
 
-    &__promotion
-    {
-      margin: .5rem 0;
+    &__promotion {
+      margin: 0.5rem 0;
     }
 
-    &__agreement
-    {
+    &__agreement {
       text-align: right;
 
       @media screen and (max-width: 575px) {
@@ -338,42 +303,36 @@
       }
     }
 
-    &__check
-    {
+    &__check {
       position: relative;
       top: 1px;
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
 
-    &__button
-    {
+    &__button {
       text-align: right;
       margin: 1rem 0;
     }
   }
 
-  &_empty
-  {
+  &_empty {
     padding: 2rem 0;
     text-align: center;
 
-    &__icon
-    {
+    &__icon {
       width: 3rem !important;
       height: 3rem !important;
     }
 
-    &__title
-    {
-      font-family: "roboto-medium";
+    &__title {
+      font-family: "Poppins-medium";
       font-size: 1rem;
       text-transform: uppercase;
-      margin: 1rem 0 .5rem 0;
+      margin: 1rem 0 0.5rem 0;
     }
   }
 
-  &_popupProcessOverlay
-  {
+  &_popupProcessOverlay {
     position: fixed;
     z-index: 10;
     top: 0;
@@ -386,9 +345,7 @@
     align-items: center;
   }
 
-
-  &_popupProcessContainer
-  {
+  &_popupProcessContainer {
     position: relative;
     display: flex;
     justify-content: center;
@@ -399,8 +356,7 @@
     }
   }
 
-  &_popupProcessInner
-  {
+  &_popupProcessInner {
     display: flex;
     align-items: center;
     width: max-content;
@@ -409,21 +365,19 @@
     text-align: center;
     border-radius: 5px;
     background-color: $color_white;
-    box-shadow: 0 0 15px rgba(0,0,0,.15);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 
     @media screen and (max-width: 991px) {
       width: 100%;
     }
   }
 
-  &_pointButton
-  {
+  &_pointButton {
     display: flex;
     width: max-content;
     min-width: 300px;
 
-    img
-    {
+    img {
       display: none;
     }
 
@@ -433,108 +387,91 @@
   }
 
   &_pointAppliedText,
-  &_voucherAppliedText
-  {
+  &_voucherAppliedText {
     flex-grow: 1;
     text-align: left;
   }
 
   &_pointAppliedRemove,
-  &_voucherAppliedRemove
-  {
+  &_voucherAppliedRemove {
     cursor: pointer;
   }
 
-  &_containerPointPopup
-  {
+  &_containerPointPopup {
     position: relative;
     z-index: 10;
     padding: 15px 16px;
     background: $color_white;
     border-radius: 5px;
 
-    &__close
-    {
+    &__close {
       position: absolute;
       right: 0;
       top: 0;
       background: transparent;
       border: none;
-      padding: .25rem .5rem;
+      padding: 0.25rem 0.5rem;
       cursor: pointer;
 
       &:focus,
-      &:active
-      {
+      &:active {
         outline: 0;
-        border: none; 
+        border: none;
       }
     }
   }
 
-  &_pointsPopupLabel
-  {
+  &_pointsPopupLabel {
     font-size: 14px;
   }
 
-  &_pointsPopupValue
-  {
+  &_pointsPopupValue {
     font-size: 12px;
   }
 
-  &_buttonChangePoint
-  {
+  &_buttonChangePoint {
     width: 45px;
     background: transparent;
-    border: 1px solid $color_base_red;
+    border: 1px solid $color_blue;
     border-radius: 3px;
     margin-left: 5px;
     transition: 0.3s all ease;
     font-size: 20px;
-    color: $color_base_red;
 
     &:hover,
-    &:active
-    {
-      background: $color_base_red;
+    &:active {
+      background: $color_blue;
       color: $color_white;
     }
   }
 
-  &_pointsFormContainer
-  {
+  &_pointsFormContainer {
     margin: 16px 0;
   }
 
-  &_pointsForm
-  {
+  &_pointsForm {
     display: flex;
 
-    & > input
-    {
+    & > input {
       border-radius: 3px !important;
 
-      &:focus
-      {
+      &:focus {
         background: $color_blue_light;
         border: 1px solid $color_blue;
       }
     }
   }
 
-  &_pointsInsufficient
-  {
+  &_pointsInsufficient {
     color: $color_red;
 
-    & > p
-    {
+    & > p {
       font-size: 12px;
       margin: 0;
     }
   }
 
-  &_pointsWarning
-  {
+  &_pointsWarning {
     width: 400px;
     text-align: center;
     color: $color_red;
@@ -543,8 +480,7 @@
       width: 100%;
     }
 
-    & > p
-    {
+    & > p {
       font-size: 12px;
       margin: 0;
     }
