@@ -1,273 +1,203 @@
 /* library Package */
-import { useState } from 'react'
+import { FC } from 'react'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import dynamic from 'next/dynamic'
-import Link from 'next/link'
-import Router from 'next/router'
-import Carousel from '@brainhubeu/react-carousel'
-import { LazyLoadComponent } from 'react-lazy-load-image-component'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import {
   Banner,
   getBanner,
   Products,
   useI18n,
+  Widget,
 } from '@sirclo/nexus'
-const Widget = dynamic(
-  () => import('@sirclo/nexus').then((mod) => mod.Widget),
-  { ssr: false }
-);
+import { useRouter } from 'next/router'
+import Carousel from '@brainhubeu/react-carousel'
+import { LazyLoadComponent } from 'react-lazy-load-image-component'
 
 /* library Template */
-import useWindowSize from 'lib/utils/useWindowSize'
-import { useSizeBanner } from 'lib/useSizeBanner'
+import useWindowSize from 'lib/useWindowSize'
 import { parseCookies } from 'lib/parseCookies'
-import { useBrand } from 'lib/utils/useBrand'
+import { useSizeBanner } from 'lib/useSizeBanner'
 import { GRAPHQL_URI } from 'lib/Constants'
+import { useBrand } from 'lib/useBrand'
 
 /* component */
 import Layout from 'components/Layout/Layout'
-import InstagramFeed from 'components/InstagramFeed/InstagramFeed'
-import Popup from 'components/Popup/Popup'
 import Placeholder from 'components/Placeholder'
-import Quickview from 'components/Quickview/Quickview'
+import InstagramFeed from 'components/InstagramFeed/InstagramFeed'
 
-const bannerClasses = {
-  imageContainerClassName: "banner-carousel__header",
-  linkClassName: "banner-carousel__link",
-  imageClassName: "banner-carousel__image"
+/* styles */
+import styles from 'public/scss/pages/Home.module.scss'
+
+const classesBanner = {
+  imageContainerClassName: styles.bannerCarousel_header,
+  linkClassName: styles.bannerCarousel_link,
+  imageClassName: styles.bannerCarousel_image,
 };
 
 const classesProducts = {
-  productContainerClassName: "col-6 col-md-3 products__item",
-  productImageContainerClassName: "products__item--image-container",
-  productImageClassName: "products__item--image",
-  productLabelContainerClassName: "products__item--content",
-  productTitleClassName: "products__item--content-title",
-  productPriceClassName: "products__item--content-price",
-  stickerContainerClassName: "products__item-sticker",
-  outOfStockLabelClassName: "products__item-sticker--outofstock",
-  comingSoonLabelClassName: "products__item-sticker--comingsoon",
-  openOrderLabelClassName: "products__item-sticker--openorder",
-  saleLabelClassName: "products__item-sticker--sale",
-  preOrderLabelClassName: "products__item-sticker--preorder",
-  newLabelClassName: "products__item-sticker--new",
-  buttonClassName: "products__item--buttonQuickview",
-  salePriceClassName: "products__item--content-price--sale",
+  productContainerClassName: `col-6 col-md-3 product_list ${styles.product}`,
+  stickerContainerClassName: styles.product_sticker,
+  outOfStockLabelClassName: `${styles.product_stickerLabel} ${styles.product_stickerLabel__outofstock}`,
+  saleLabelClassName: `${styles.product_stickerLabel} ${styles.product_stickerLabel__sale}`,
+  comingSoonLabelClassName: `${styles.product_stickerLabel} ${styles.product_stickerLabel__comingsoon}`,
+  openOrderLabelClassName: `${styles.product_stickerLabel} ${styles.product_stickerLabel__openorder}`,
+  preOrderLabelClassName: `${styles.product_stickerLabel} ${styles.product_stickerLabel__preorder}`,
+  newLabelClassName: `${styles.product_stickerLabel} ${styles.product_stickerLabel__new}`,
+  productImageContainerClassName: styles.product_link,
+  productImageClassName: styles.product_link__image,
+  productLabelContainerClassName: styles.product_label,
+  productTitleClassName: styles.product_label__title,
+  productPriceClassName: styles.product_labelPrice,
+  salePriceClassName: styles.product_labelPrice__sale,
+  priceClassName: styles.product_labelPrice__price,
 };
 
 const classesPlaceholderBanner = {
-  placeholderImage: "placeholder-item placeholder-item__banner",
+  placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem__banner}`,
 };
 
 const classesPlaceholderProduct = {
-  placeholderImage: "placeholder-item placeholder-item__product--card",
+  placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_product__card}`,
 };
 
-const Home: React.FC<any> = ({
+const Home: FC<any> = ({
   lng,
   lngDict,
   brand,
-  urlSite,
-  dataBanners
+  dataBanners,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n();
   const size = useWindowSize();
-
-  const [isQuickview, setIsQuickview] = useState<boolean>(false);
-  const [slug, setSlug] = useState<string>("");
-  const [showModalErrorAddToCart, setShowModalErrorAddToCart] = useState<boolean>(false);
-  const [showModalAddToCart, setShowModalAddToCart] = useState<boolean>(false);
-  const [showModalNotifyMe, setShowModalNotifyMe] = useState<boolean>(false);
-
-  const handleFailedAddToCart = () => {
-    setIsQuickview(false);
-    setShowModalErrorAddToCart(true);
-  }
-
-  const handleCompleteAddToCart = () => {
-    setIsQuickview(false);
-    setShowModalAddToCart(true);
-  }
-
-  const handleCompleteNotifyMe = () => {
-    setIsQuickview(false);
-    setShowModalNotifyMe(true);
-  }
+  const router = useRouter();
 
   return (
-    <Layout
-      i18n={i18n}
-      lng={lng}
-      lngDict={lngDict}
-      brand={brand}
-    >
-      {isQuickview && slug && (
-        <Quickview
-          slug={slug}
-          setIsQuickView={setIsQuickview}
-          handleFailedAddToCart={handleFailedAddToCart}
-          handleCompleteAddToCart={handleCompleteAddToCart}
-          handleCompleteNotifyMe={handleCompleteNotifyMe}
-          i18n={i18n}
-          urlSite={urlSite}
-        />
-      )}
-      {showModalNotifyMe &&
-        <Popup
-          setPopup={setShowModalNotifyMe}
-          withClose={false}
-        >
-          <div className="product-detail_errorAddCart">
-            <h3 className="product-detail_errorAddCartTitle">
-              {i18n.t("product.notifyTitleSuccess")}
-            </h3>
-            <p className="product-detail_errorAddCartDesc">
-              {i18n.t("product.notifySuccess")}
-            </p>
-            <button
-              className="btn btn-orange btn-long mt-3"
-              onClick={() => {
-                setShowModalNotifyMe(false);
-                Router.push("/[lng]/products", `/${lng}/products`);
-              }}>
-              {i18n.t("global.continueShopping")}
-            </button>
-          </div>
-        </Popup>
-      }
-      {showModalAddToCart &&
-        <Popup
-          setPopup={setShowModalAddToCart}
-          withClose={false}
-        >
-          <div className="product-detail_errorAddCart">
-            <FontAwesomeIcon
-              icon={faCheckCircle}
-              size="6x"
-              color="#00BA3F"
-              className="mb-4"
-            />
-            <p className="product-detail_errorAddCartDesc">
-              {i18n.t("product.successAddToCart")}
-            </p>
-            <button
-              className="btn btn-orange btn-long mt-4"
-              onClick={() => {
-                setShowModalAddToCart(false);
-                Router.push("/[lng]/cart", `/${lng}/cart`);
-              }}>
-              {i18n.t("cart.title")}
-            </button>
-            <button
-              className="btn btn-orange-outer btn-long mt-3"
-              onClick={() => {
-                setShowModalAddToCart(false);
-                Router.push("/[lng]/products", `/${lng}/products`);
-              }}>
-              {i18n.t("global.continueShopping")}
-            </button>
-          </div>
-        </Popup>
-      }
-      {showModalErrorAddToCart &&
-        <Popup setPopup={setShowModalErrorAddToCart}>
-          <div className="product-detail_errorAddCart">
-            <h3 className="product-detail_errorAddCartTitle">{i18n.t("cart.errorSKUTitle")}</h3>
-            <p className="product-detail_errorAddCartDesc">{i18n.t("cart.errorSKUDetail")} </p>
-          </div>
-        </Popup>
-      }
-      <div className="banner-carousel">
+    <Layout i18n={i18n} lng={lng} lngDict={lngDict} brand={brand}>
+      <div className={styles.bannerCarousel}>
         <Banner
           data={dataBanners?.data}
           Carousel={Carousel}
-          classes={bannerClasses}
-          lazyLoad
+          classes={classesBanner}
           autoPlay={5000}
+          lazyLoad
           dots
           infinite
           thumborSetting={{
             width: useSizeBanner(size.width),
             format: "webp",
-            quality: 90,
+            quality: 85,
           }}
           loadingComponent={
             <Placeholder classes={classesPlaceholderBanner} withImage />
           }
+          widthImage={size.width}
         />
-
       </div>
       <section>
         <div className="container">
-          <div className="heading">
-            <div className="heading__title">
-              <h2>{i18n.t("home.ourProducts")}</h2>
-            </div>
-          </div>
-          <div className="row best-seller">
-            <LazyLoadComponent>
-              <Products
-                itemPerPage={4}
-                withSeparatedVariant={true}
-                isQuickView={setIsQuickview}
-                getQuickViewSlug={setSlug}
-                quickViewFeature={true}
-                classes={classesProducts}
-                lazyLoadedImage={false}
-                thumborSetting={{
-                  width: size.width < 768 ? 375 : 512,
-                  format: "webp",
-                  quality: 85,
-                }}
-                loadingComponent={
-                  <>
-                    {[0,1,2,3].map((_,i) => (
-                      <div key={i} className="col-6 col-md-3 mb-4">
-                        <Placeholder
+          <div className="row">
+            <div className="col-12 col-lg-12">
+              <h3 className={styles.home_product}>
+                {i18n.t("home.ourProduct")}
+              </h3>
+              <div className="row mt-4">
+                <LazyLoadComponent>
+                  <Products
+                    filter={{ openOrderScheduled: false, published: true }}
+                    itemPerPage={4}
+                    classes={classesProducts}
+                    pathPrefix="product"
+                    lazyLoadedImage={false}
+                    thumborSetting={{
+                      width: size.width < 768 ? 512 : 800,
+                      format: "webp",
+                      quality: 85,
+                    }}
+                    loadingComponent={
+                      <>
+                        <div className="col-6 col-md-3">
+                          <Placeholder
                             classes={classesPlaceholderProduct}
                             withImage
-                        />
-                      </div>
-                    ))}
-                  </>
-                }
-              />
-            </LazyLoadComponent>
+                          />
+                        </div>
+                        <div className="col-6 col-md-3">
+                          <Placeholder
+                            classes={classesPlaceholderProduct}
+                            withImage
+                          />
+                        </div>
+                        <div className="col-6 col-md-3">
+                          <Placeholder
+                            classes={classesPlaceholderProduct}
+                            withImage
+                          />
+                        </div>
+                        <div className="col-6 col-md-3">
+                          <Placeholder
+                            classes={classesPlaceholderProduct}
+                            withImage
+                          />
+                        </div>
+                      </>
+                    }
+                  />
+                </LazyLoadComponent>
+              </div>
+              <div className="text-center mt-4">
+                <a
+                  className={`btn ${styles.btn_secondary} ${styles.btn_long}`}
+                  onClick={() => router.push(`/${lng}/products`)}
+                >
+                  {i18n.t("product.seeAll")}
+                </a>
+              </div>
+            </div>
           </div>
-          <div className="text-center">
-            <Link href="/[lng]/products" as={`/${lng}/products`}>
-              <a className="btn btn-orange-outer btn-short">
-                {i18n.t("home.showAll")}
-              </a>
-            </Link>
-          </div>
-          
         </div>
       </section>
       <section>
         <div className="container">
-          <LazyLoadComponent>
-              <Widget
-                widgetClassName="widget-contain"
-                pos='main-content-2'
-                thumborSetting={{
-                  width: 0,
-                  height: 0,
-                  format: 'webp',
-                  quality: 0,
-                }}
-              />
-            </LazyLoadComponent>
+          <div className="row">
+            <div className="col-12 col-lg-12">
+              <div className="row">
+                <LazyLoadComponent>
+                  <Widget
+                    pos="main-content-2"
+                    containerClassName={styles.widgetHomePage}
+                    widgetClassName={styles.widgetItemHomePage}
+                    loadingComponent={
+                      <>
+                        <div className="col-6">
+                          <Placeholder
+                            classes={classesPlaceholderProduct}
+                            withImage
+                          />
+                        </div>
+                        <div className="col-6">
+                          <Placeholder
+                            classes={classesPlaceholderProduct}
+                            withImage
+                          />
+                        </div>
+                      </>
+                    }
+                    thumborSetting={{
+                      width: size.width < 768 ? 576 : 1200,
+                      format: "webp",
+                      quality: 85,
+                    }}
+                  />
+                </LazyLoadComponent>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       <section>
-        {brand?.socmedSetting?.instagramToken &&
+        {brand?.socmedSetting?.instagramToken && (
           <LazyLoadComponent threshold={300}>
             <InstagramFeed size={size} />
           </LazyLoadComponent>
-        }
+        )}
       </section>
     </Layout>
   );
@@ -277,36 +207,35 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
   res,
   params,
-}) => {
+}: any) => {
+  const brand = await useBrand(req);
+  const cookies = parseCookies(req);
+  const defaultLanguage =
+    brand?.settings?.defaultLanguage ||
+    params.lng ||
+    cookies.ACTIVE_LNG ||
+    "id";
   const allowedUri: Array<string> = ["en", "id", "graphql", "favicon.ico"];
 
   if (allowedUri.indexOf(params.lng.toString()) == -1) {
-    const cookies = parseCookies(req);
-
     res.writeHead(307, {
-      Location: cookies.ACTIVE_LNG
-        ? "/" + cookies.ACTIVE_LNG + "/" + params.lng
-        : "/id/" + params.lng,
+      Location: `/${defaultLanguage}/` + params.lng,
     });
 
     res.end();
   }
 
   const { default: lngDict = {} } = await import(
-    `locales/${params.lng}.json`
+    `locales/${defaultLanguage}.json`
   );
-
-  const brand = await useBrand(req);
-  const urlSite = `https://${req.headers.host}/${params.lng}/product/${params.slug}`;
   const dataBanners = await getBanner(GRAPHQL_URI(req));
 
   return {
     props: {
-      lng: params.lng,
+      lng: defaultLanguage,
       lngDict,
-      brand: brand || '',
-      urlSite,
-      dataBanners
+      brand: brand || "",
+      dataBanners,
     },
   };
 };
