@@ -1,15 +1,12 @@
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { Newsletter, withBrand } from "@sirclo/nexus";
-import { useRouter } from "next/router";
-
+import { withBrand, Newsletter } from "@sirclo/nexus";
 import Head from "next/head";
-import SEO from "../SEO/SEO";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { useHookWidgetStyle } from "lib/utils/useWidgetStyle";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import SEO from "../SEO";
+import { X as XIcon } from "react-feather";
+import PageNotFound from "components/PageNotFound";
 import styles from "public/scss/components/Newsletter.module.scss";
 
 type LayoutPropType = {
@@ -17,17 +14,20 @@ type LayoutPropType = {
   i18n: any;
   lng: string;
   layoutClassName?: string;
+  withHeader?: boolean;
+  withFooter?: boolean;
+  withAllowed?: boolean | undefined;
   [otherProp: string]: any;
 };
 
 const classesNewsletterPopup = {
-  containerClassName: "newsletter__popup-container",
-  closeButtonClassName: "newsletter__close",
-  formContainerClassName: "newsletter-form-container",
-  labelClassName: "newsletter-form__label",
-  inputClassName: "newsletter-form__input",
-  buttonClassName: "newsletter-form__button",
-};
+  containerClassName: styles.newsletter_popupContainer,
+  closeButtonClassName: styles.newsletter_close,
+  formContainerClassName: styles.newsletter_form,
+  labelClassName: "d-none",
+  inputClassName: "form-control",
+  buttonClassName: `btn mt-3 ${styles.btn_blue} ${styles.btn_center}`,
+}
 
 const Layout: React.FC<LayoutPropType> = ({
   lngDict,
@@ -36,11 +36,10 @@ const Layout: React.FC<LayoutPropType> = ({
   layoutClassName = "",
   withHeader = true,
   withFooter = true,
+  withAllowed = true,
   brand,
   ...props
 }) => {
-  const router = useRouter();
-  useHookWidgetStyle(router);
 
   useEffect(() => {
     i18n?.locale(lng, lngDict);
@@ -60,67 +59,38 @@ const Layout: React.FC<LayoutPropType> = ({
     <>
       <Head>
         {brand?.settings?.hideFromSearchEngine && (
-          <meta name="robots" content="noindex, nofollow" />
+          <meta name="robots" content="noindex, nofollow"></meta>
         )}
+        <title>{brand?.settings?.websiteTitle}</title>
         {brand?.googleAdsWebsiteMetaToken &&
           <meta name="google-site-verification" content={getToken()} />
-        }
-        {brand?.ID === "bajubaju-4" &&
-          <meta name="google-site-verification" content="-c386YDXJpIeEJ9XXKhU-aTLsjibQRwT5YYFw2WPsx8" />
         }
         <link
           rel="shortcut icon"
           href={brand?.settings?.faviconURL}
           type="image/x-icon"
         />
-        <link rel="preconnect" href="https://thumbor.sirclocdn.com" />
-        <link rel="preconnect" href={process.env.IS_PROD == "true" ?
-            "http://cdn.sirclo.com" :
-            "http://cdn.sirclo.com.dmmy.me"} />
-        
+        <link rel="manifest" href="/manifest.json" />
         <link
-          rel="dns-prefetch"
-          href={process.env.IS_PROD == "true" ?
-            "http://cdn.sirclo.com" :
-            "http://cdn.sirclo.com.dmmy.me"}
-        />
-
-        <link rel="dns-prefetch" href="https://storage.googleapis.com" />
-        <link rel="dns-prefetch" href="https://thumbor.sirclocdn.com" />
-        <link rel="dns-prefetch" href="https://graph.instagram.com" />
-        <link rel="dns-prefetch" href="http://static.getbutton.io" />
-
-        <link 
-          rel="preload" 
-          href="/webfonts/Poppins-Bold.ttf"
-          as="font" 
+          rel="preload"
+          href="webfonts/Poppins-Regular.ttf"
+          as="font"
           crossOrigin="anonymous"
-          type="font/ttf" 
         />
-
-        <link 
-          rel="preload" 
-          href="/webfonts/Poppins-BoldItalic.ttf"
-          as="font" 
+        <link
+          rel="preload"
+          href="webfonts/Poppins-Black.ttf"
+          as="font"
           crossOrigin="anonymous"
-          type="font/ttf" 
         />
-
-        <link 
-          rel="preload" 
-          href="/webfonts/Poppins-Italic.ttf"
-          as="font" 
+        <link
+          rel="preload"
+          href="webfonts/Poppins-Medium.ttf"
+          as="font"
           crossOrigin="anonymous"
-          type="font/ttf" 
         />
-
-        <link 
-          rel="preload" 
-          href="/webfonts/Poppins-Regular.ttf"
-          as="font" 
-          crossOrigin="anonymous"
-          type="font/ttf" 
-        />
+        <link rel="preconnect" href="https://thumbor.sirclocdn.com" />
+        <link rel="preconnect" href="https://storage.googleapis.com" />
       </Head>
       <SEO
         title={brand?.settings?.websiteTitle}
@@ -130,16 +100,21 @@ const Layout: React.FC<LayoutPropType> = ({
       {withHeader &&
         <Header lng={lng} />
       }
-      <main className={layoutClassName}>{props.children}</main>
+      <main className={layoutClassName}>
+        {withAllowed ?
+          props.children :
+          <PageNotFound i18n={i18n} />
+        }
+      </main>
       <ToastContainer />
       <div className={styles.newsletter_overlay}>
         <Newsletter
           classes={classesNewsletterPopup}
-          closeButton={<FontAwesomeIcon icon={faTimes} />}
+          closeButton={<XIcon color="black" size="18" />}
           withForm
+          buttonComponent={i18n.t("newsletter.subscribe")}
           onComplete={() => toast.success(i18n.t("newsletter.submitSuccess"))}
           onError={() => toast.error(i18n.t("newsletter.submitError"))}
-          buttonComponent={i18n.t("newsletter.submitButton")}
         />
       </div>
       {withFooter &&

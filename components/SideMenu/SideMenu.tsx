@@ -1,45 +1,49 @@
-/* library Package */
-import { Logo } from '@sirclo/nexus'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { LazyLoadComponent } from 'react-lazy-load-image-component'
+import { FC } from "react";
+import { X } from 'react-feather';
+import styles from "public/scss/components/SideMenu.module.scss";
 
-const SideMenu = ({ title, openSide, toogleSide, children, positionSide }) => {
+type SideMenuPropsType = {
+  withClose?: boolean
+  withTitle?: boolean,
+  withLogo?: boolean,
+  title?: string,
+  logo?: any,
+  openSide: any,
+  toogleSide: any,
+  positionSide: string
+}
+
+const SideMenu: FC<SideMenuPropsType> = ({
+  withClose = false,
+  withTitle = false,
+  withLogo = false,
+  title,
+  logo,
+  openSide,
+  toogleSide,
+  positionSide,
+  children
+}) => {
   return (
     <>
-      <div
-        className={
-          openSide ? `side-menu fade show ${positionSide}` : `side-menu fade`
-        }
-      >
-        <div className="header-side-menu">
-          <LazyLoadComponent>
-            <Logo
-              imageClassName="nav-logo"
-              thumborSetting={{
-                width: 100,
-                format: "webp",
-                quality: 100,
-              }}
-           />
-          </LazyLoadComponent>
-          
-          <FontAwesomeIcon
-            className="icon"
-            icon={faTimes}
-            onClick={toogleSide}
-          />
+      <div className={`
+        ${styles.sidemenu} 
+        ${openSide ? `${styles[positionSide]}` : ""} 
+      `}>
+        <div className={styles.header_side_menu}>
+          {withLogo && logo}
+          {withTitle &&
+            <h6>{title}</h6>
+          }
+          {withClose &&
+            <X onClick={toogleSide} size={30} />
+          }
         </div>
-        <hr className="side-menu-hr" />
         {children}
       </div>
-      <div
-        className="bg-outside"
-        style={{ display: openSide ? "block" : "none" }}
-        onClick={toogleSide}
-      ></div>
+      <div className="bg-outside" style={{ display: openSide ? 'block' : 'none' }} onClick={toogleSide}></div>
     </>
-  );
-};
+  )
+}
 
 export default SideMenu;

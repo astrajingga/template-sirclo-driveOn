@@ -1,5 +1,5 @@
 import { getBrand } from "@sirclo/nexus";
-import { GRAPHQL_URI } from '../Constants';
+import { GRAPHQL_URI } from '../components/Constants';
 import { IncomingMessage } from 'http';
 
 export const useBrand = async (req: IncomingMessage) => {

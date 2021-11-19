@@ -7,15 +7,17 @@ export type EmptyComponentPropsType = {
     emptyDesc?: string;
   };
   logo?: any;
-  title: string;
+  title?: string;
   desc?: string;
+  button?: React.ReactNode;
 };
 
 const EmptyComponent: FC<EmptyComponentPropsType> = ({
   classes = {},
   logo,
   title,
-  desc
+  desc,
+  button
 }) => {
   const {
     emptyContainer = "empty-emptyContainer",
@@ -25,9 +27,12 @@ const EmptyComponent: FC<EmptyComponentPropsType> = ({
 
   return (
     <div className={emptyContainer}>
-      {logo}
+      {logo && logo}
       <h2 className={emptyTitle}>{title}</h2>
-      <p className={emptyDesc}>{desc}</p>
+      {desc &&
+        <p className={emptyDesc}>{desc}</p>
+      }
+      {button && button}
     </div>
   )
 }

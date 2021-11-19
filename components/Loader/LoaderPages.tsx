@@ -1,22 +1,13 @@
-import { FC } from "react"
 import { useI18n } from "@sirclo/nexus"
 
-type TypeLoaderPage = {
-  otherClassNameInner?: string
-}
-
-const LoaderPages: FC<any> = ({
-  otherClassNameInner
-}: TypeLoaderPage) => {
+const LoaderPages = () => {
   const i18n: any = useI18n();
 
   return (
     <div className="loader-pages">
       <div className="loader-pages__container">
-        <div className={`loader-pages__inner ${otherClassNameInner}`}>
-          <img src="/images/merlin-loader.svg" className="loader-pages__inner--icon" alt="merlin" />
-          <p className="loader-pages__inner--label">{i18n.t("home.loading")}</p>
-        </div>
+        <div className="loader-pages__container--spin"></div>
+        <p className="loader-pages__container--label">{i18n.t("home.loading")}</p>
       </div>
     </div>
   )

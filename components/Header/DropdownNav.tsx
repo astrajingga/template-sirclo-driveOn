@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from "next/router";
+import { FC, useState } from 'react';
 
-const DropdownNav = ({ title, children }) => {
-  const router = useRouter();
-  const [isDropdown, setDropdown] = useState<boolean>(false);
+type TypeDropdownNav = {
+  title: string,
+  children: any
+}
 
-  useEffect(() => {
-    setDropdown(false);
-  }, [router.query]);
+const DropdownNav: FC<any> = ({ title, children }: TypeDropdownNav) => {
+  const [isDropdown, setDropdown] = useState<boolean>(false)
 
   const handleOutside = () => {
     if (isDropdown) setDropdown(false);
@@ -23,7 +22,7 @@ const DropdownNav = ({ title, children }) => {
         >
           {title}
         </button>
-        <div className="dropdown-menu dropdown-menu-right dropdown-merlin" style={{ display: isDropdown ? 'block' : 'none' }}>
+        <div className="dropdown-menu dropdown-menu-right dropdown-lastino" style={{ display: isDropdown ? 'block' : 'none' }}>
           {children}
         </div>
         <div className="bg-outside" style={{ display: isDropdown ? 'block' : 'none' }} onClick={() => handleOutside()}></div>

@@ -8,6 +8,7 @@ import {
   faShoppingBag,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import styles from "public/scss/components/Header.module.scss"
 
 const MobileShortcut = ({ lng }) => {
   const i18n: any = useI18n();
@@ -18,7 +19,8 @@ const MobileShortcut = ({ lng }) => {
   return (
     <div
       className={`
-      navbar-mobile__shortcut d-lg-none 
+      ${styles.navbar_mobile__shortcut} 
+      d-lg-none 
       ${(router.pathname === "/[lng]/cart" ||
           router.pathname === "/[lng]/place_order" ||
           router.pathname === "/[lng]/shipping_method") &&
@@ -26,49 +28,49 @@ const MobileShortcut = ({ lng }) => {
         }
     `}
     >
-      <div className="navbar-mobile__shortcut--inner">
-        <div className="navbar-mobile__shortcut--item">
+      <div className={styles.navbar_mobile__shortcut__inner}>
+        <div className={styles.navbar_mobile__shortcut__item}>
           <Link href="/[lng]" as={`/${lng}`}>
             <a>
-              <FontAwesomeIcon className="icon-item" icon={faHome} />
-              <span className="icon-title">{i18n.t("header.home")}</span>
+              <FontAwesomeIcon className={styles.icon_item} icon={faHome} />
+              <span className={styles.icon_title}>{i18n.t("header.home")}</span>
             </a>
           </Link>
         </div>
-        <div className="navbar-mobile__shortcut--item">
+        <div className={styles.navbar_mobile__shortcut__item}>
           <Link href="/[lng]/products" as={`/${lng}/products`}>
             <a>
-              <FontAwesomeIcon className="icon-item" icon={faThLarge} />
-              <span className="icon-title">{i18n.t("header.shop")}</span>
+              <FontAwesomeIcon className={styles.icon_item} icon={faThLarge} />
+              <span className={styles.icon_title}>{i18n.t("header.shop")}</span>
             </a>
           </Link>
         </div>
-        <div className="navbar-mobile__shortcut--item">
+        <div className={styles.navbar_mobile__shortcut__item}>
           <Link href="/[lng]/cart" as={`/${lng}/cart`}>
             <a>
               <span style={{ position: "relative" }}>
-                <FontAwesomeIcon className="icon-item" icon={faShoppingBag} />
-                <div className="icon-badge">{data?.totalItem}</div>
+                <FontAwesomeIcon className={styles.icon_item} icon={faShoppingBag} />
+                <div className={styles.icon_badge}>{data?.totalItem}</div>
               </span>
-              <span className="icon-title">{i18n.t("header.cart")}</span>
+              <span className={styles.icon_title}>{i18n.t("header.cart")}</span>
             </a>
           </Link>
         </div>
-        <div className="navbar-mobile__shortcut--item">
+        <div className={styles.navbar_mobile__shortcut__item}>
           <PrivateComponent
             Auth={
               <Link href="/[lng]/account" as={`/${lng}/account`}>
                 <a>
-                  <FontAwesomeIcon className="icon-item" icon={faUser} />
-                  <span className="icon-title">{i18n.t("header.account")}</span>
+                  <FontAwesomeIcon className={styles.icon_item} icon={faUser} />
+                  <span className={styles.icon_title}>{i18n.t("header.account")}</span>
                 </a>
               </Link>
             }
             NoAuth={
               <Link href="/[lng]/login" as={`/${lng}/login`}>
                 <a>
-                  <FontAwesomeIcon className="icon-item" icon={faUser} />
-                  <span className="icon-title">{i18n.t("header.login")}</span>
+                  <FontAwesomeIcon className={styles.icon_item} icon={faUser} />
+                  <span className={styles.icon_title}>{i18n.t("header.login")}</span>
                 </a>
               </Link>
             }

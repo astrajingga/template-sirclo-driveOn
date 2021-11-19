@@ -1,5 +1,5 @@
 import { getGoogleAuth } from "@sirclo/nexus";
-import { GRAPHQL_URI } from '../Constants';
+import { GRAPHQL_URI } from './Constants';
 import { IncomingMessage } from 'http';
 
 export const useGoogleAuth = async (req: IncomingMessage) => {

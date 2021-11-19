@@ -1,49 +1,57 @@
-import { FC } from "react";
-import Link from 'next/link';
+import React, { FC } from "react";
+import Link from "next/link";
+import { useI18n } from "@sirclo/nexus";
+import styles from "public/scss/components/Breadcrumbs.module.scss";
 
-export type PageHeadingPropsType = {
-  title: string
-  links: Array<string>
-  withImage?: string
-  lng: any
-}
+type BreadcrumbPropsType = {
+  currentStep: number;
+};
 
-const Breadcrumb: FC<any> = ({
-  title,
-  links,
-  withImage,
-  lng
-}) => {
+const Breadcrumb: FC<BreadcrumbPropsType> = ({ currentStep }) => {
+  const i18n: any = useI18n();
+  const steps = [
+    {
+      text: i18n.t("placeOrder.userInformation"),
+      route: "/place_order",
+    },
+    {
+      text: i18n.t("shipping.shippingMethod"),
+      route: "/shipping_method",
+    },
+    {
+      text: i18n.t("payment.title"),
+      route: "/payment_method",
+    },
+  ];
   return (
-    <div
-      className={`section-breadcrumb ${withImage ? "section-breadcrumb__image" : ""}`}
-      style={{ backgroundImage: `url(${withImage})` }}
-    >
-      <h1 className="section-breadcrumb__title">{title}</h1>
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb breadcrumb-merlin">
-          {
-            links.map((el, idx) => {
-              if (el === "Home" || el === "Beranda") {
-                return (
-                  <li className="breadcrumb-item breadcrumb-merlin-item" key={idx}>
-                    <Link href="/[lng]" as={`/${lng}`}>
-                      <a className="breadcrumb-merlin-item__link">{el}</a>
-                    </Link>
-                  </li>
-                )
-              }
-              return (
-                <li className="breadcrumb-item breadcrumb-merlin-item" key={idx}>
-                  <a className="breadcrumb-merlin-item__link">{el}</a>
-                </li>
-              )
-            })
-          }
-        </ol>
-      </nav>
-    </div>
-  )
-}
+    <div className={styles.breadcrumbs}>
+        {steps.map((step, index) => (
+          <React.Fragment key={index}>
+            <Link
+              href={`/[lng]${step.route}`} as={`/${i18n.activeLocale}${step.route}`}
+            >
+                <span
+                  className={`
+                  ${styles.breadcrumbs_class} 
+                  ${
+                    index == currentStep - 1
+                      ? styles.breadcrumbs_activeClass
+                      : ""
+                  }
+                `}
+                >
+                  <span className={styles.breadcrumbs_class_label}>
+                    {step.text}
+                  </span>
+                </span>
+            </Link>
+            {index != 2 ? (
+                  <span className={styles.breadcrumbs_line} />
+                ) : null}
+          </React.Fragment>
+        ))}
+      </div>
+  );
+};
 
 export default Breadcrumb;

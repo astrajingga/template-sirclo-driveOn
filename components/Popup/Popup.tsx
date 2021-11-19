@@ -1,25 +1,43 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useRef, FC } from 'react';
+import { X } from 'react-feather';
+import styles from 'public/scss/components/Popup.module.scss';
+import useOutsideClick from 'lib/useOutsideClick';
 
 export type PopupPropsType = {
-  setPopup: any,
-  withClose?: boolean,
+  withHeader: boolean,
+  setPopup?: any,
+  popupTitle?: string
+  mobileFull?: boolean,
+  classPopopBody?: boolean
 }
 
-const Popup: React.FC<PopupPropsType> = ({
+const Popup: FC<PopupPropsType> = ({
+  withHeader,
   setPopup,
-  withClose = true,
+  popupTitle,
+  mobileFull = true,
+  classPopopBody,
   children
 }) => {
+
+  const cartOuterDiv = useRef<HTMLDivElement>(null);
+
+  useOutsideClick(cartOuterDiv, () => setPopup(false));
+
   return (
-    <div className="quickdetail__overlay">
-      <div className="quickdetail__container">
-        {withClose &&
-          <span className="close-button" onClick={() => setPopup(false)}>
-            <FontAwesomeIcon icon={faTimes} className="close-icon" />
-          </span>
+    <div className={styles.popup_overlay}>
+      <div ref={cartOuterDiv} className={mobileFull ? styles.popup_containerFull : styles.popup_container}>
+        {withHeader &&
+          <div className={styles.popup_header}>
+            <h6>{popupTitle}</h6>
+            <span className={styles.close_button} onClick={() => setPopup(false)}>
+              <X className={styles.close_icon} />
+            </span>
+          </div>
         }
-        {children}
+        <div className={`${styles.popup_body} ${classPopopBody ? styles.popup_bodyMaxHeight : ""}`}>
+          {children}
+        </div>
       </div>
     </div>
   )

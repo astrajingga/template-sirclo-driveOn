@@ -1,5 +1,5 @@
-import React from 'react';
-import { NextScript } from 'next/document'
+import { NextScript } from "next/document";
+import React from "react";
 
 type DocumentFiles = {
   sharedFiles: readonly string[];
@@ -8,17 +8,17 @@ type DocumentFiles = {
 };
 
 function dedupe<T extends { file: string }>(bundles: T[]): T[] {
-  const files = new Set<string>()
-  const kept: T[] = []
+  const files = new Set<string>();
+  const kept: T[] = [];
 
   for (const bundle of bundles) {
     if (files.has(bundle.file)) {
-      continue
+      continue;
     }
-    files.add(bundle.file)
-    kept.push(bundle)
+    files.add(bundle.file);
+    kept.push(bundle);
   }
-  return kept
+  return kept;
 }
 
 export class DeferredNextScript extends NextScript {
@@ -29,12 +29,12 @@ export class DeferredNextScript extends NextScript {
         key: script.props.src,
         defer: true,
         async: false,
-      })
-    })
+      });
+    });
   }
   getDynamicChunks(files: DocumentFiles) {
     const { dynamicImports, assetPrefix, devOnlyCacheBusterQueryString } =
-      this.context
+      this.context;
 
     // @ts-ignore
     return dedupe(dynamicImports).map((bundle) => {
@@ -42,14 +42,14 @@ export class DeferredNextScript extends NextScript {
       if (process.env.__NEXT_MODERN_BUILD) {
         modernProps = bundle.file.endsWith(".module.js")
           ? { type: "module" }
-          : { noModule: true }
+          : { noModule: true };
       }
 
       if (
         !bundle?.file?.endsWith(".js") ||
         files?.allFiles?.includes(bundle.file)
       ) {
-        return null
+        return null;
       }
 
       return (
@@ -65,7 +65,7 @@ export class DeferredNextScript extends NextScript {
           }
           {...modernProps}
         />
-      )
-    })
+      );
+    });
   }
 }
