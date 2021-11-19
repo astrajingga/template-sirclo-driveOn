@@ -1,6 +1,6 @@
-/* library Package */
-import { FC, useState } from 'react'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { FC, useState } from "react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import dynamic from "next/dynamic";
 import {
   useI18n,
   Blogs,
@@ -8,72 +8,65 @@ import {
   getBlogHeaderImage,
   BlogRecent,
   isBlogAllowed
-} from '@sirclo/nexus'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faNewspaper } from '@fortawesome/free-solid-svg-icons' 
+} from "@sirclo/nexus";
+import useWindowSize from "lib/useWindowSize";
+import { useBrand } from "lib/useBrand";
+import Layout from "components/Layout/Layout";
+import { GRAPHQL_URI } from "components/Constants";
+import Breadcrumb from 'components/Breadcrumb/Breadcrumblink'
+import styles from "public/scss/pages/Blog.module.scss";
+import stylesPagination from "public/scss/components/Pagination.module.scss"
 
-/* library Template */
-import useWindowSize from 'lib/utils/useWindowSize'
-import { GRAPHQL_URI } from 'lib/Constants'
-import { useBrand } from 'lib/utils/useBrand'
-
-/* component */
-import Layout from 'components/Layout/Layout'
-import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
-import EmptyComponent from 'components/EmptyComponent/EmptyComponent'
-import Placeholder from 'components/Placeholder'
-
-/* styles */
-import styles from 'public/scss/pages/Blog.module.scss'
+const EmptyComponent = dynamic(() => import("components/EmptyComponent/EmptyComponent"));
+const Placeholder = dynamic(() => import("components/Placeholder"));
 
 const classesBlogs = {
-  blogsContainerClassName: "row blogs-page",
-  blogContainerClassName: "col-12 col-md-12 blogs-page__items row",
-  categoryClassName: "blogs-page__items--category",
-  imageContainerClassName: "blogs-page__items--container col-12 col-md-4",
-  imageClassName: "blogs-page__items--container-image",
-  contentContainerClassName: "blogs-page__items--contentContainer",
-  descriptionClassName: "blogs-page__items--container col-12 col-md-8 ",
-  titleClassName: "blogs-page__items--container-title",
-  descriptionFooterClassName: "blogs-page__items--container-details",
+  blogsContainerClassName: `row ${styles.blog}`,
+  blogContainerClassName: `col-12 col-md-12 ${styles.blog_item} row`,
+  categoryClassName: styles.blog_itemCategory,
+  imageContainerClassName: `${styles.blog_itemImageContainer} col-12 col-md-4 `,
+  imageClassName: styles.blog_itemImage,
+  descriptionClassName: `col-12 col-md-8 ${styles.blog_itemContent}`,
+  titleClassName: styles.blog_itemTitle,
+  authorClassName: styles.blog_itemAuthor,
+  descriptionInnerFooterClassName: styles.blog_itemInnerFooter,
+  dateClassName: styles.blog_itemInnerFooterDate,
   authorPicClassName: "d-none",
-  descriptionInnerFooterClassName: "blogs-page__items--container-details-author",
-  authorClassName: "blogs-page__items--container-details-author-title",
-  dateClassName: "blogs-page__items--container-details-author-date"
+  contentContainerClassName: styles.blog_contentContainer,
+  buttonClassName: styles.blog_button
 }
 
 const classesBlogCategories = {
-  containerClassName: "blogs-category",
-  categoryClassName: "blogs-category__items ",
-  linkClassName: "blogs-category__items--link",
+  containerClassName: styles.blog_category,
+  categoryClassName: styles.blog_categoryItem,
+  linkClassName: styles.blog_categoryLink,
 }
 
 const classesEmptyComponent = {
-  emptyContainer: "blogs-page__empty",
-  emptyTitle: "blogs-page__empty--title",
-  emptyDesc: "blogs-page__empty--desc",
+  emptyContainer: styles.blog_empty,
+  emptyTitle: styles.blog_emptyTitle
 };
 
 const classesPagination = {
-  pagingClassName: "col-12 blogs-page__pagination",
-  itemClassName: "blogs-page__paginationItem",
-  activeClassName: "blogs-page__paginationItemActive"
+  pagingClassName: `col-12 ${stylesPagination.pagination}`,
+  activeClassName: stylesPagination.pagination_active,
+  itemClassName: stylesPagination.pagination_item
 }
 
 const classesPlaceholderBlogs = {
-  placeholderImage: "placeholder-item placeholder-item__blogsList"
+  placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_blogsList}`
 }
 
 const classesBlogRecent = {
-  containerClassName: "recent-post",
-  blogRecentClassName: "recent-post__items",
-  imageClassName: "recent-post__items--image",
-  labelContainerClassName: "recent-post__items--label",
-  titleClassName: "recent-post__items--label-title",
-  dateClassName: "recent-post__items--label-date",
+  containerClassName: styles.blog_recent,
+  blogRecentClassName: styles.blog_recentItem,
+  imageClassName: styles.blog_recentItemImage,
+  labelContainerClassName: styles.blog_recentItemContent,
+  titleClassName: styles.blog_recentItemContentTitle,
+  dateClassName: styles.blog_recentItemContentDate
 }
 
-const Blog: FC<object> = ({
+const Blog: FC<any> = ({
   lng,
   lngDict,
   headerImage,
@@ -81,10 +74,9 @@ const Blog: FC<object> = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n();
   const size = useWindowSize();
-  const allowedBlog = isBlogAllowed();
 
   const [totalCategories, setTotalCategories] = useState(null);
-  console.log(headerImage)
+  const allowedBlog = isBlogAllowed();
 
   const linksBreadcrumb = [`${i18n.t("home.title")}`, `${i18n.t("blog.title")}`]
 
@@ -117,6 +109,7 @@ const Blog: FC<object> = ({
                   classes={classesBlogs}
                   paginationClasses={classesPagination}
                   withPagination
+                  withAuthor
                   itemPerPage={4}
                   withReadMoreButton
                   thumborSetting={{
@@ -138,12 +131,6 @@ const Blog: FC<object> = ({
                     <EmptyComponent
                       classes={classesEmptyComponent}
                       title={i18n.t("blog.isEmpty")}
-                      logo={
-                        <FontAwesomeIcon
-                          icon={faNewspaper}
-                          className="blogs-page__empty--icon"
-                        />
-                      }
                     />
                   }
                 />
@@ -153,7 +140,7 @@ const Blog: FC<object> = ({
                   <div className="col-12 col-md-6 col-lg-12">
                     {(totalCategories > 0 || totalCategories === null) &&
                       <>
-                        <h1 className="title-side-blogs">
+                        <h1 className={styles.title_side_blogs}>
                           {i18n.t("blog.categories")}
                         </h1>
                         <BlogCategories
@@ -164,7 +151,7 @@ const Blog: FC<object> = ({
                     }
                   </div>
                   <div className="col-12 col-md-6 col-lg-12">
-                    <h2 className="title-side-blogs">{i18n.t("blog.recentPost")}</h2>
+                    <h2 className={styles.title_side_blogs}>{i18n.t("blog.recentPost")}</h2>
                     <BlogRecent
                       classes={classesBlogRecent}
                       limit={5}
@@ -187,19 +174,17 @@ const Blog: FC<object> = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
-  const { default: lngDict = {} } = await import(
-    `locales/${params.lng}.json`
-  );
-
   const brand = await useBrand(req);
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
+  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
   const headerImage = await getBlogHeaderImage(GRAPHQL_URI(req));
 
   return {
     props: {
-      lng: params.lng,
+      lng: defaultLanguage,
       lngDict,
       headerImage,
-      brand: brand || ''
+      brand: brand || ""
     },
   };
 }

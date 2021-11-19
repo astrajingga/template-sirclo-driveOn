@@ -1,42 +1,53 @@
-/* library Package */
-import { FC, useState } from 'react'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { Article, useI18n } from '@sirclo/nexus'
+import { FC, useState } from "react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import {
+	Article,
+	ArticleCategories,
+	useI18n
+} from "@sirclo/nexus";
+import Layout from "components/Layout/Layout";
+import SEO from "components/SEO";
+import Placeholder from "components/Placeholder";
+import { useBrand } from "lib/useBrand";
+import styles from "public/scss/pages/Article.module.scss";
+import Breadcrumb from 'components/Breadcrumb/Breadcrumblink'
 
-/* library Template */
-import { useBrand } from 'lib/utils/useBrand'
+const classesPlaceholderArticle = {
+	placeholderImage: `${styles.placeholderItem} ${styles.placeholderItem_article}`,
+}
 
-/* component*/
-import Layout from 'components/Layout/Layout'
-import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
-
-const Information: FC<object> = ({
+const ArticleDetail: FC<any> = ({
 	lng,
 	lngDict,
 	slug,
 	brand
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const i18n: any = useI18n();
+
 	const [title, setTitle] = useState<string>("");
-	const linksBreadcrumb = [`${i18n.t("home.title")}`, `${title}`]
+	
 
 	return (
 		<Layout
-			lngDict={lngDict}
 			i18n={i18n}
 			lng={lng}
+			lngDict={lngDict}
 			brand={brand}
 		>
-			<Breadcrumb 
-			 links={linksBreadcrumb} lng={lng} />
+			<SEO title={title} />
 			<section>
 				<div className="container">
-					<div className="information">
-						<Article
-							containerClassName="information__content"
-							slug={slug as string}
-							getTitle={setTitle}
-						/>
+					<div className="row">
+						<div className="col-12 col-lg-10 offset-lg-1">
+							<Article
+								containerClassName={styles.article}
+								slug={slug as string}
+								getTitle={setTitle}
+								loadingComponent={
+									<Placeholder classes={classesPlaceholderArticle} withImage />
+								}
+							/>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -44,21 +55,21 @@ const Information: FC<object> = ({
 	);
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
-	const { default: lngDict = {} } = await import(
-		`locales/${params.lng}.json`
-	);
-
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
 	const brand = await useBrand(req);
+	const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
+	const { default: lngDict = {} } = await import(
+		`locales/${defaultLanguage}.json`
+	);
 
 	return {
 		props: {
-			lng: params.lng,
+			lng: defaultLanguage,
 			lngDict,
 			slug: params.slug,
-			brand: brand || ''
-		},
+			brand: brand || ""
+		}
 	};
 }
 
-export default Information;
+export default ArticleDetail;
