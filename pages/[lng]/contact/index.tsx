@@ -1,31 +1,35 @@
 import { FC } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import dynamic from "next/dynamic";
 import {
+  useI18n,
   Contact,
   Widget,
-  useI18n,
-  isEnquiryAllowed,
-  
+  isEnquiryAllowed
 } from "@sirclo/nexus";
 import Layout from "components/Layout/Layout";
-import Breadcrumb from "components/Breadcrumb/Breadcrumb";
-import Placeholder from "components/Placeholder";
-import useWindowSize from "lib/utils/useWindowSize";
+import { useBrand } from "lib/useBrand";
 import { toast } from "react-toastify";
-import { useBrand } from "lib/utils/useBrand";
+import styles from "public/scss/pages/Contact.module.scss";
+import Breadcrumb from 'components/Breadcrumb/Breadcrumblink'
+
+const Placeholder = dynamic(() => import("components/Placeholder"));
 
 const classesContact = {
-  containerClassName: "contact-page-container",
-  mapClassName: "d-none",
-  titleClassName: "contact-page-title",
-  inputContainerClassName: "sirclo-form-row",
-  inputClassName: "form-control sirclo-form-input",
-  buttonClassName: "btn btn-danger btn-long float-right",
+  containerClassName: `${styles.contact_container} d-flex flex-column align-items-start justify-content-start`,
+  mapClassName: styles.contact_map,
+  formContainerClassName: styles.contact_form,
+  titleClassName: "d-none",
+  inputContainerClassName: `${styles.sirclo_form_row}`,
+  inputClassName: `form-control ${styles.sirclo_form_input}`,
+  labelClassName: `d-flex flex-row align-items-center justify-content-start`,
+  buttonContainerClassName: `${styles.contact_buttonContainer} d-block mt-4`,
+  buttonClassName: `${styles.btn} ${styles.btn_primary} ${styles.btn_long} ${styles.btn_full_width} ${styles.btn_center}`,
+  widgetClassName: styles.contact_widget
 };
 
 const classesPlaceholderContact = {
-  placeholderImage: "placeholder-item placeholder-item__contact--logo",
-  placeholderList: "placeholder-item placeholder-item__contact--caption"
+  placeholderList: `${styles.placeholderItem} ${styles.placeholderItem_contactWidget}`
 }
 
 const ContactPage: FC<any> = ({
@@ -33,10 +37,9 @@ const ContactPage: FC<any> = ({
   lngDict,
   brand
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const i18n: any = useI18n();
-  const size = useWindowSize();
-  const allowedEnquiry = isEnquiryAllowed();
 
+  const i18n: any = useI18n();
+  const allowedEnquiry = isEnquiryAllowed()
   const linksBreadcrumb = [`${i18n.t("home.title")}`, `${i18n.t("contact.title")}`]
 
   return (
@@ -45,69 +48,51 @@ const ContactPage: FC<any> = ({
       lng={lng}
       lngDict={lngDict}
       brand={brand}
+      withAllowed={allowedEnquiry}
     >
-      {allowedEnquiry &&
-        <>
-          <Breadcrumb 
-          // title={i18n.t("contact.title")} 
-          links={linksBreadcrumb} lng={lng} />
-          <div className="container mb-5">
-            <div className="row"> 
-              <div className="col-12 col-sm-12 col-lg-6">
+      <Breadcrumb
+            links={linksBreadcrumb} lng={lng} />
+      <div className="container">
+        <div className="row">
+          <div className="col-12 col-lg-10 offset-lg-1">
+
+            <div className={`${styles.contact_info} ${styles.contact_info__top}`}>
               <Widget
-                  pos="main-content-1"
-                  widgetClassName="insert-your-class"
-                />
-              </div>
-              <div className="col-12 col-sm-12 col-lg-6">
-                {/* <img src="testing"></img> */}
-              </div>
+                pos="main-content-1"
+                widgetClassName={styles.contact_info}
+                loadingComponent={
+                  <Placeholder
+                    classes={classesPlaceholderContact}
+                    withList
+                    listMany={5}
+                  />
+                }
+              />
             </div>
-            <br></br>
-            <div className="row">
-              <div className="col-12 col-sm-12 col-lg-12">
-                <Contact
-                  classes={classesContact}
-                  isAddressDetail={false}
-                  onCompleted={() => toast.success(i18n.t("contact.submitSuccess"))}
-                  onError={() => toast.error(i18n.t("contact.submitError"))}
-                />
-              </div>
-              {/* <div className="col-12 col-sm-12 col-lg-5">
-                <Widget
-                  pos="footer-4"
-                  widgetClassName="contact-info"
-                  thumborSetting={{
-                    width: size.width < 768 ? 375 : 512,
-                    format: "webp",
-                    quality: 85,
-                  }}
-                  loadingComponent={
-                    <Placeholder classes={classesPlaceholderContact} withImage withList listMany={3} />
-                  }
-                />
-              </div> */}
-            </div>
+            <Contact
+              classes={classesContact}
+              isAddressDetail={false}
+              onCompleted={() => toast.success(i18n.t("contact.submitSuccess"))}
+              onError={() => toast.error(i18n.t("contact.submitError"))}
+            />
           </div>
-        </>
-      }
+        </div>
+      </div>
     </Layout>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
-  const { default: lngDict = {} } = await import(
-    `locales/${params.lng}.json`
-  );
-
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const brand = await useBrand(req);
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
+  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
 
   return {
     props: {
-      lng: params.lng,
+      lng: defaultLanguage,
       lngDict,
-      brand: brand || ''
-    },
+      brand: brand || ""
+    }
   };
 }
 
