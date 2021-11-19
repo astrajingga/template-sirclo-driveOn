@@ -4,17 +4,20 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { LookbookSingle, useI18n } from '@sirclo/nexus'
 
 /* library Template */
-import useWindowSize from 'lib/utils/useWindowSize'
-import { useBrand } from 'lib/utils/useBrand'
+import useWindowSize from 'lib/useWindowSize'
+import { useBrand } from 'lib/useBrand'
 
 /* component */
 import Layout from 'components/Layout/Layout'
-import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
+import Breadcrumb from 'components/Breadcrumb/Breadcrumblink'
+
+/* styles */
+import styles from 'public/scss/pages/Lookbook.module.scss'
 
 const classesLookbookSingle = {
-  containerClassName: "lookbook-detail",
+  containerClassName: styles.lookbook_detail,
   rowClassName: "card-columns",
-  imageClassName: "card lookbook-detail__items",
+  imageClassName: `card ${styles.lookbook_detailItems}`,
 }
 
 const LookbookSinglePage: FC<object> = ({
