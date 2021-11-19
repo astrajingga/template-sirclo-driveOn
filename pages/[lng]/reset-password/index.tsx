@@ -1,48 +1,46 @@
-/* library Package */ 
+/* library Package */
 import { FC } from 'react'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { SetNewPassword, useI18n } from '@sirclo/nexus'
 import { toast } from 'react-toastify'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faEye,
-  faEyeSlash,
-  faCheckCircle,
-} from '@fortawesome/free-solid-svg-icons'
+  Eye,
+  EyeOff,
+  CheckCircle
+} from 'react-feather'
 
 /* library Template */
-import { useBrand } from 'lib/utils/useBrand'
+import { useBrand } from 'lib/useBrand'
 
 /* component */
+import SEO from 'components/SEO'
 import Layout from 'components/Layout/Layout'
-import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
 import Loader from 'components/Loader/Loader'
 
-const classesSetNewPassword = {
-  containerClassName: "forgot-password-page-form",
-  inputContainerClassName: "sirclo-form-row",
-  inputClassName: "form-control sirclo-form-input",
-  passwordViewButtonClassName: "sirclo-form-input-btn",
-  buttonClassName: "btn col-12 btn-danger btn-long ",
-  errorClassName: "error",
-  passwordStrengthBarContainerClassName: "sirclo-form-password-strength-bar-container",
-  passwordStrengthBarClassName: "sirclo-form-password-strength-bar",
-  passwordStrengthLabelClassName: "sirclo-form-password-strength-label",
-  passwordCriteriaListClassName: "sirclo-form-password-criteria-list",
-  passwordCriteriaClassName: "sirclo-form-password-criteria",
-};
+/* styles */
+import styles from 'public/scss/pages/ResetPassword.module.scss'
 
-const ResetPasswordPage: FC<object> = ({
+const classesSetNewPassword = {
+  containerClassName: styles.resetPassword_innerForm,
+  inputContainerClassName: styles.sirclo_form_row,
+  inputClassName: `form-control mb-4 ${styles.sirclo_form_input}`,
+  passwordViewButtonClassName: `${styles.sirclo_form_input_btn}`,
+  passwordStrengthBarClassName: styles.passwordBar,
+  passwordStrengthBarContainerClassName: styles.passwordValidation,
+  passwordCriteriaListClassName: styles.formPassword,
+  passwordCriteriaClassName: styles.formPasswordList,
+  buttonClassName: `btn 
+  ${styles.btn_primary} ${styles.btn_long} 
+  ${styles.btn_full_width} ${styles.btn_center}`,
+  errorClassName: styles.resetPassword_error
+}
+
+const ResetPasswordPage: FC<any> = ({
   lng,
   lngDict,
   brand
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const i18n: any = useI18n();
-
-  const linksBreadcrumb = [
-    `${i18n.t("home.title")}`,
-    `${i18n.t("resetPassword.setNewPassword")}`,
-  ];
 
   return (
     <Layout
@@ -51,58 +49,44 @@ const ResetPasswordPage: FC<object> = ({
       lngDict={lngDict}
       brand={brand}
     >
-      <Breadcrumb
-        links={linksBreadcrumb}
-        lng={lng}
-      />
-      <div className="container">
-        <div className="forgot-password-page-container">
-          <div className="forgot-password-page-inner">
-            <h3 className="forgot-password-page-title">
-              {i18n.t("resetPassword.setYourNewPassword")}
-            </h3>
-            <span className="forgot-password-page-subtitle">
-              {i18n.t("resetPassword.setNewPasswordDesc")}
-            </span>
-            <SetNewPassword
-              classes={classesSetNewPassword}
-              onErrorMsg={toast.error}
-              onSuccessMsg={toast.success}
-              passwordViewIcon={
-                <FontAwesomeIcon icon={faEye} className="icon-password" />
-              }
-              passwordHideIcon={
-                <FontAwesomeIcon icon={faEyeSlash} className="icon-password" />
-              }
-              passwordUnfulfilledCriteriaIcon={
-                <FontAwesomeIcon icon={faCheckCircle} height="1.25em" />
-              }
-              passwordFulfilledCriteriaIcon={
-                <FontAwesomeIcon icon={faCheckCircle} height="1.25em" />
-              }
-              loadingComponent={<Loader color="text-light" />}
-            />
+      <SEO title={i18n.t("resetPassword.setNew")} />
+      <section>
+        <div className="container">
+          <div className={styles.resetPassword_container}>
+            <div className={styles.resetPassword_inner}>
+              <div className={styles.resetPassword_inner_title}>
+                <h3>{i18n.t("resetPassword.setNew")}</h3>
+              </div>
+              <SetNewPassword
+                classes={classesSetNewPassword}
+                onErrorMsg={toast.error}
+                onSuccessMsg={toast.success}
+                passwordViewIcon={<Eye />}
+                passwordHideIcon={<EyeOff />}
+                passwordFulfilledCriteriaIcon={<CheckCircle color="green" size={16} />}
+                passwordUnfulfilledCriteriaIcon={<CheckCircle color="gray" size={16} />}
+                loadingComponent={<Loader color="text-light" />}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </Layout>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
-  const { default: lngDict = {} } = await import(
-    `locales/${params.lng}.json`
-  );
-
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const brand = await useBrand(req);
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
+  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
 
   return {
     props: {
-      lng: params.lng,
+      lng: defaultLanguage,
       lngDict,
-      brand: brand || ''
-    },
+      brand: brand || ""
+    }
   };
-};
+}
 
 export default ResetPasswordPage;
