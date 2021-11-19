@@ -1,5 +1,7 @@
 import { NextPage } from "next";
+import { useI18n } from "@sirclo/nexus";
 import { parseCookies } from 'lib/parseCookies';
+import { useBrand } from "lib/useBrand";
 import Error from 'components/Error';
 
 interface Props {
@@ -9,9 +11,10 @@ interface Props {
 const Index: NextPage<Props> = ({
   statusCode
 }) => {
+  const i18n: any = useI18n();
 
   if (statusCode) {
-    return <Error />
+    return <Error i18n={i18n} />
   }
 
   return <></>
@@ -22,6 +25,9 @@ export const getServerSideProps = async ({
   res,
   params
 }: any) => {
+  const brand = await useBrand(req);
+  const cookies = parseCookies(req);
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || cookies.ACTIVE_LNG || 'id';
   const allowedUri: Array<string> = [
     'en',
     'id',
@@ -31,9 +37,7 @@ export const getServerSideProps = async ({
     'sitemap.xml'
   ];
 
-  const cookies = parseCookies(req);
-  const lng = cookies.ACTIVE_LNG || "id";
-  const location = `/${lng}` + req.url;
+  const location = `/${defaultLanguage}` + req.url;
 
   if (allowedUri.indexOf(params.param) == -1) {
     if (

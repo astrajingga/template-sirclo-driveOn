@@ -2,8 +2,8 @@ import
   Document, 
   { Html, Main } 
 from 'next/document';
-import { CriticalCssHead } from 'components/CustomScript/CriticalCssHead'
-import { DeferredNextScript } from 'components/CustomScript/DeferredNextScript'
+import { CriticalCssHead } from "../components/CriticalCssHead";
+import { DeferredNextScript } from "../lib/DeferredNextScript";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {

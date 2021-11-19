@@ -1,24 +1,27 @@
 import "@brainhubeu/react-carousel/lib/style.css";
 import "react-toastify/dist/ReactToastify.css";
-import "../public/scss/main.scss";
+import "public/scss/main.scss";
 
 import { useState, useEffect } from "react";
-
-import { 
-  useApollo, 
-  ApolloProvider, 
+import {
+  useApollo,
+  ApolloProvider,
   PackageFeatureProvider,
   Widget,
-  I18n 
+  I18n
 } from "@sirclo/nexus";
-
-import { useWidgetStyle } from "lib/utils/useWidgetStyle";
 import { PageTransition } from "next-page-transitions";
 import MaintenanceMode from "@sirclo/nexus/lib/component/MaintenanceMode";
 
-const MyApp = ({ Component, pageProps, router }) => {
-  const apolloClient = useApollo(pageProps.initialApolloState)
-  const [hash, setHash] = useState("")
+const classesMaintenance = {
+  maintenanceContainerClassName: 'maintenance__container',
+  imageContainerClassName: 'maintenance__container--images',
+  imageClassName: 'maintenance__container--images-img',
+}
+
+function MyApp({ Component, pageProps, router }) {
+  const apolloClient = useApollo(pageProps.initialApolloState);
+  const [hash, setHash] = useState("");
 
   useEffect(() => {
     const routeChangeHandler = () => {
@@ -34,27 +37,22 @@ const MyApp = ({ Component, pageProps, router }) => {
 
   return (
     <PageTransition
-        timeout={200}
-        loadingDelay={100}
-        classNames="page-transition"
-      >
+      timeout={200}
+      loadingDelay={100}
+      classNames="page-transition"
+    >
       <ApolloProvider client={apolloClient} key={router.route}>
         <PackageFeatureProvider>
-          <MaintenanceMode classes={{ maintenanceContainerClassName: "maintenance" }}>
+          <MaintenanceMode classes={classesMaintenance}>
             <I18n lngDict={pageProps.lngDict} locale={pageProps.lng}>
               <Component {...pageProps} />
-              <Widget pos="script"
-                hash={hash}
-                getItemCount={() => setTimeout(() => {
-                  useWidgetStyle(router);
-                }, 3000)}
-              />
+              <Widget pos="script" hash={hash} />
             </I18n>
           </MaintenanceMode>
         </PackageFeatureProvider>
       </ApolloProvider>
     </PageTransition>
-  )
+  );
 }
 
 export default MyApp;

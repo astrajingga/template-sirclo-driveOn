@@ -1,5 +1,5 @@
 import { getBrand } from "@sirclo/nexus";
-import { GRAPHQL_URI } from "lib/Constants";
+import { GRAPHQL_URI } from "components/Constants";
 
 const Manifest = () => <></>;
 export default Manifest;
