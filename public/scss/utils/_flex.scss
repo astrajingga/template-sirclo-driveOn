@@ -1,0 +1,35 @@
+@mixin flex($direction: row, $align: center, $justify: center, $wrap: false, $important: false)
+{
+  @if $important
+  {
+    display: flex !important;
+    flex-direction: #{$direction} !important;
+    align-items: #{$align} !important;
+    justify-content: #{$justify} !important;
+
+    @if $wrap 
+    {
+      flex-wrap: wrap !important;
+    }
+    @else
+    {
+      flex-wrap: nowrap !important;
+    }
+  }
+  @else
+  {
+    display: flex;
+    flex-direction: #{$direction};
+    align-items: #{$align};
+    justify-content: #{$justify};
+
+    @if $wrap 
+    {
+      flex-wrap: wrap;
+    }
+    @else
+    {
+      flex-wrap: nowrap;
+    }
+  }
+}
