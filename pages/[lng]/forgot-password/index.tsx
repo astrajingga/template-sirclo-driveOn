@@ -9,7 +9,6 @@ import { parseCookies } from 'lib/parseCookies'
 import redirectIfAuthenticated from 'lib/redirectIfAuthenticated'
 import { useBrand } from 'lib/useBrand'
 
-
 /* component */
 import SEO from 'components/SEO'
 import Layout from 'components/Layout/Layout'

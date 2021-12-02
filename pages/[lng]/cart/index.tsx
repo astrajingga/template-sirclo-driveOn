@@ -1,39 +1,39 @@
 /* library package */
-import { FC, useState } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { LazyLoadComponent } from "react-lazy-load-image-component";
-import { parseCookies } from "lib/parseCookies";
-import Router from "next/router";
-import dynamic from "next/dynamic";
+import { FC, useState } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { LazyLoadComponent } from 'react-lazy-load-image-component'
+import { parseCookies } from 'lib/parseCookies'
+import Router from 'next/router'
 import {
   X as XIcon,
   Trash,
   ChevronDown,
   ChevronUp,
-} from "react-feather";
-import { toast } from "react-toastify";
+} from 'react-feather'
+import { toast } from 'react-toastify'
 import {
   CartDetails,
   OrderSummary,
   isProductRecommendationAllowed,
   Products,
   useI18n,
-} from "@sirclo/nexus";
+} from '@sirclo/nexus'
 
 /* library template */
-import { useBrand } from "lib/useBrand";
-import useWindowSize from "lib/useWindowSize";
+import { useBrand } from 'lib/useBrand'
+import useWindowSize from 'lib/useWindowSize'
 
 /* components */
-import Layout from "components/Layout/Layout";
-import EmptyComponent from "components/EmptyComponent/EmptyComponent";
-import Placeholder from "components/Placeholder";
+import Layout from 'components/Layout/Layout'
+import EmptyComponent from 'components/EmptyComponent/EmptyComponent'
+import Placeholder from 'components/Placeholder'
+import Popup from 'components/Popup/Popup'
+import Breadcrumblink from 'components/Breadcrumb/Breadcrumblink'
 
-const Popup = dynamic(() => import("components/Popup/Popup"));
-
-import styles from "public/scss/pages/Cart.module.scss";
-import stylesOrderSummary from "public/scss/components/OrderSummaryCart.module.scss";
-import stylesPagination from "public/scss/components/Pagination.module.scss";
+/* styles */
+import styles from 'public/scss/pages/Cart.module.scss'
+import stylesOrderSummary from 'public/scss/components/OrderSummaryCart.module.scss'
+import stylesPagination from 'public/scss/components/Pagination.module.scss'
 
 const classesCartDetails = {
   className: styles.cart,
@@ -107,6 +107,10 @@ const classesOrderSummary = {
   voucherListHeaderClassName: styles.ordersummary_popupVoucherTitle,
   voucherClassName: styles.ordersummary_popupVoucherItem,
   voucherDetailClassName: styles.ordersummary_popupVoucherDetail,
+  voucherDetailCodeClassName: styles.ordersummary_popupVoucherDetailCode,
+  voucherDetailTitleClassName: styles.ordersummary_popupVoucherDetailTitle,
+  voucherDetailDescClassName: styles.ordersummary_popupVoucherDetailDesc,
+  voucherDetailEstimateClassName : styles.ordersummary_popupVoucherDetailDesc,
   voucherFooterClassName: styles.ordersummary_popupVoucherFooter,
   voucherApplyButtonClassName: `btn ${styles.btn_primary}`,
   pointsContainerClassName: styles.ordersummary_popup,
@@ -159,6 +163,10 @@ const Cart: FC<any> = ({
   const [pageInfo, setPageInfo] = useState({
     itemPerPage: null,
   });
+  const linksBreadcrumb = [
+    `${i18n.t("home.title")}`,
+    `${i18n.t("cart.title")}`,
+  ];
 
   const toogleErrorAddToCart = () =>
     setShowModalErrorAddToCart(!showModalErrorAddToCart);
@@ -178,11 +186,21 @@ const Cart: FC<any> = ({
           <div className={styles.cartError_inner}>{invalidMsg}</div>
         </div>
       )}
-      <section className={styles.cart}>
-        <div className="container">
+      <Breadcrumblink
+        links={linksBreadcrumb}
+        lng={lng}
+      />
+      <div className="container">
+      </div>
+      <section className={styles.cart_container}>
+        <div className="container ">
           <div className="row">
             <div className={SKUs?.length > 0 ? "col-12 col-lg-8" : "col-12 col-lg-8 offset-lg-2"}>
-              {SKUs?.length > 0 && <h3>{i18n.t("cart.title")}</h3>}
+              {SKUs?.length > 0 && <div>
+                <h3>{i18n.t("cart.title")}</h3>
+                <span className={styles.cart_notready}>{i18n.t("cart.notready")}</span>
+                <span className={styles.cart_notready_shopnow} onClick={() => Router.push("/[lng]/products", `/${lng}/products`)}>{i18n.t("cart.shopNow")}</span>
+                </div>}
               <CartDetails
                 getSKU={(SKUs: any) => setSKUs(SKUs)}
                 classes={classesCartDetails}
@@ -281,10 +299,10 @@ const Cart: FC<any> = ({
             </div>
             )}
           </div>
-          {allowedProductRecommendation &&
+          {SKUs?.length > 0 && allowedProductRecommendation &&
             pageInfo.itemPerPage !== 10 &&
             SKUs !== null && (
-              <div className="container">
+          <div className="container">
           <div className="row">
             <div className="col-12 col-lg-10 offset-lg-1">
               <div className={styles.productdetail_relatedProductHeader}>
@@ -370,8 +388,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   const brand = await useBrand(req);
-  const defaultLanguage =
-    brand?.settings?.defaultLanguage || params.lng || "id";
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || "id"
   const { default: lngDict = {} } = await import(
     `locales/${defaultLanguage}.json`
   );

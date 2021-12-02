@@ -1,65 +1,62 @@
 /* library Package */
 import { FC, useState } from 'react'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import dynamic from 'next/dynamic'
+import Router from 'next/router'
+import { toast } from 'react-toastify'
 import {
+  useI18n,
   Testimonials,
-  isTestimonialFormAllowed,
   isTestimonialAllowed,
-  Pagination,
-  useI18n
+  isTestimonialFormAllowed,
+  TestimonialForm
 } from '@sirclo/nexus'
 import ReCAPTCHA from 'react-google-recaptcha'
-import { toast } from 'react-toastify'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons' 
-const TestimonialForm = dynamic(() => import('@sirclo/nexus').then((mod) => mod.TestimonialForm));
 
 /* library Template */
-import { useBrand } from 'lib/utils/useBrand'
+import { useBrand } from 'lib/useBrand'
 
 /* component */
 import Layout from 'components/Layout/Layout'
-import Breadcrumb from 'components/Breadcrumb/Breadcrumb'
 import Placeholder from 'components/Placeholder'
-import PremiumFeatures from 'components/PremiumFeatures/PremiumFeatures'
-const Popup = dynamic(() => import('components/Popup/Popup'));
+import Popup from 'components/Popup/Popup'
+
+/* styles */
+import styles from 'public/scss/pages/Testimonials.module.scss'
 
 const classesTestimonials = {
-  containerClassName: "testimonial__body",
-  cardClassName: "testimonial__body--items",
-  mainClassName: "testimonial__body--items-main",
-  contentClassName: "testimonial__body--items-main-content",
-  userClassName: "testimonial__body--items-main-user",
-  dateClassName: "testimonial__body--items-created",
-};
+  containerClassName: `${styles.testimonials_container}`,
+  cardClassName: `${styles.testimonials_card}`,
+  imgClassName: `${styles.testimonials_img}`,
+  mainClassName: `${styles.testimonials_main}`,
+  contentClassName: `${styles.testimonials_content}`,
+  userClassName: `${styles.testimonials_user}`,
+  dateClassName: `${styles.testimonials_date}`,
+}
 
 const classesTestimonalsForm = {
   backdropClassName: "d-none",
-  formContainerClassName: "testimonial__form--inner",
   testimonialHeaderClassName: "d-none",
-  formClassName: "testimonial__form--page",
-  inputContainerClassName: "sirclo-form-row mb-3",
-  inputLabelClassName: "testimonialForm-inputLabelClassName",
-  inputClassName: "form-control sirclo-form-input",
-  imgUploadContainerClassName: "sirclo-form-row mb-3",
-  uploadIconClassName: "d-block mb-2",
-  imgUploadClassName: "sirclo-form-input-file",
-  publishOptionClassName: "sirclo-form-input-radio",
-  verificationContainerClassName: "mb-3",
-  submitBtnClassName: "btn btn-orange btn-long text-uppercase",
+  formContainerClassName: styles.testimonials_form,
+  inputContainerClassName: `${styles.sirclo_form_row}`,
+  inputClassName: `form-control ${styles.sirclo_form_input}`,
+  imgUploadContainerClassName: `${styles.sirclo_form_row}`,
+  imgUploadClassName: `form-control ${styles.sirclo_form_input}`,
+  uploadIconClassName: "d-block",
+  publishOptionClassName: styles.testimonials_formPublishOption,
+  optionClassName: "mt-2",
+  verificationContainerClassName: "mb-4",
+  submitBtnClassName: `${styles.btn} ${styles.btn_primary} ${styles.btn_long} ${styles.btn_full_width}`,
+}
+
+const paginationClasses = {
+  pagingClassName: styles.pagination,
+  activeClassName: styles.pagination_active,
+  itemClassName: styles.pagination_item,
 }
 
 const classesPlaceholderTestimonials = {
-  placeholderTitle: "placeholder-item placeholder-item__testimonial--title",
-  placeholderList: "placeholder-item placeholder-item__testimonial--list"
-}
-
-const classesPagination = {
-  pagingClassName: "testimonial__footer--pagination-order",
-  itemClassName: "testimonial__footer--pagination-order-list",
-  activeClassName: "testimonial__footer--pagination-order-list-active",
-  linkClassName: "testimonial__footer--pagination-order-list-link"
+  placeholderList: `${styles.testimonials_placeholder}`,
+  placeholderImage: `${styles.testimonials_placeholderImage}`
 }
 
 const TestimonialsPage: FC<any> = ({
@@ -67,14 +64,16 @@ const TestimonialsPage: FC<any> = ({
   lngDict,
   brand
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const i18n: any = useI18n();
-  const [testimonialInfo, setTestimonialInfo] = useState(null);
-  const [popup, setPopup] = useState<boolean>(false)
-  const [isVerified, setIsVerified] = useState<boolean>(false);
-  const testimonialFormAllowed = isTestimonialFormAllowed();
-  const testimonialAllowed = isTestimonialAllowed();
 
-  const linksBreadcrumb = [`${i18n.t("home.title")}`, `${i18n.t("testimonial.title")}`]
+  const i18n: any = useI18n();
+  const testimonialAllowed = isTestimonialAllowed();
+  const testimonialFormAllowed = isTestimonialFormAllowed();
+
+  const [totalItem, setTotalItems] = useState<number>(null);
+  const [showAdd, setShowAdd] = useState<boolean>(false);
+  const [isVerified, setIsVerified] = useState<boolean>(false)
+
+  const toogleShowAdd = () => setShowAdd(!showAdd);
 
   return (
     <Layout
@@ -82,17 +81,84 @@ const TestimonialsPage: FC<any> = ({
       lng={lng}
       lngDict={lngDict}
       brand={brand}
+      withAllowed={testimonialAllowed}
     >
-      {popup && testimonialFormAllowed && (
-        <PremiumFeatures>
-          <Popup setPopup={setPopup}>
+      <div className={`${styles.testimonials} container`}>
+        <div className={styles.testimonials_header}>
+          <h4>{i18n.t("testimonial.title")}</h4>
+          {totalItem > 0 && <p>{i18n.t("testimonial.desc")}</p>}
+        </div>
+        {!(totalItem > 0 || totalItem === null) ?
+          <>
+            <div className={styles.testimonials_qtyAdd}>
+              <p>
+                {i18n.t("testimonial.weHave")}
+                <strong>{totalItem}</strong>
+                {i18n.t("testimonial.weHave2")}
+              </p>
+              <button
+                className={styles.testimonials_qtyAddButton}
+                onClick={toogleShowAdd}
+              >
+                {i18n.t("testimonial.add")}
+              </button>
+            </div>
+            <div className={styles.testimonials_list}>
+              <Testimonials
+                itemPerPage={5}
+                getPageInfo={(pageInfo: any) => setTotalItems(pageInfo.totalItems)}
+                withImage
+                classes={classesTestimonials}
+                callPagination
+                paginationClasses={paginationClasses}
+                loadingComponent={
+                  [1, 2, 3].map((_, i) => (
+                    <div className={styles.testimonials_placeholderContainer}>
+                      <Placeholder
+                        key={i}
+                        classes={classesPlaceholderTestimonials}
+                        withImage={true}
+                        withList
+                        listMany={3}
+                      />
+                    </div>
+                  ))
+                }
+              />
+            </div>
+          </> :
+          <div className={styles.testimonials_empty}>
+            <p>{i18n.t("testimonial.isEmpty")}</p>
+            <a
+              className={`${styles.testimonials_emptyAddButton} ${styles.btn_primary} ${styles.btn_long}`}
+              onClick={toogleShowAdd}
+            >
+              {i18n.t("testimonial.add")}
+            </a>
+            <a
+              className={`${styles.testimonials_backButton} ${styles.btn_long}`}
+              onClick={() => Router.push(`/[lng]/products`, `/${lng}/products`)}
+            >
+              {i18n.t("product.back")}
+            </a>
+          </div>
+        }
+        {(showAdd && testimonialFormAllowed) &&
+          <Popup
+            withHeader
+            setPopup={toogleShowAdd}
+            popupTitle={i18n.t("testimonial.add")}
+          >
             <TestimonialForm
               classes={classesTestimonalsForm}
               uploadIcon={i18n.t("testimonial.inputImage")}
-              onCreateTestimonialCompleted={() => setPopup(false)}
-              onCreateTestimonialError={(error: any) => toast.error(error)}
               onUploadImageCompleted={() => toast.success(i18n.t("testimonial.successUpload"))}
               onUploadImageError={(error: any) => toast.error(error)}
+              onCreateTestimonialCompleted={(_) => {
+                setShowAdd(false)
+                toast.success(i18n.t('testimonial.createSuccess'))
+              }}
+              onCreateTestimonialError={(_) => toast.error(i18n.t('testimonial.createError'))}
               withVerification={true}
               isVerified={isVerified}
               verificationComponent={
@@ -103,74 +169,23 @@ const TestimonialsPage: FC<any> = ({
               }
             />
           </Popup>
-        </PremiumFeatures>
-      )}
-      <Breadcrumb title={i18n.t("testimonial.title")} links={linksBreadcrumb} lng={lng} />
-      <PremiumFeatures>
-        {testimonialAllowed &&
-          <div className="container">
-            <div className="testimonial">
-              <div className="testimonial__header">
-                <div className="testimonial__header--detail">
-                  <span>{i18n.t('testimonial.weHave')} {testimonialInfo && testimonialInfo.totalItems} {i18n.t('testimonial.caption')}</span>
-                </div>
-                <div className="testimonial__header--add" onClick={() => setPopup(!popup)}>
-                  <FontAwesomeIcon icon={faPlus} className="testimonial__header--add-icon" />
-                  <span>{i18n.t("testimonial.addTestimonial")}</span>
-                </div>
-              </div>
-              <Testimonials
-                classes={classesTestimonials}
-                itemPerPage={2}
-                getPageInfo={(pageInfo: any) =>
-                  setTestimonialInfo(pageInfo)
-                }
-                loadingComponent={
-                  <>
-                    <Placeholder classes={classesPlaceholderTestimonials}
-                      withTitle={true} withList={true} listMany={3}
-                    />
-                    <hr className="my-5" />
-                    <Placeholder classes={classesPlaceholderTestimonials}
-                      withTitle={true} withList={true} listMany={3}
-                    />
-                  </>
-                }
-              />
-              <div className="testimonial__footer">
-                <div className="testimonial__footer--pagination">
-                  {testimonialInfo && testimonialInfo.totalItems &&
-                    <Pagination
-                      classes={classesPagination}
-                      totalData={testimonialInfo && testimonialInfo.totalItems}
-                      displayPerPage={2}
-                      prevLabel={"Previous"}
-                      nextLabel={"Next"}
-                    />
-                  }
-                </div>
-              </div>
-            </div>
-          </div>
         }
-      </PremiumFeatures>
+      </div>
     </Layout>
   );
-}
+};
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
-  const { default: lngDict = {} } = await import(
-    `locales/${params.lng}.json`
-  );
-
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const brand = await useBrand(req);
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
+  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
 
   return {
     props: {
-      lng: params.lng,
+      lng: defaultLanguage,
       lngDict,
-      brand: brand || ''
-    },
+      brand: brand || ""
+    }
   };
 }
 

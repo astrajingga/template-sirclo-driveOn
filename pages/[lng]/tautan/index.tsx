@@ -1,17 +1,26 @@
-import { FC } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { Links, useI18n } from "@sirclo/nexus";
-import Layout from "components/Layout/Layout";
-import { useBrand } from "lib/utils/useBrand";
+/* library Package */
+import { FC } from 'react'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { Links, useI18n } from '@sirclo/nexus'
+
+/* library Template */
+import { useBrand } from 'lib/useBrand'
+
+/* component */
+import Layout from 'components/Layout/Layout'
+
+/* styles */
+import styles from 'public/scss/pages/Tautan.module.scss'
+
 
 const classesLinks = {
-  containerClassName: "tautan",
-  logoImage: "tautan_logo",
-  titleClassName: "tautan_title",
-  description: "tautan_description",
-  linksSection: "tautan_linkSection",
-  labelText: "tautan_labelText",
-  labelImage: "tautan_labelImage"
+  containerClassName: styles.tautan,
+  logoImage: styles.tautan_logo,
+  titleClassName: styles.tautan_title,
+  description: styles.tautan_description,
+  linksSection: styles.tautan_linkSection,
+  labelText: styles.tautan_labelText,
+  labelImage: styles.tautan_labelImage,
 }
 
 const TautanPage: FC<any> = ({
@@ -42,15 +51,13 @@ const TautanPage: FC<any> = ({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
-  const { default: lngDict = {} } = await import(
-    `locales/${params.lng}.json`
-  );
-
   const brand = await useBrand(req);
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
+  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
 
   return {
     props: {
-      lng: params.lng,
+      lng: defaultLanguage,
       lngDict,
       brand: brand || ""
     }

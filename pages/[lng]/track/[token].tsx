@@ -1,23 +1,33 @@
-import { ShipmentTracker } from "@sirclo/nexus";
+/* library Package */
+import { ShipmentTracker } from '@sirclo/nexus'
+
+/* library Template */
+import { useBrand } from 'lib/useBrand'
+
+/* styles */
+import styles from 'public/scss/pages/Track.module.scss'
+
+
 
 const classesTrackerPage = {
-  shipmentHeaderClassName: "track-shipment__header rounded-none px-10 py-8",
-  shipmentBodyClassName: "track-shipment__body d-flex justify-content-center",
-  shipmentFooterClassName: "track-shipment__footer d-flex justify-content-center text-center",
-  shipmentTrackingClassName: "track-shipment__tracking",
-  shipmentHeaderTextClassName: "track-shipment__headerText",
-  shipmentTextClassName: "track-shipment__text",
-  shipmentListClassName: "track-shipment__list",
-  shipmentListWrapperClassName: "track-shipment__listWrapper",
-  shipmentCloseIconClassName: "track-shipment__closeIcon",
-  shipmentTrackButtonClassName: "track-shipment__trackButton btn btn-orange",
+  shipmentHeaderClassName: `${styles.track_shipmentHeader} ${styles.track_shipmentHeaderGuest}`,
+  shipmentBodyClassName: `${styles.track_shipmentBody} ${styles.track_shipmentBodyGuest} d-flex justify-content-center`,
+  shipmentFooterClassName: `${styles.track_shipmentFooter} d-flex justify-content-center text-center`,
+  shipmentTrackingClassName: styles.track_shipmentTracking,
+  shipmentHeaderTextClassName: styles.track_shipmentHeaderText,
+  shipmentTextClassName: styles.track_shipmentText,
+  shipmentNoteClassName: styles.track_shipmentNote,
+  shipmentListClassName: styles.track_shipmentList,
+  shipmentListWrapperClassName: styles.track_shipmentListWrapper,
+  shipmentCloseIconClassName: styles.track_shipmentCloseIcon,
+  shipmentTrackButtonClassName: `${styles.track_shipmentTrackButton} ${styles.track_shipmentTrackButtonGuest}`,
 };
-const TrackerPage = ({ order_token }) => {
 
+const TrackerPage = ({ order_token }) => {
   return (
     <ShipmentTracker
-      // token={order_token}
-      awbNumber="IN-SB-2-C2VTGFMAA2XUME"
+
+      awbNumber={"IN-SB-2-C2VTGFMAA2XUME"}
       shippingProvider="GRAB"
       iconTracker={
         <img
@@ -28,18 +38,21 @@ const TrackerPage = ({ order_token }) => {
       }
       classes={classesTrackerPage}
     />
+
   );
 };
 
-export async function getServerSideProps({ params }) {
-  const lng = params.lng == "en" ? "en" : "id";
-
-  const { default: lngDict = {} } = await import(
-    `locales/${lng}.json`
-  );
+export async function getServerSideProps({ params, req }) {
+  const brand = await useBrand(req);
+  const defaultLanguage = brand?.settings?.defaultLanguage || params.lng || 'id';
+  const { default: lngDict = {} } = await import(`locales/${defaultLanguage}.json`);
 
   return {
-    props: { lng: lng, lngDict, order_token: params.token },
+    props: {
+      lng: defaultLanguage,
+      lngDict,
+      order_token: params.token
+    },
   };
 }
 
