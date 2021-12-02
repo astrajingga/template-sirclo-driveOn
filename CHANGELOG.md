@@ -1,30 +1,88 @@
 # Change Log
 
-All notable changes to SIRCLO's Template Merlin will be documented in this file.
+All notable changes to SIRCLO's Template Uno will be documented in this file.
 
-# release-20210819
-
-**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/2.0.1) version 2.0.1
+# release-20210913
+**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/2.2.1) version 2.2.1
 
 ### Bug fixes
-* placeOrder set email if member doent hv email
-* storybook remove unused code
+* Brand unescape getBrand response
+* nexus-image return null if imgSrc empty
+* remove memberID if auth key invalid
+* estimate-shipping accountLocation still hit when is not member
+* points handle apply point 0
+* Fix currency format in shipping cost
+
+### Feature
+* Login & Register with OTP
+* Notification (whatsapp), including opt in/out
+* Ordery history table with accordion
+
+# release-20210827
+**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/2.2.1) version 2.2.1
+
+### Bug fixes
+* thank-you add banksAccount section
+* invert webp validation
+* register prettify diff change first and last name into full name
+* register change first and last name into full name
+* chore(optIn) prompt only if any template active
+* nexusImage change type of src on handle nexusImage with lazyLoader false
+* handle nexusImage with lazyLoader false
+* payment confirmation add className on payment status
+* account: disable tracker and add loading icon on popupOrderConfirmation
+* Remove memberID if auth key invalid
+* Brand: unescape getBrand response
+* nexus-image: return null if imgSrc empty
+* estimate-shipping: accountLocation still hit when is not member
+* optIn: adjust prompt checker
+* points: handle apply point 0
+* WhatsAppOTPInput: handle else redirect condition after login
+
+### Feature
+* thank-you: fix banksAccount section
+* WA-OTP custom locales whatsappOTP
+* account: revamp UI account history table (1357781)
+* common: export format date and price (3a90f51)
+* payment-method: add className deduction on paymentDetails (2cd411b)
+* brand: add defaultLanguage on settings
+
+# release-20210803
+
+**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/2.1.1) version 2.1.1
+
+### Bug fixes
+* placeOrder set email if member doent hv email 
+* storybook: remove unused code
 * handle redirect priority
-* dicrect-checkout fix kekeliruan boolean directCheckout
-* estimate-shipping fix lazy load image provider
+* dicrect checkout fix kekeliruan boolean directCheckout
+* estimate shipping fix lazy load image provider
 * fetchGql error handling fetchGQL
 * optin handle bug
-* place-order make revamped map UI optional
+* place order make revamped map UI optional
 * handle undefined getbrand
 * remove enum
 * withbrand prettify
+* products pagination cross sell with disabled attribute
+* payment confirmation fix props and add upload info
+* adjust otp status query
+* form autofill still shown on chrome
+* check payment order fix error msg
+* unauthorized fix error message unauthorized
+* unescape special characters in alpha menus
+* brands failed to destructure
+* payment confirmation add props withButton & handle error orderByHashes
+* validate webp support
+* register prevent registration when password isn’t match
+* register weak password prompt and toast message
+* brands failed to destructure
 
 ### Features
-* banner Add Banner Storybook Component
+* banner add Banner Storybook Component
 * add WA OTP setting hooks
 * prevent autofill on checkout & account
 * banner add SSR Banner
-* map revamp map UI
+* map revamp map UI 
 * notification integration notifications
 * otp complete flow otp login
 * otp update mutation request otp
@@ -35,6 +93,9 @@ All notable changes to SIRCLO's Template Merlin will be documented in this file.
 * add whatApp OTP UI
 * adjust WA OTP UI
 * theme setting context
+* payment confirmation simplify confirmation payment
+* product detail disable option select
+* shipping methods raise maximum error message
 
 # release-20210803
 
@@ -44,7 +105,6 @@ All notable changes to SIRCLO's Template Merlin will be documented in this file.
 * Direct to place order for all case
 * Coupon can't add & remove if not logged in
 * Coupon no coupon output 0 because && conditional
-* Products handle membershipModelID
 * Products handle membershipModelID
 * AddToCart fix onError AddtoCart
 * Payment confirmation image type validation
@@ -59,7 +119,6 @@ All notable changes to SIRCLO's Template Merlin will be documented in this file.
 
 ### Features
 * Direct to placeorder after login register
-* Product detail toggle product reviews visibility based on web setting
 * ProductDetailv2 add EstimateShipping
 
 # release-20210719
@@ -104,6 +163,8 @@ All notable changes to SIRCLO's Template Merlin will be documented in this file.
 * Product filter filter variant not updated
 * Products add default value for item per page
 * Products filter conflicts with url param
+* Image add props width & height & fix unhandled error on safari
+* Products filter variant key type error
 * withBrand fix getCart on withBrand
 * Refetch undefined result from safari
 * WYSIWYG remove thumbor
@@ -115,9 +176,9 @@ All notable changes to SIRCLO's Template Merlin will be documented in this file.
 
 ### Features
 * Brand add googleAdsWebsiteMetaToken
-* Product detail qty di PDP negatif
-* Account add hooks to getCustomerInformation & getAddressByCartID
-* Account add hooks useCustomerInformation
+* Direct checkout update total item in cart
+* Product detail add props withButtonBuyNow
+* Products enable redirect checkout
 * Artciles add hooks getArticles
 * Helpers add getBlogs and getAllowedActions helpers
 * Cart handle skip getCart and add emptyStateComponent
@@ -140,7 +201,6 @@ All notable changes to SIRCLO's Template Merlin will be documented in this file.
 * Order Review fix counting character of review
 * Shipping Methods: conditional i18n for set pinpoint
 * Account fix function button Delivered
-
 ### Features
 * Account add loading and empty state component
 * Ordersummary fix onSaveCartError
@@ -148,25 +208,27 @@ All notable changes to SIRCLO's Template Merlin will be documented in this file.
 * Account add order status completed & handle confirmation order to completed
 * Account add status cancelled
 * Estimate Shipping add image provider
-
-# release-20210602
+# release-20210531
 
 **note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/1.9.6) version 1.9.6
 
 ### Bug fixes
+
 * Login issue
 * Navigation update limit navigation to 500 items
 * Revert fix (apolloClient) fix URL graphql fqdn
-* Account date of birth select
-* Instagram-feed add alt text and fix loading state
-* Order-summary add shipping cost breakdown
-* Order-summary shipping cost breakdown on cart and place_order page
-* Product-detail show membership discount price
-* Products type error
-* Register fix register redirect
+* Account: date of birth select
+* Instagram-feed: add alt text and fix loading state
+* Order-summary: add shipping cost breakdown
+* Order-summary: shipping cost breakdown on cart and place_order page
+* Product-detail: show membership discount price
+* Products: type error
+* Products: type error
+* Register: fix register redirect
 * FormatDate helper
 
 ### Features
+
 * Allow function lookbook
 * Pagination disable spacer pointer-event
 * Pagination limit page numbers
@@ -207,28 +269,47 @@ All notable changes to SIRCLO's Template Merlin will be documented in this file.
 
 # release-20210423
 
-**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/1.8.25) version 1.8.25
+**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/1.8.20) version 1.8.20
 
 ### Bug fixes
 
 * Image loading service per variant
 * Section hidden cross sell
-* Change thank you & payment status url
-* Improve redirect to default language, can handle more than 1 uri segment
-* Membership History
-* Use point webstore on step checkout
 
 ### Features
 
-* Google SSO Login
 * Tautan / Links
+* Membership History
+* Use point webstore on step checkout
+
+# release-20210416
+
+**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/1.8.17) version 1.8.17
+
+### Bug fixes
+
+* fix thank you page & payment status page url
+* Improve redirect to default language, can handle more than 1 uri segment
+
+### Features
+
+* Blog List
+* Blog Detail with Social Share
+* Google SSO
+* Notify Me
 * Allow function policy
 * Product bundling
-* Notify Me
+* Product review and ratings
+* Product recommendation
+* Coupon
+* Shipping method instant courier
+* Shipment tracking
+* Discount line items in cart
+* Line items error in cart
 
 # release-20210409
 
-**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/1.8.11) version 1.8.11
+**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/1.8.9) version 1.8.9
 
 ### Bug fixes
 
@@ -237,21 +318,12 @@ All notable changes to SIRCLO's Template Merlin will be documented in this file.
 * fix disabled if shipping.isEnable false && shipping is instant or sameday
 * fix disabled shipping condition
 * fix styling shipment tracking
-* fix styling birthdate on account page
 
 ### Features
 
-* Product review and ratings
-* Product recommendation
-* Coupon
-* Shipping method instant courier
-* Shipment tracking
-* Discount line items in cart
-* Line items error in cart
-* Blog
 * Shipment tracking
 
-# release-20210305
+# release-20210303
 
 **note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/1.4.14) version 1.4.14
 
@@ -259,15 +331,25 @@ All notable changes to SIRCLO's Template Merlin will be documented in this file.
 
 * Fix pagination in product list
 * Fix cart ignore stock
-* Fix multiple order, when brute-force click pay button
-* Fix missing SEO data
-* Fix height product detail image
+* Fix multiple order, when brute click pay button
+* Fix can not edit account
+* Fix product display lower price
+* Fix typo i18n edit account
+* Fix shipping cost calculation, item weight included
+* Fix related product to be removed from product detail page
+* Fix error page always redirect to /id/id
+
+### Changed
+
+* Change copyright wording
 
 ### Features
 
 * Pin point location in account and place order
-* Filter & sort enhancement 
-* Total tagihan in payment confirmation
+* Filter & sort enhancement
+* Social share
+* Total bill on payment confirmation
+* Add quantity in order detail on place order
 
 # release-20210115
 
@@ -296,7 +378,7 @@ All notable changes to SIRCLO's Template Merlin will be documented in this file.
 
 ### Features
 
-* Ignore Stock
+* Ignore stock item
 * Move cart using BE API
 * Password validation
 * Tag name badge & support validation
@@ -304,119 +386,10 @@ All notable changes to SIRCLO's Template Merlin will be documented in this file.
 * Testimonials with carousel
 * Hide blog features (unfinished feature)
 
-# release-20201222
+# release-20201218
 
-**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/0.7.23) version 0.7.23
-
-### Features
-
-* Fix invalid token
-
-# release-20201207
-
-**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/0.7.21) version 0.7.21
+**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/0.8.5) version 0.8.5
 
 ### Features
 
-* Order history list and details
-
-# release-20201202
-
-**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/0.7.21) version 0.7.21
-
-### Bug fixes
-
-* Fix double bank transfer payment method
-* Fix can't proceed to cart after add to cart product
-
-# release-20201125
-
-**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/0.7.11) version 0.7.11
-
-### Bug fixes
-
-* Fix broken image categories
-* Fix empty cart after add to cart
-* Remove copy content error when banner is empty
-* Fix imageFallback for broken image categories
-
-### Features
-
-* Open order
-* Contact us
-* Social media icon
-
-# release-20201111
-
-**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/0.4.44) version 0.4.44
-
-### Bug fixes
-
-* Fix member order history
-* Fix logout remove authentication
-* Hotfix unfinished features (on backend), social media icon and isExpired
-
-### Features
-
-* Newsletter pop up
-* Header announcements
-* Displaying information when product couldn't be found
-
-# release-20201012
-
-**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/0.4.28) version 0.4.28
-
-### Bug fixes
-
-* Fix error blank on register page
-* Fix error unrecognized active lang on 404 page
-* Fix ui bugs, password hide icon
-* Fix bugs reset password
-* Fix item quantity count, that sometime make the website freeze
-
-### Features
-
-* Discount price on products and payment details
-* Hide premium features
-* Maintenance mode
-* Page transitions
-
-# release-20201001
-
-**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/0.4.2) version 0.4.2
-
-### Bug fixes
-
-* Badge total item to become quantity item
-* Label point in popup order summary
-* Private route for checkout flow
-* Disable toggle cart pop up on cart page and place order
-* Hide button voucher and points in order summary
-* Hide shortcut in Cart, and Placeorder pages
-* Hide footer in Cart, and Placeorder pages only for mobile version
-* Hide Quickview in mobile version
-* Hide enquiry form (Subscribe newsletter)
-* Redirect to cart when order placed
-
-### Features
-
-* Empty state and 404 error page
-* Search feature
-* Gift card page
-
-# release-20200924
-
-**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/0.3.1) version 0.3.1
-
-### Bug fixes
-
-* Remove graphql uri in next config
-
-### Features
-
-* Set limit for product category in homepage
-* Popup points
-
-## release-20200923
-
-**note**: using [nexus](https://www.npmjs.com/package/@sirclo/nexus/v/0.3.1) version 0.3.1
+* all basic features Sirclo store V2

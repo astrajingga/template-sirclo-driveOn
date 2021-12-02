@@ -15,5 +15,8 @@ module.exports = withPWA({
   },
   headers: {
     "X-Frame-Options": "sameorigin",
+  },
+  future: {
+    webpack5: true
   }
 });

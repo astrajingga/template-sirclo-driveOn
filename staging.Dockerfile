@@ -3,7 +3,7 @@ FROM node:12-alpine
 # Create app directory
 WORKDIR /usr/src/app
 
-ENV ASSET_PREFIX=https://staging-template.sirclocdn.com/merlin
+ENV ASSET_PREFIX=https://staging-template.sirclocdn.com/uno
 
 # Install app dependencies
 COPY package*.json ./
