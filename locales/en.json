@@ -61,7 +61,9 @@
     "viewDetail": "View Detail",
     "viewInvoice": "View Invoice",
     "youGot": "You Got",
-    "youHave": "You have"
+    "youHave": "You have",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Full name"
   },
   "article": {
     "categories": "Help"

@@ -61,7 +61,9 @@
     "viewDetail": "Lihat Detail",
     "viewInvoice": "Lihat Tagihan",
     "youGot": "Anda punya",
-    "youHave": "Anda memiliki"
+    "youHave": "Anda memiliki",
+    "fullName": "Nama Lengkap",
+    "fullNamePlaceholder": "Masukan nama lengkap anda"
   },
   "article": {
     "categories": "Bantuan"
