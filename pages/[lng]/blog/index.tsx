@@ -149,9 +149,9 @@ const Blog: FC<any> = ({
                   <div className="col-12 col-md-6 col-lg-12">
                     {(totalCategories > 0 || totalCategories === null) &&
                       <>
-                        <h1 className={styles.title_side_blogs}>
+                        <h5 className={styles.title_side_blogs}>
                           {i18n.t("blog.categories")}
-                        </h1>
+                        </h5>
                         <BlogCategories
                           classes={classesBlogCategories}
                           getCategoriesCount={(categoriesCount) => setTotalCategories(categoriesCount)}
@@ -160,7 +160,7 @@ const Blog: FC<any> = ({
                     }
                   </div>
                   <div className="col-12 col-md-6 col-lg-12">
-                    <h2 className={styles.title_side_blogs}>{i18n.t("blog.recentPost")}</h2>
+                    <h5 className={styles.title_side_blogs}>{i18n.t("blog.recentPost")}</h5>
                     <BlogRecent
                       classes={classesBlogRecent}
                       limit={5}

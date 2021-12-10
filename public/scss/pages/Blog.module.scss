@@ -13,12 +13,18 @@
     justify-content: center;
     margin: 24px 0;
     width: 100%;
-    height: 200px;
+    height: 357px;
     border-radius: 20px;
     color: $color_white;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+
+    @media screen and (max-width: 769px) {
+      width: 100%;
+      height: 88px;
+      margin: auto;
+    }
   }
 
   &_headerWithoutBackground {
@@ -60,11 +66,17 @@
   }
 
   &_itemImage {
-    width: 100%;
-    height: 150px;
+    width: 250px;
+    height: 250px;
     border-radius: 10px;
     border: 1px solid $color_gray_low;
     object-fit: cover;
+    @media screen and (max-width: 769px) {
+      width: 233px;
+      height: 120px;
+      // align-items: center;
+      margin: auto;
+    }
   }
 
   &_itemContent {

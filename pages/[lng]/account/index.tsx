@@ -70,7 +70,7 @@ const classesAccount = {
   passwordStrengthBarContainerClassName: `${styles.passwordValidation} ${styles.marginAccount}`,
   passwordCriteriaListClassName: `${styles.formPassword} ${styles.marginAccount} ${styles.formPasswordAccount} d-none`,
   passwordCriteriaClassName: styles.formPasswordList,
-  buttonClassName: `btn text-uppercase mr-2 ${styles.btn_primary} ${styles.btn_long}`,
+  buttonClassName: `btn text-uppercase  ${styles.btn_app_view} mr-2 ${styles.btn_primary} ${styles.btn_long}`,
   /* map */
   mapAreaClassName: styles.account_mapArea,
   mapSelectAreaClassName: styles.account_buttonLocation,
