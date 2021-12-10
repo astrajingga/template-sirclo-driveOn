@@ -64,7 +64,7 @@
     }
 
     &_dots {
-      color: $color_blue;
+      color: $color_base_red;
       font-size: medium;
       display: flex;
       align-items: center;
@@ -121,9 +121,12 @@
 
     &_title {
       font-family: "Poppins-medium";
-      font-size: 20px;
+      font-size: 36px;
       font-weight: bold;
       color: $color_normal_text;
+      @media screen and (max-width: 757px) {
+        font-size: 20px;
+      }
     }
 
     & > p {
@@ -140,7 +143,11 @@
 
     &_priceSale {
       color: $color_normal_text;
+      font-size: 16px;
       margin-right: 0.5rem;
+      @media screen and (max-width: 757px) {
+        font-size: 20px;
+      }
     }
 
     &_containerVariant {
@@ -384,6 +391,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 389px;
+    
+    @media screen and (max-width: 575px) {
+      width: auto;
+    }
 
     &_content {
       width: 100%;
@@ -422,7 +434,11 @@
 
   &_popupError {
     text-align: center;
-    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 369px;
   }
 
   &_popupErrorTitle {

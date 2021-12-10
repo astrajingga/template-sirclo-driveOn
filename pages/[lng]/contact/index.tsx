@@ -30,7 +30,7 @@ const classesContact = {
   inputClassName: `form-control ${styles.sirclo_form_input}`,
   labelClassName: `d-flex flex-row align-items-center justify-content-start`,
   buttonContainerClassName: `${styles.contact_buttonContainer} d-block mt-4`,
-  buttonClassName: `${styles.btn} ${styles.btn_primary} ${styles.btn_long} ${styles.btn_full_width} ${styles.btn_center}`,
+  buttonClassName: `${styles.btn} ${styles.btn_primary} ${styles.btn_long} ${styles.btn_right}`,
   widgetClassName: styles.contact_widget
 };
 

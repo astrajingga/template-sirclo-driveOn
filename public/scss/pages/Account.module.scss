@@ -4,6 +4,13 @@
 @import "../components/Password.module.scss";
 @import "./Track.module.scss";
 
+
+.btn_app_view{
+  @media screen and (max-width: 575px) {
+    margin-bottom: 0 !important;
+  }
+}
+
 .table {
   &_status {
     width: max-content;
