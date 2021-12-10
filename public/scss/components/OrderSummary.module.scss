@@ -27,6 +27,7 @@
       margin: 0;
       margin-left: 1rem;
       color: $color_white;
+      font-size: 25px;
     }
   }
 
@@ -228,7 +229,7 @@
     &:active
     {
       outline: 0;
-      border: none; 
+      border: none;
     }
 
     &:hover
@@ -899,11 +900,11 @@
 
       -moz-appearance: textfield;
 
-      &::-webkit-inner-spin-button, 
+      &::-webkit-inner-spin-button,
       &::-webkit-outer-spin-button
-      { 
-        -webkit-appearance: none; 
-        margin: 0; 
+      {
+        -webkit-appearance: none;
+        margin: 0;
       }
 
       &:hover,
