@@ -247,11 +247,9 @@ const Product: FC<any> = ({ lng, lngDict, slug, data, brand, urlSite }) => {
             <div>
               <button
                 className={`btn ${styles.btn_blue}`}
-                onClick={() =>
-                  router.push("/[lng]/products", `/${lng}/products`)
-                }
+                onClick={() => setShowPopup(false)}
               >
-                {i18n.t("product.continueShopping")}
+                {i18n.t("product.closePopup")}
               </button>
             </div>
           </div>
@@ -308,7 +306,7 @@ const Product: FC<any> = ({ lng, lngDict, slug, data, brand, urlSite }) => {
                 router.push("/[lng]/products", `/${lng}/products`);
               }}
             >
-              {i18n.t("product.continueShopping")}
+              {i18n.t("product.closePopup")}
             </button>
           </div>
         </Popup>
