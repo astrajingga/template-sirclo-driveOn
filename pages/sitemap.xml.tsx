@@ -1,4 +1,5 @@
-import globby from "globby";
+/* library Package */
+import globby from 'globby'
 import {
   getProducts,
   getCategories,
@@ -6,8 +7,11 @@ import {
   getBlogs,
   getArticles,
   getAllowedActions,
-} from "@sirclo/nexus";
-import { GRAPHQL_URI } from "lib/Constants";
+  getProductCount,
+} from '@sirclo/nexus'
+
+/* library Template */
+import { GRAPHQL_URI } from 'lib/Constants'
 
 const Sitemap = () => <></>;
 export default Sitemap;
@@ -21,13 +25,20 @@ export async function getServerSideProps({ req, res }) {
 
   const languages = ["id", "en"];
   const allowedActions = await getAllowedActions(GRAPHQL_URI(req));
-  const products = await getProducts(GRAPHQL_URI(req));
   const categories = await getCategories(GRAPHQL_URI(req));
   const allArticles = await getArticles(GRAPHQL_URI(req));
   const articles = allArticles?.filter(item => item.isActive === true);
 
   const blogs = allowedActions['BLOG_VIEW'] ? await getBlogs(GRAPHQL_URI(req)) : [];
   const lookbooks = allowedActions['LOOKBOOK_VIEW'] ? await getLookbooks(GRAPHQL_URI(req)) : [];
+
+  let products: Array<any> = [];
+  const { totalItems } = await getProductCount(GRAPHQL_URI(req));
+  const totalPage: number = Math.ceil(totalItems / 100);
+  for (let i = 0; i < totalPage && i < 10; i++) {
+    const result = await getProducts(GRAPHQL_URI(req), i);
+    products.push(...result.items);
+  }
 
   if (!allowedActions['BLOG_VIEW']) {
     pages = pages.filter(page => page.includes('/blog'));
